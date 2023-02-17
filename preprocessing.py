@@ -2,9 +2,8 @@ import load
 import matplotlib
 from statsmodels.tsa.deterministic import DeterministicProcess
 
-def preprocessing(order, fore):
-    df = load.load()
 
+def preprocessing(df, order, fore):
     price = df["Close"]
 
     trend = price.rolling(
@@ -13,9 +12,9 @@ def preprocessing(order, fore):
         min_periods=7
     ).mean()
 
-    ax = price.plot()
-    trend.plot(ax=ax, linewidth=3)
-    matplotlib.pyplot.show()
+    # ax = price.plot()
+    # trend.plot(ax=ax, linewidth=3)
+    # matplotlib.pyplot.show()
 
     y = trend.copy()
     dp = DeterministicProcess(
