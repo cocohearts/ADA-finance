@@ -1,5 +1,18 @@
 from sklearn.neural_network import MLPRegressor
+import datetime
+import pickle
 
-def train(X, y):
-    model = MLPRegressor()  # TODO Tune hyperparameters
-    model.fit(X, y)
+def train(X_train, y_train):
+    now = datetime.datetime.now()
+    print(X_train, y_train)
+    neural_net = MLPRegressor()  # TODO Tune hyperparameters
+    neural_net.fit(X_train, y_train)
+
+    print("Trained neural net in", (datetime.datetime.now() - now).microseconds / 1000, "milliseconds")
+    filename = "neural_net.sav"
+    pickle.dump(neural_net, open(filename, "wb"))
+
+def test(X_test, y_test):
+    filename = "lin_reg.sav"
+    neural_net = pickle.load(open(filename, "rb"))
+    print("Score of NN:", neural_net.score(X_test, y_test))

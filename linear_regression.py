@@ -20,7 +20,7 @@ def train(X, y):
     # y_fore.plot(ax=ax, color="red", linestyle="dashed")
 
     # matplotlib.pyplot.show()
-    print("Trained linear regression in ", (datetime.datetime.now() - now).microseconds / 1000, " milliseconds")
+    print("Trained linear regression in", (datetime.datetime.now() - now).microseconds / 1000, "milliseconds")
     print("MSE of LR: ", mean_squared_error(y, y_pred))
 
     filename = "lin_reg.sav"
@@ -29,5 +29,5 @@ def train(X, y):
 
 def predict(X):
     filename = "lin_reg.sav"
-    model = pickle.load(open(filename, "rb"))
-    return pd.Series(model.predict(X), index=X.index)
+    lin_reg = pickle.load(open(filename, "rb"))
+    return pd.Series(lin_reg.predict(X), index=X.index)
