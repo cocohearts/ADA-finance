@@ -1,4 +1,4 @@
-import matplotlib
+import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 import pandas as pd
@@ -19,7 +19,7 @@ def train(X, y):
     # y_pred.plot(ax=ax, color="blue")
     # y_fore.plot(ax=ax, color="red", linestyle="dashed")
 
-    # matplotlib.pyplot.show()
+    # plt.show()
     print("Trained linear regression in", (datetime.datetime.now() - now).microseconds / 1000, "milliseconds")
     print("MSE of LR: ", mean_squared_error(y, y_pred))
 
