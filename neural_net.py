@@ -4,7 +4,6 @@ import pickle
 
 def train(X_train, y_train):
     now = datetime.datetime.now()
-    print(X_train, y_train)
     neural_net = MLPRegressor()  # TODO Tune hyperparameters
     neural_net.fit(X_train, y_train)
 
@@ -13,6 +12,6 @@ def train(X_train, y_train):
     pickle.dump(neural_net, open(filename, "wb"))
 
 def test(X_test, y_test):
-    filename = "lin_reg.sav"
+    filename = "neural_net.sav"
     neural_net = pickle.load(open(filename, "rb"))
     print("Score of NN:", neural_net.score(X_test, y_test))
