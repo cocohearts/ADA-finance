@@ -1,0 +1,157 @@
+{
+  "pipelineSpec": {
+    "components": {
+      "comp-gcs-load-data": {
+        "executorLabel": "exec-gcs-load-data",
+        "inputDefinitions": {
+          "parameters": {
+            "output_gcs_bucket": {
+              "type": "STRING"
+            }
+          }
+        },
+        "outputDefinitions": {
+          "parameters": {
+            "Output": {
+              "type": "STRING"
+            }
+          }
+        }
+      },
+      "comp-train-model": {
+        "executorLabel": "exec-train-model",
+        "inputDefinitions": {
+          "parameters": {
+            "gcs_bucket": {
+              "type": "STRING"
+            },
+            "model_name": {
+              "type": "STRING"
+            },
+            "train_file_path": {
+              "type": "STRING"
+            }
+          }
+        }
+      }
+    },
+    "deploymentSpec": {
+      "executors": {
+        "exec-gcs-load-data": {
+          "container": {
+            "args": [
+              "--executor_input",
+              "{{$}}",
+              "--function_to_execute",
+              "gcs_load_data"
+            ],
+            "command": [
+              "sh",
+              "-c",
+              "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet     --no-warn-script-location 'google-cloud-bigquery' 'google-cloud-storage' 'pandas' 'pyarrow' 'kfp==1.8.19' && \"$0\" \"$@\"\n",
+              "sh",
+              "-ec",
+              "program_path=$(mktemp -d)\nprintf \"%s\" \"$0\" > \"$program_path/ephemeral_component.py\"\npython3 -m kfp.v2.components.executor_main                         --component_module_path                         \"$program_path/ephemeral_component.py\"                         \"$@\"\n",
+              "\nimport kfp\nfrom kfp.v2 import dsl\nfrom kfp.v2.dsl import *\nfrom typing import *\n\ndef gcs_load_data(output_gcs_bucket: str) -> str:\n    from google.cloud import storage\n\n    output_file = f\"{train_pipeline_name}/artefacts/train.csv\"\n\n    dataframe = pd.DataFrame()\n\n    # this line might be issue, not sure\n    gcs_client = storage.Client(project=project_id)\n\n    bucket = gcs_client.get_bucket(output_gcs_bucket)\n    bucket.blob(output_file).upload_from_string(dataframe.to_csv(index=False), 'text/csv')\n\n    return output_file\n\n"
+            ],
+            "image": "python:3.7"
+          }
+        },
+        "exec-train-model": {
+          "container": {
+            "args": [
+              "--executor_input",
+              "{{$}}",
+              "--function_to_execute",
+              "train_model"
+            ],
+            "command": [
+              "sh",
+              "-c",
+              "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet     --no-warn-script-location 'google-cloud-storage' 'pandas' 'scikit-learn==0.21.3' 'fsspec' 'gcsfs' 'kfp==1.8.19' && \"$0\" \"$@\"\n",
+              "sh",
+              "-ec",
+              "program_path=$(mktemp -d)\nprintf \"%s\" \"$0\" > \"$program_path/ephemeral_component.py\"\npython3 -m kfp.v2.components.executor_main                         --component_module_path                         \"$program_path/ephemeral_component.py\"                         \"$@\"\n",
+              "\nimport kfp\nfrom kfp.v2 import dsl\nfrom kfp.v2.dsl import *\nfrom typing import *\n\ndef train_model(gcs_bucket: str, train_file_path: str, model_name: str):\n    from google.cloud import storage\n    from sklearn.model_selection import train_test_split\n    from sklearn import metrics\n    from sklearn.externals import joblib\n    import pandas as pd\n\n    dataframe = pd.read_csv(f'gs://{gcs_bucket}/{train_file_path}')\n\n    output_file = f\"ai-pipeline-credit-default-train/artefacts/{model_name}\"\n\n    # TODO: GET STUFF FROM dataframe\n    x_train = dataframe[0]\n    y_train = dataframe[1]\n    x_test = dataframe[2]\n    y_test = dataframe[3]\n\n    my_model = neural_net.train(x_train,y_train)\n\n    y_pred = neural_net.test(my_model,x_test,y_test)\n\n    print(\"Accuracy:\",metrics.accuracy_score(y_test, y_pred))\n\n    joblib.dump(my_model, model_name)\n\n    bucket = storage.Client().bucket(gcs_bucket)\n    blob = bucket.blob(output_file)\n    blob.upload_from_filename(model_name)\n\n    print(f\"Model saved in : {output_file}\")\n\n"
+            ],
+            "image": "python:3.7"
+          }
+        }
+      }
+    },
+    "pipelineInfo": {
+      "name": "trainingpipeline"
+    },
+    "root": {
+      "dag": {
+        "tasks": {
+          "gcs-load-data": {
+            "cachingOptions": {
+              "enableCache": true
+            },
+            "componentRef": {
+              "name": "comp-gcs-load-data"
+            },
+            "inputs": {
+              "parameters": {
+                "output_gcs_bucket": {
+                  "runtimeValue": {
+                    "constantValue": {
+                      "stringValue": "packt-data-eng-on-gcp-vertex-ai-pipeline"
+                    }
+                  }
+                }
+              }
+            },
+            "taskInfo": {
+              "name": "gcs-load-data"
+            }
+          },
+          "train-model": {
+            "cachingOptions": {
+              "enableCache": true
+            },
+            "componentRef": {
+              "name": "comp-train-model"
+            },
+            "dependentTasks": [
+              "gcs-load-data"
+            ],
+            "inputs": {
+              "parameters": {
+                "gcs_bucket": {
+                  "runtimeValue": {
+                    "constantValue": {
+                      "stringValue": "packt-data-eng-on-gcp-vertex-ai-pipeline"
+                    }
+                  }
+                },
+                "model_name": {
+                  "runtimeValue": {
+                    "constantValue": {
+                      "stringValue": "cc_default_rf_model.joblib"
+                    }
+                  }
+                },
+                "train_file_path": {
+                  "taskOutputParameter": {
+                    "outputParameterKey": "Output",
+                    "producerTask": "gcs-load-data"
+                  }
+                }
+              }
+            },
+            "taskInfo": {
+              "name": "train-model"
+            }
+          }
+        }
+      }
+    },
+    "schemaVersion": "2.0.0",
+    "sdkVersion": "kfp-1.8.19"
+  },
+  "runtimeConfig": {
+    "gcsOutputDirectory": "gs://packt-data-eng-on-gcp-vertex-ai-pipeline/ai-pipeline-credit-default-train"
+  }
+}
