@@ -48,7 +48,7 @@
             "command": [
               "sh",
               "-c",
-              "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet     --no-warn-script-location 'google-cloud-bigquery' 'google-cloud-storage' 'pandas' 'pyarrow' 'kfp==1.8.19' && \"$0\" \"$@\"\n",
+              "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet     --no-warn-script-location 'google-cloud-storage' 'pandas' 'pyarrow' 'kfp==1.8.19' && \"$0\" \"$@\"\n",
               "sh",
               "-ec",
               "program_path=$(mktemp -d)\nprintf \"%s\" \"$0\" > \"$program_path/ephemeral_component.py\"\npython3 -m kfp.v2.components.executor_main                         --component_module_path                         \"$program_path/ephemeral_component.py\"                         \"$@\"\n",
@@ -97,7 +97,7 @@
                 "output_gcs_bucket": {
                   "runtimeValue": {
                     "constantValue": {
-                      "stringValue": "packt-data-eng-on-gcp-vertex-ai-pipeline"
+                      "stringValue": "ada_finance_dataset"
                     }
                   }
                 }
@@ -122,14 +122,14 @@
                 "gcs_bucket": {
                   "runtimeValue": {
                     "constantValue": {
-                      "stringValue": "packt-data-eng-on-gcp-vertex-ai-pipeline"
+                      "stringValue": "ada_finance_dataset"
                     }
                   }
                 },
                 "model_name": {
                   "runtimeValue": {
                     "constantValue": {
-                      "stringValue": "cc_default_rf_model.joblib"
+                      "stringValue": "S&Pmodel.joblib"
                     }
                   }
                 },
@@ -152,6 +152,6 @@
     "sdkVersion": "kfp-1.8.19"
   },
   "runtimeConfig": {
-    "gcsOutputDirectory": "gs://packt-data-eng-on-gcp-vertex-ai-pipeline/ai-pipeline-credit-default-train"
+    "gcsOutputDirectory": "gs://ada_finance_dataset/S&P_train_pipeline"
   }
 }

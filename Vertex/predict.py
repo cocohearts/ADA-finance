@@ -67,3 +67,5 @@ response = api_client.create_run_from_job_spec(
     job_spec_path=f"{predict_pipeline_name}.json",
     pipeline_root=pipeline_root_path
 )
+
+print(response)

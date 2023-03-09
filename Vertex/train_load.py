@@ -9,15 +9,15 @@ sys.path.append('..')
 import neural_net
 
 # TODO: Change with your project id and gcs bucket name
-project_id = "packt-data-eng-on-gcp"
-gcs_bucket = "packt-data-eng-on-gcp-vertex-ai-pipeline"
+project_id = "ada-cloud-compute"
+gcs_bucket = "ada_finance_dataset"
 region = "us-central1"
-train_pipeline_name = "ai-pipeline-credit-default-train"
+train_pipeline_name = "S&P_train_pipeline"
 pipeline_root_path = f"gs://{gcs_bucket}/{train_pipeline_name}"
 
-model_name = "cc_default_rf_model.joblib"
+model_name = "S&Pmodel.joblib"
 
-@component(packages_to_install=["google-cloud-bigquery","google-cloud-storage","pandas","pyarrow"])
+@component(packages_to_install=["google-cloud-storage","pandas","pyarrow"])
 def gcs_load_data(output_gcs_bucket: str) -> str:
     from google.cloud import storage
 
