@@ -5,29 +5,29 @@ import pandas as pd
 import datetime
 import pickle
 
+class linearRegression:
+    def __init__(self):
+        self.lin_reg = LinearRegression()
 
-def train(X, y):
-    now = datetime.datetime.now()
+    def train(self, X, y):
+        now = datetime.datetime.now()
 
-    lin_reg = LinearRegression()
-    lin_reg.fit(X, y)
+        self.lin_reg.fit(X, y)
 
-    y_pred = pd.Series(lin_reg.predict(X), index=X.index)
-    # y_fore = pd.Series(lin_reg.predict(X_fore), index=X_fore.index)
+        y_pred = pd.Series(self.lin_reg.predict(X), index=X.index)
+        # y_fore = pd.Series(lin_reg.predict(X_fore), index=X_fore.index)
 
-    # ax = y.plot()
-    # y_pred.plot(ax=ax, color="blue")
-    # y_fore.plot(ax=ax, color="red", linestyle="dashed")
+        # ax = y.plot()
+        # y_pred.plot(ax=ax, color="blue")
+        # y_fore.plot(ax=ax, color="red", linestyle="dashed")
 
-    # plt.show()
-    print("Trained linear regression in", (datetime.datetime.now() - now).microseconds / 1000, "milliseconds")
-    print("MSE of LR: ", mean_squared_error(y, y_pred))
+        # plt.show()
+        print("Trained linear regression in", (datetime.datetime.now() - now).microseconds / 1000, "milliseconds")
+        print("MSE of LR: ", mean_squared_error(y, y_pred))
 
-    filename = "lin_reg.sav"
-    pickle.dump(lin_reg, open(filename, "wb"))
+        # filename = "lin_reg.sav"
+        # pickle.dump(self.lin_reg, open(filename, "wb"))
 
-
-def predict(X):
-    filename = "lin_reg.sav"
-    lin_reg = pickle.load(open(filename, "rb"))
-    return pd.Series(lin_reg.predict(X), index=X.index)
+    def predict(self, X):
+        # filename = "lin_reg.sav"
+        return pd.Series(self.lin_reg.predict(X), index=X.index)
