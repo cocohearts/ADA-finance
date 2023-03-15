@@ -3,7 +3,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 import pandas as pd
 import datetime
-import pickle
+# import pickle
 
 class linearRegression:
     def __init__(self):
@@ -17,11 +17,11 @@ class linearRegression:
         y_pred = pd.Series(self.lin_reg.predict(X), index=X.index)
         # y_fore = pd.Series(lin_reg.predict(X_fore), index=X_fore.index)
 
-        # ax = y.plot()
-        # y_pred.plot(ax=ax, color="blue")
+        ax = y.plot()
+        y_pred.plot(ax=ax, color="blue")
         # y_fore.plot(ax=ax, color="red", linestyle="dashed")
 
-        # plt.show()
+        plt.show()
         print("Trained linear regression in", (datetime.datetime.now() - now).microseconds / 1000, "milliseconds")
         print("MSE of LR: ", mean_squared_error(y, y_pred))
 
