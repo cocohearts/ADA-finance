@@ -6,7 +6,7 @@ import pandas as pd
 
 import sys
 sys.path.append('..')
-import neural_net
+from Forecasting import neural_net
 
 # TODO: Change with your project id and gcs bucket name
 project_id = "ada-cloud-compute"
@@ -36,7 +36,6 @@ def gcs_load_data(output_gcs_bucket: str) -> str:
 @component(packages_to_install=["google-cloud-storage","pandas","scikit-learn==0.21.3","fsspec","gcsfs"])
 def train_model(gcs_bucket: str, train_file_path: str, model_name: str):
     from google.cloud import storage
-    from sklearn.model_selection import train_test_split
     from sklearn import metrics
     from sklearn.externals import joblib
     import pandas as pd
@@ -51,9 +50,9 @@ def train_model(gcs_bucket: str, train_file_path: str, model_name: str):
     x_test = dataframe[2]
     y_test = dataframe[3]
 
-    my_model = neural_net.train(x_train,y_train)
+    my_model = neural_net.train(x_train, y_train)
 
-    y_pred = neural_net.test(my_model,x_test,y_test)
+    y_pred = neural_net.test(my_model, x_test, y_test)
 
     print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
 
