@@ -8,7 +8,6 @@ import sys
 sys.path.append('..')
 from Forecasting import neural_net
 
-# TODO: Change with your project id and gcs bucket name
 project_id = "ada-cloud-compute"
 gcs_bucket = "ada_finance_dataset"
 region = "us-central1"
@@ -42,7 +41,7 @@ def train_model(gcs_bucket: str, train_file_path: str, model_name: str):
 
     dataframe = pd.read_csv(f'gs://{gcs_bucket}/{train_file_path}')
 
-    output_file = f"ai-pipeline-credit-default-train/artefacts/{model_name}"
+    output_file = f"{train_pipeline_name}/artefacts/{model_name}"
 
     # TODO: GET STUFF FROM dataframe
     x_train = dataframe[0]

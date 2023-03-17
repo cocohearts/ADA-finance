@@ -2,17 +2,9 @@ from kfp.dsl import pipeline
 from kfp.v2 import compiler
 from kfp.v2.dsl import component
 from kfp.v2.google.client import AIPlatformClient
-from train_load import project_id, gcs_bucket, region, train_pipeline_name, predict_pipeline_name, pipeline_root_path, model_name
+from train_load import *
 
-# # TODO: Change with your project id and gcs bucket name
-# project_id = "packt-data-eng-on-gcp"
-# gcs_bucket = "packt-data-eng-on-gcp-vertex-ai-pipeline"
-# region = "us-central1"
-# predict_pipeline_name = "ai-pipeline-credit-default-predict"
-# train_pipeline_name = "ai-pipeline-credit-default-train"
-# pipeline_root_path = f"gs://{gcs_bucket}/{predict_pipeline_name}"
-
-# model_name = "cc_default_rf_model.joblib"
+predict_pipeline_name = "S&P_predict_pipeline"
 
 @component(packages_to_install=["google-cloud-storage","pandas","scikit-learn==0.21.3","fsspec","gcsfs"])
 def predict_batch(gcs_bucket: str, predict_file_path: str, model_path: str, output_path: str):
