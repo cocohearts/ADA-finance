@@ -4,7 +4,6 @@ import finnhub
 import time 
 import pandas as pd
 from collections import defaultdict
-from stock import Stock
 from pathlib import Path
 import datetime as dt
 
@@ -13,7 +12,7 @@ finnhub_client = finnhub.Client(api_key="cdq10f2ad3i5u3ridjs0cdq10f2ad3i5u3ridjs
 
 criteria = {'PE': ('<', 10), 'PB': ('<=', 0.7), 'RG5Y': ('>=', 10), 'PS': ('<', 1)}
 
-#don't know what this does. tutorial did it
+# Function from Neural9 Stock Screener Tutorial
 def fixed_delay(call, **kwargs):
     start = time.perf_counter() + 1
     try:

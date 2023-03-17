@@ -15,8 +15,8 @@ def train_hybrid(X1, X2, y):
 
 
 df = load.load()
-X1, y, X_fore_1 = preprocessing.preprocessing(df, 3, 14)
-X2 = preprocessing.make_lags(y, 14).dropna()
+X1, y = preprocessing.preprocessing(df, 3)
+X2 = preprocessing.make_lags(y, 15).dropna()
 
 train_hybrid(X1, X2, y)
 model = pickle.load(open("model.sav", "rb"))

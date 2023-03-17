@@ -15,7 +15,7 @@ class hybrid:
         y_resid = y - self.lr.predict(X1)
         y_resid = y_resid.squeeze()
 
-        y2 = preprocessing.make_multistep_target(y_resid, 7).dropna()
+        y2 = preprocessing.make_multistep_target(y_resid, 10).dropna()
 
         y2, X2 = y2.align(X2, join='inner', axis=0)
 
@@ -33,6 +33,6 @@ class hybrid:
     def predict(self, X1, X2):
         y_pred = self.lr.predict(X1)
         y_pred_2 = self.nn.predict(X2)
-        y_pred_boosted = y_pred_2[:,0] + y_pred[14:]
+        y_pred_boosted = y_pred_2[:,0] + y_pred[15:]
 
         return y_pred_boosted
