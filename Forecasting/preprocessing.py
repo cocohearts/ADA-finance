@@ -1,11 +1,10 @@
-import load
 import matplotlib
 from statsmodels.tsa.deterministic import DeterministicProcess
 import pandas as pd
 
 
 def preprocessing(df, order, fore):
-    price = df["Close"]
+    price = df["Close"][3000:]
 
     trend = price.rolling(
         window=14,
@@ -17,7 +16,7 @@ def preprocessing(df, order, fore):
     # trend.plot(ax=ax, linewidth=3)
     # matplotlib.pyplot.show()
 
-    y = trend.copy()
+    y = price.copy()
     dp = DeterministicProcess(
         index=y.index,
         order=order
@@ -25,7 +24,6 @@ def preprocessing(df, order, fore):
 
     X = dp.in_sample()
     X_fore = dp.out_of_sample(fore)
-
     return X, y, X_fore
 
 def make_lags(ts, lags):
