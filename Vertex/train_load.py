@@ -17,6 +17,7 @@ pipeline_root_path = f"gs://{gcs_bucket}/{train_pipeline_name}"
 
 model_name = "S&Pmodel.joblib"
 
+
 @component(packages_to_install=["google-cloud-storage","pandas","pyarrow"])
 def gcs_load_data(output_gcs_bucket: str) -> str:
     project_id = "ada-cloud-compute"
@@ -44,12 +45,29 @@ def gcs_load_data(output_gcs_bucket: str) -> str:
 
 @component(packages_to_install=["google-cloud-storage","pandas","scikit-learn==0.21.3","fsspec","gcsfs"])
 def train_model(gcs_bucket: str, train_file_path: str, model_name: str):
+    # class TestClass:
+    #     def __init__(self):
+    #         return
+        
+    #     def f(self,x):
+    #         return x+2
+    from sklearn.ensemble import RandomForestClassifier
+
+    
+    my_model=RandomForestClassifier(n_estimators=10)
+
+    project_id = "ada-cloud-compute"
+    gcs_bucket = "ada_finance_dataset"
+    region = "us-central1"
+    train_pipeline_name = "S&P_train_pipeline"
+    pipeline_root_path = f"gs://{gcs_bucket}/{train_pipeline_name}"
+
     from google.cloud import storage
     # from sklearn import metrics
     import joblib
-    import pandas as pd
+    # import pandas as pd
 
-    dataframe = pd.read_csv(f'gs://{gcs_bucket}/{train_file_path}')
+    # dataframe = pd.read_csv(f'gs://{gcs_bucket}/{train_file_path}')
 
     output_file = f"{train_pipeline_name}/artefacts/{model_name}"
 
@@ -65,8 +83,6 @@ def train_model(gcs_bucket: str, train_file_path: str, model_name: str):
 
     # print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
 
-    my_model = lambda x : x+2
-
     joblib.dump(my_model, model_name)
 
     bucket = storage.Client().bucket(gcs_bucket)
@@ -81,9 +97,9 @@ def train_model(gcs_bucket: str, train_file_path: str, model_name: str):
     pipeline_root=pipeline_root_path,
 )
 def pipeline():
-    load_output = gcs_load_data(gcs_bucket)
+    # load_output = gcs_load_data(gcs_bucket)
     # train_model(gcs_bucket, load_output.output, model_name)
-    # train_model(gcs_bucket, "", model_name)
+    train_model(gcs_bucket, "", model_name)
 
 compiler.Compiler().compile(
     pipeline_func=pipeline, package_path=f"{train_pipeline_name}.json"
