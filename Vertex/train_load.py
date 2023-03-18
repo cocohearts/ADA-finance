@@ -2,11 +2,12 @@ from kfp.dsl import pipeline
 from kfp.v2 import compiler
 from kfp.v2.dsl import component
 from kfp.v2.google.client import AIPlatformClient
+import google.cloud.aiplatform as aip
 import pandas as pd
 
-import sys
-sys.path.append('..')
-from Forecasting import neural_net
+# import sys
+# sys.path.append('..')
+# from Forecasting import neural_net
 
 project_id = "ada-cloud-compute"
 gcs_bucket = "ada_finance_dataset"
@@ -18,7 +19,16 @@ model_name = "S&Pmodel.joblib"
 
 @component(packages_to_install=["google-cloud-storage","pandas","pyarrow"])
 def gcs_load_data(output_gcs_bucket: str) -> str:
+    project_id = "ada-cloud-compute"
+    gcs_bucket = "ada_finance_dataset"
+    region = "us-central1"
+    train_pipeline_name = "S&P_train_pipeline"
+    pipeline_root_path = f"gs://{gcs_bucket}/{train_pipeline_name}"
+
+    model_name = "S&Pmodel.joblib"
+
     from google.cloud import storage
+    import pandas as pd
 
     output_file = f"{train_pipeline_name}/artefacts/train.csv"
 
@@ -35,8 +45,8 @@ def gcs_load_data(output_gcs_bucket: str) -> str:
 @component(packages_to_install=["google-cloud-storage","pandas","scikit-learn==0.21.3","fsspec","gcsfs"])
 def train_model(gcs_bucket: str, train_file_path: str, model_name: str):
     from google.cloud import storage
-    from sklearn import metrics
-    from sklearn.externals import joblib
+    # from sklearn import metrics
+    import joblib
     import pandas as pd
 
     dataframe = pd.read_csv(f'gs://{gcs_bucket}/{train_file_path}')
@@ -44,16 +54,18 @@ def train_model(gcs_bucket: str, train_file_path: str, model_name: str):
     output_file = f"{train_pipeline_name}/artefacts/{model_name}"
 
     # TODO: GET STUFF FROM dataframe
-    x_train = dataframe[0]
-    y_train = dataframe[1]
-    x_test = dataframe[2]
-    y_test = dataframe[3]
+    # x_train = dataframe[0]
+    # y_train = dataframe[1]
+    # x_test = dataframe[2]
+    # y_test = dataframe[3]
 
-    my_model = neural_net.train(x_train, y_train)
+    # my_model = neural_net.train(x_train, y_train)
 
-    y_pred = neural_net.test(my_model, x_test, y_test)
+    # y_pred = neural_net.test(my_model, x_test, y_test)
 
-    print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+    # print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+
+    my_model = lambda x : x+2
 
     joblib.dump(my_model, model_name)
 
@@ -70,15 +82,32 @@ def train_model(gcs_bucket: str, train_file_path: str, model_name: str):
 )
 def pipeline():
     load_output = gcs_load_data(gcs_bucket)
-    train_model(gcs_bucket, load_output.output, model_name)
+    # train_model(gcs_bucket, load_output.output, model_name)
+    # train_model(gcs_bucket, "", model_name)
 
 compiler.Compiler().compile(
     pipeline_func=pipeline, package_path=f"{train_pipeline_name}.json"
 )
 
-api_client = AIPlatformClient(project_id=project_id, region=region)
+# api_client = AIPlatformClient(project_id=project_id, region=region)
 
-response = api_client.create_run_from_job_spec(
-    job_spec_path=f"{train_pipeline_name}.json",
-    pipeline_root=pipeline_root_path
+# response = api_client.create_run_from_job_spec(
+#     job_spec_path=f"{train_pipeline_name}.json",
+#     pipeline_root=pipeline_root_path
+# )
+
+aip.init(
+    project=project_id,
+    location=region
 )
+
+job = aip.PipelineJob(
+    display_name=train_pipeline_name,
+    template_path=f"{train_pipeline_name}.json",
+    pipeline_root=pipeline_root_path,
+    # parameter_values={
+    #     'project_id': project_id
+    # }
+)
+
+job.submit()
