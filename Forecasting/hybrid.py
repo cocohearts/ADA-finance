@@ -7,8 +7,11 @@ class hybrid:
     def __init__(self):
         self.lr = None
         self.nn = None
+        self.dp = None
 
-    def train(self, X1, X2, y):
+    def train(self, X1, X2, y, dp):
+        self.dp = dp
+
         self.lr = linear_regression.linearRegression()
         self.lr.train(X1, y)
 
@@ -30,9 +33,10 @@ class hybrid:
 
         self.nn.plot(X2, y2)
 
-    def predict(self, X1, X2):
+    def predict(self, d, X2):
+        X1 = self.dp.range(d[0], d[-1])
         y_pred = self.lr.predict(X1)
         y_pred_2 = self.nn.predict(X2)
-        y_pred_boosted = y_pred_2[:,0] + y_pred[15:]
+        y_pred_boosted = y_pred_2[:, 0] + y_pred[15:]
 
         return y_pred_boosted

@@ -7,15 +7,17 @@ import pandas as pd
 def preprocessing(df, order):
     price = df["Close"][3000:]
 
+    """
     trend = price.rolling(
         window=14,
         center=True,
         min_periods=7
     ).mean()
 
-    # ax = price.plot()
-    # trend.plot(ax=ax, linewidth=3)
-    # matplotlib.pyplot.show()
+    ax = price.plot()
+    trend.plot(ax=ax, linewidth=3)
+    matplotlib.pyplot.show()
+    """
 
     y = price.copy()
     dp = DeterministicProcess(
@@ -24,7 +26,7 @@ def preprocessing(df, order):
     )
 
     X = dp.in_sample()
-    return X, y
+    return X, y, dp
 
 def make_lags(ts, lags):
     return pd.concat(
