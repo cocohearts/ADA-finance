@@ -33,10 +33,20 @@ class hybrid:
 
         self.nn.plot(X2, y2)
 
+    # Function predict
+    # Parameters
+    # d (str): date range to generate prediction for
+    # (First date, last date)
+    # (If one day, pass in just one date)
+    # X2 (Dataframe): Dataframe with index as dates in date range
+    # Columns: y_lag_1, y_lag_2, ... y_lag_15
+    # X2[date][y_lag_3] = Price 3 days before the date
+    # X2[date][y_lag_1] = Price 1 day before the date
+    # Output (Series): Prediction of price for next 5 days
     def predict(self, d, X2):
         X1 = self.dp.range(d[0], d[-1])
         y_pred = self.lr.predict(X1)
         y_pred_2 = self.nn.predict(X2)
-        y_pred_boosted = y_pred_2[:, 0] + y_pred[15:]
+        y_pred_boosted = y_pred_2[:, 0] + y_pred
 
         return y_pred_boosted
