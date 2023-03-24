@@ -5,17 +5,7 @@ from kfp.v2.google.client import AIPlatformClient
 import google.cloud.aiplatform as aip
 import pandas as pd
 
-# import sys
-# sys.path.append('..')
-# from Forecasting import neural_net
-
-project_id = "ada-cloud-compute"
-gcs_bucket = "ada_finance_dataset"
-region = "us-central1"
-train_pipeline_name = "S&P_train_pipeline"
-pipeline_root_path = f"gs://{gcs_bucket}/{train_pipeline_name}"
-
-model_name = "S&Pmodel.joblib"
+from directory_parameters import *
 
 @component(packages_to_install=["google-cloud-storage","pandas","pyarrow"])
 def gcs_load_data(output_gcs_bucket: str) -> str:
@@ -25,7 +15,7 @@ def gcs_load_data(output_gcs_bucket: str) -> str:
     train_pipeline_name = "S&P_train_pipeline"
     pipeline_root_path = f"gs://{gcs_bucket}/{train_pipeline_name}"
 
-    model_name = "S&Pmodel.joblib"
+    model_name = "../Forecasting/model.sav"
 
     from google.cloud import storage
     import pandas as pd
@@ -43,13 +33,13 @@ def gcs_load_data(output_gcs_bucket: str) -> str:
     return output_file
 
 @component(packages_to_install=["google-cloud-storage","pandas","scikit-learn==0.21.3","fsspec","gcsfs"])
-def train_model(gcs_bucket: str, train_file_path: str, model_name: str):
+def train_model(gcs_bucket: str, train_pipeline_name: str, model_name: str):
     from google.cloud import storage
-    # from sklearn import metrics
-    import joblib
-    import pandas as pd
 
-    dataframe = pd.read_csv(f'gs://{gcs_bucket}/{train_file_path}')
+    # gcs_bucket = "ada_finance_dataset"
+    train_pipeline_name = "S&P_train_pipeline"
+
+    # dataframe = pd.read_csv(f'gs://{gcs_bucket}/{train_file_path}')
 
     output_file = f"{train_pipeline_name}/artefacts/{model_name}"
 
@@ -65,9 +55,9 @@ def train_model(gcs_bucket: str, train_file_path: str, model_name: str):
 
     # print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
 
-    my_model = lambda x : x+2
+    # my_model = lambda x : x+2
 
-    joblib.dump(my_model, model_name)
+    # joblib.dump(my_model, model_name)
 
     bucket = storage.Client().bucket(gcs_bucket)
     blob = bucket.blob(output_file)
@@ -81,9 +71,10 @@ def train_model(gcs_bucket: str, train_file_path: str, model_name: str):
     pipeline_root=pipeline_root_path,
 )
 def pipeline():
-    load_output = gcs_load_data(gcs_bucket)
+    # model_name = "../Forecasting/model.sav"
+    # load_output = gcs_load_data(gcs_bucket)
     # train_model(gcs_bucket, load_output.output, model_name)
-    # train_model(gcs_bucket, "", model_name)
+    train_model(gcs_bucket, train_pipeline_name, model_name)
 
 compiler.Compiler().compile(
     pipeline_func=pipeline, package_path=f"{train_pipeline_name}.json"

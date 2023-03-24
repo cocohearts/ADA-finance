@@ -2,23 +2,23 @@ from kfp.dsl import pipeline
 from kfp.v2 import compiler
 from kfp.v2.dsl import component
 from kfp.v2.google.client import AIPlatformClient
-from train_load import *
+
+from directory_parameters import *
 
 predict_pipeline_name = "S&P_predict_pipeline"
 
 @component(packages_to_install=["google-cloud-storage","pandas","scikit-learn==0.21.3","fsspec","gcsfs"])
-def predict_batch(gcs_bucket: str, predict_file_path: str, model_path: str, output_path: str):
+def predict_batch(gcs_bucket: str, predict_file: str, model_path: str, output_path: str, model_name: str, project_id: str):
     from sklearn.externals import joblib
     from google.cloud import storage
     import pandas as pd
 
-    project_id = project_id
     model_local_uri = model_name
     gcs_client = storage.Client(project=project_id)
     bucket = gcs_client.get_bucket(gcs_bucket)
 
     # Load predict data from GCS to pandas
-    dataframe = pd.read_csv(f'gs://{gcs_bucket}/{predict_file_path}')
+    dataframe = pd.read_csv(f'gs://{gcs_bucket}/{predict_file}')
 
     # Load ML model from GCS
     model_file = bucket.blob(model_path)
@@ -41,12 +41,14 @@ def predict_batch(gcs_bucket: str, predict_file_path: str, model_path: str, outp
 )
 def pipeline():
     # TODO
-    predict_file_path = ""
+    predict_file = ""
     predict_batch(
         gcs_bucket,
-        predict_file_path,
+        predict_file,
         f"{train_pipeline_name}/artefacts/{model_name}",
-        f"{predict_pipeline_name}/artefacts/prediction.csv"
+        f"{predict_pipeline_name}/artefacts/prediction.csv",
+        model_name,
+        project_id
     )
 
 compiler.Compiler().compile(
