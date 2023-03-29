@@ -36,7 +36,7 @@ y_fit = pd.Series(y_fit[:, 0][:, 0].astype(float), index=y_fit[:, 1][:, 1])
 print("R^2 score:", r2_score(y[15:], y_fit))
 
 ax = y.plot(color="black")
-# CURRENTLY BROKEN
+# TODO CURRENTLY BROKEN
 # y_fit.plot(ax=ax, color="blue")
 
 plt.show()
