@@ -27,13 +27,13 @@ def read(filename):
     blob = bucket.blob(filename)
 
     with blob.open("r") as f:
-        print(f.read())
+        return f.read()
 
-def read(filename):
-        bucket = storage.Client().bucket(gcs_bucket)
-        blob = bucket.blob(filename)
-        with blob.open("r") as f:
-            return f.read()
+# def read(filename):
+#     bucket = storage.Client().bucket(gcs_bucket)
+#     blob = bucket.blob(filename)
+#     with blob.open("r") as f:
+#         return f.read(output_path)
 
 # def read(filename):
 #     """Write and read a blob from GCS using file-like IO"""
@@ -42,12 +42,15 @@ def read(filename):
 #     blob = bucket.blob(filename)
 #     blob.download_to_filename("mymodel.sav")
 
+# write(predict_file,local_filename)
+
 # write(context_filename1,context_filepath1)
 # write(context_filename2,context_filepath2)
-for context_filename, context_filepath in dependencies:
-    write(context_filename,context_filepath)
+# for context_filename, context_filepath in dependencies:
+#     write(context_filename,context_filepath)
 # read(model_name)
 # upload_model()
+# read(output_path)
 
 # obj = read(context_filename1)
 # print(type(obj))

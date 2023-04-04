@@ -22,7 +22,7 @@ X1, y, dp = preprocessing.preprocessing(df, 3)
 
 X2 = preprocessing.make_lags(y, 15).dropna()
 
-# train_hybrid(X1, X2, y, 5, dp)
+train_hybrid(X1, X2, y, 5, dp)
 model = joblib.load(open("model.sav", "rb"))
 
 # Current prediction
