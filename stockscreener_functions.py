@@ -12,7 +12,7 @@ def insert_metrics(data_dict: dict, criteria: dict, translations: dict):
     return stock_dict
 
 
-def match_conditions(criteria: dict[str: tuple], metrics: dict[str: int]):
+def match_conditions(criteria: dict, metrics: dict):
     for m, v in metrics.items():
         (c, t) = criteria[m]
         if type(v) in (int, float):
