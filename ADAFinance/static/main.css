@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+
 * {
     margin: 0;
     padding: 0;
@@ -6,19 +8,22 @@
 
 body {
     height: 100vh;
-    background: black;
-    font-family: "Roboto", sans-serif;
+    background: #1E5128;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     padding: 25px 5%;
+    padding-left: 10px;
     align-items: center;
-    background: black;
+    background: #191A19;
+    font-size: large;
 }
 
 .logo {
+    display:inline;
     color: #FFF;
     font-size: 22px;
 }
@@ -29,6 +34,7 @@ ul {
 
 ul li {
     display: inline-block;
+    border-right:solid 1px #FFF;
 }
 
 ul li a {
@@ -74,7 +80,7 @@ ul li a:hover::after {
 }
 
 #icon {
-    background-color: #0075FF;
+    background-color: #191A19;
     padding: 5px 7px 3px 7px;
     border-radius: 4px;
     cursor: pointer;
@@ -99,7 +105,7 @@ ul li a:hover::after {
 #icon {
     display: none;
 }
-/* Youtube link */
+
 .link {
     position: fixed;
     background-color: #D12322;
@@ -188,3 +194,278 @@ h4 {
     letter-spacing: 1px; 
 }
 
+/*footer*/
+.footer {
+    position: relative;
+    width: 100%;
+    background: #191A19;
+    min-height: 100px;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .menu {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    flex-wrap: wrap;
+    font-size: small;
+  }
+  
+  .menu__item {
+    list-style: none;
+  }
+  
+  .social-icon__link {
+    font-size: 2rem;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+  }
+  .social-icon__link:hover {
+    transform: translateY(-10px);
+  }
+  
+  .menu__link {
+    font-size: 1.2rem;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+    text-decoration: none;
+    opacity: 0.75;
+    font-weight: 300;
+  }
+  
+  .menu__link:hover {
+    opacity: 1;
+  }
+  
+  .footer p {
+    color: #fff;
+    margin: 15px 0 10px 0;
+    font-size: 1rem;
+    font-weight: 300;
+    border-right:solid #191A19;
+  }
+  
+  .wave {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url("/static/wave.png");
+    background-size: 1000px 100px;
+  }
+  
+  .wave#wave1 {
+    z-index: 1000;
+    opacity: 1;
+    bottom: 0;
+    animation: animateWaves 4s linear infinite;
+  }
+  
+  .wave#wave2 {
+    z-index: 999;
+    opacity: 0.5;
+    bottom: 10px;
+    animation: animate 4s linear infinite !important;
+  }
+  
+  .wave#wave3 {
+    z-index: 1000;
+    opacity: 0.2;
+    bottom: 15px;
+    animation: animateWaves 3s linear infinite;
+  }
+  
+  .wave#wave4 {
+    z-index: 999;
+    opacity: 0.7;
+    bottom: 20px;
+    animation: animate 3s linear infinite;
+  }
+  
+  @keyframes animateWaves {
+    0% {
+      background-position-x: 1000px;
+    }
+    100% {
+      background-positon-x: 0px;
+    }
+  }
+  
+  @keyframes animate {
+    0% {
+      background-position-x: -1000px;
+    }
+    100% {
+      background-positon-x: 0px;
+    }
+  }
+
+/* Tiles */
+.tools{
+  background-color: white;
+  text-align:center;
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.tile{
+  font-size:small;
+  padding:100px;
+  display:block;
+}
+
+.screenertile {
+  display: inline-block;
+  width:500px;
+  height:350px;
+  transition:0.5s;
+  justify-content:center;
+  align-items:center;
+  background-image:url(https://media-cldnry.s-nbcnews.com/image/upload/newscms/2020_12/3279436/200322-new-york-stock-exchange-coronavirus-cs-1144a.jpg);
+  background-position:center;
+  background-size:cover;
+  border-radius:10px;
+  margin: 70px;
+  margin-top: 30px;
+}
+.screenertile div{
+  opacity:0;
+  transform:scale(0);
+  transition:0.5s;
+  font-size:2rem;
+  color:white;
+}
+
+.screenertile:hover {
+  box-shadow:0 0 0 200px rgba(0,0,0,0.9) inset;
+}
+
+.screenertile:hover div{
+  opacity:1;
+  transform:scale(1);
+}
+
+.predictiontile {
+    display: inline-block;
+    width:500px;
+    height:350px;
+    transition:0.5s;
+    justify-content:center;
+    align-items:center;
+    background-image: url(https://cdn.analyticsvidhya.com/wp-content/uploads/2021/07/21894download.jpg);
+    background-position:center;
+    background-size:cover;
+    border-radius:10px;
+    margin: 70px;
+    margin-top: 30px;
+  }
+
+  .predictiontile div{
+    opacity:0;
+    transform:scale(0);
+    transition:0.8s;
+    font-size:2rem;
+    color:white;
+  }
+  
+  .predictiontile:hover {
+    box-shadow:0 0 0 200px rgba(0,0,0,0.9) inset;
+  }
+
+  .predictiontile:hover div{
+    opacity:1;
+    transform:scale(1);
+  }
+  
+  
+/* Heading */
+.heading{
+  text-align: center;
+  padding: 10px;
+  padding-top:50px;
+  background-color: white;
+  font-size: larger;
+}
+
+.subheading{
+  text-align: center;
+  padding: 10px;
+  background-color: white;
+  font-size: larger;
+}
+
+.space {
+  font-size:xx-large;
+}
+
+.btn {
+  background-color: #13aa52;
+  border: 1px solid #13aa52;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  outline: none;
+  outline: 0;
+  padding: 10px 25px;
+  text-align: center;
+  transform: translateY(0);
+  transition: transform 150ms, box-shadow 150ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.btn:hover {
+  box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+  transform: translateY(-2px);
+}
+
+.caption {
+  font-size: 15px;
+  padding: 10px;
+}
+
+.video {
+  position:absolute;
+  top: 103px;
+  left:0;
+  height:103%;
+  width: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center;
+  object-position: center;
+  opacity:35%;
+}
+
+.overlay {
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background: #000000 none repeat scroll 0 0;
+  mix-blend-mode: overlay;
+}
