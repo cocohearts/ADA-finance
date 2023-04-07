@@ -1,80 +1,63 @@
-from queue import SimpleQueue, Empty
-import stock as Stock
-import finnhub
-import time 
-import pandas as pd
-from collections import defaultdict
+import stockscreener_functions
 from stock import Stock
-from pathlib import Path
-import datetime as dt
+import finnhub
+import pandas as pd
+import time
+
+
+criteria = {'PE': ('<', 10), 'PB': ('<=', 0.7), 'RG5Y': ('>=', 10), 'PS': ('<', 1), 'PM5Y': ('>', 30),
+            'ROAE': ('>', 10), 'DE': ('<', 50), 'CR': ('>', 1.5)}
+translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
+                'PM5Y': 'netProfitMargin5Y', 'ROAE': 'roae5Y', 'DE': 'totalDebt/totalEquityAnnual',
+                'CR': 'currentRatioAnnual'}
+
+
+def get_metrics(c):
+    symbol = c.symbol
+    try:
+        data = finnhub_client.company_basic_financials(symbol, metric='all')
+    except finnhub.FinnhubAPIException:
+        print("sleeping")
+        time.sleep(60)
+        data = finnhub_client.company_basic_financials(symbol, metric='all')
+
+    c.metrics = stockscreener_functions.insert_metrics(data, criteria, translations)
+    return c
+
+
+def find_matches(stocks, criteria):
+    match = []
+    for c in stocks:
+        symbol = c.symbol
+        if stockscreener_functions.match_conditions(criteria, c.metrics):
+            try:
+                profile = finnhub_client.company_profile2(symbol=symbol)
+            except finnhub.FinnhubAPIException:
+                print("sleeping")
+                time.sleep(60)
+                profile = finnhub_client.company_profile2(symbol=symbol)
+
+            c.industry = profile["finnhubIndustry"]
+            c.market_cap = profile["marketCapitalization"]
+
+            try:
+                c.price = finnhub_client.quote(symbol=symbol)
+            except finnhub.FinnhubAPIException:
+                print("sleeping")
+                time.sleep(60)
+                c.price = finnhub_client.company_profile2
+
+            match.append(c)
+    return match
 
 
 finnhub_client = finnhub.Client(api_key="cdq10f2ad3i5u3ridjs0cdq10f2ad3i5u3ridjsg")
+sp500 = pd.read_html('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')[0][:10]
+companies = [Stock(symbol=sp500["Symbol"][i], name=sp500["Security"][i]) for i in range(len(sp500))]
+for i in range(len(companies)):
+    companies[i] = get_metrics(companies[i])
+# print(companies)
 
-criteria = {'PE': ('<', 10), 'PB': ('<=', 0.7), 'RG5Y': ('>=', 10), 'PS': ('<', 1)}
-
-#don't know what this does. tutorial did it
-def fixed_delay(call, **kwargs):
-    start = time.perf_counter() + 1
-    try:
-        ret = call(**kwargs)
-    except finnhub.FinnhubAPIException:
-        time.sleep(60)
-        ret = call(**kwargs)
-    diff = start - time.perf_counter()
-    if diff > 0:
-        time.sleep(diff)
-    return ret
-
-
-def insert_metrics(data_dict: dict):
-    stock_dict = dict()
-    try:
-        stock_dict['PE'] = data_dict['metric']['peNormalizedAnnual']
-        stock_dict['PB'] = data_dict['metric']['pbAnnual']
-        stock_dict['RG5Y'] = data_dict['metric']['revenueGrowth5Y']
-        stock_dict['PS'] = data_dict['metric']['psTTM']
-    except KeyError:
-        pass
-    return stock_dict
-
-
-def match_conditions(metrics: dict[str: int]):
-    count = 0
-    for m, v in metrics.items():
-        c, t = criteria[m]
-        if type(v) in (int, float):
-            if c == '>':
-                if v > t:
-                    count += 1
-            elif c == '<':
-                if v < t:
-                    count += 1
-            elif c == '>=':
-                if v >= t:
-                    count += 1
-            elif c == '<=':
-                if v <= t:
-                    count += 1
-    return count == len(criteria) - 1
-
-def create_file_path(file_name: str, folder_path: Path):
-    c_time = dt.datetime.now()
-    destination = folder_path / f"{file_name}.xlsx"
-    return destination
-
-
-def write_to_excel_and_save(location, u_stocks_data):
-    excel_data = defaultdict(list)
-    current = dt.datetime.now()
-    today = f"{current.month}/{current.day}/{current.year}"
-    for stocks in u_stocks_data:
-        excel_data['Ticker'].append(stocks.symbol)
-        excel_data['Name'].append(stocks.name)
-        excel_data['Current Price'].append(stocks.c_price)
-        excel_data['Exchange'].append(stocks.exchange)
-        excel_data['Industry'].append(stocks.industry)
-        excel_data["Company's website"].append(stocks.web_url)
-        excel_data["Date"].append(today)
-    result_df = pd.DataFrame(excel_data)
-    result_df.to_excel(location)
+matches = find_matches(companies, criteria)
+# for c in matches:
+#   print(c.symbol, c.name, c.metrics, c.industry, c.market_cap, c.price)

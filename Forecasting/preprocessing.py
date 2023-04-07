@@ -1,20 +1,23 @@
 import matplotlib
 from statsmodels.tsa.deterministic import DeterministicProcess
+from sklearn.preprocessing import PolynomialFeatures
 import pandas as pd
 
 
-def preprocessing(df, order, fore):
+def preprocessing(df, order):
     price = df["Close"][3000:]
 
+    """
     trend = price.rolling(
         window=14,
         center=True,
         min_periods=7
     ).mean()
 
-    # ax = price.plot()
-    # trend.plot(ax=ax, linewidth=3)
-    # matplotlib.pyplot.show()
+    ax = price.plot()
+    trend.plot(ax=ax, linewidth=3)
+    matplotlib.pyplot.show()
+    """
 
     y = price.copy()
     dp = DeterministicProcess(
@@ -23,8 +26,7 @@ def preprocessing(df, order, fore):
     )
 
     X = dp.in_sample()
-    X_fore = dp.out_of_sample(fore)
-    return X, y, X_fore
+    return X, y, dp
 
 def make_lags(ts, lags):
     return pd.concat(

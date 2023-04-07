@@ -2,40 +2,32 @@ from kfp.dsl import pipeline
 from kfp.v2 import compiler
 from kfp.v2.dsl import component
 from kfp.v2.google.client import AIPlatformClient
-from train_load import project_id, gcs_bucket, region, train_pipeline_name, predict_pipeline_name, pipeline_root_path, model_name
+from directory_parameters import *
+from write_data import *
+from time import sleep
+import yfinance as yf
+import numpy as np
+from datetime import datetime
 
-# # TODO: Change with your project id and gcs bucket name
-# project_id = "packt-data-eng-on-gcp"
-# gcs_bucket = "packt-data-eng-on-gcp-vertex-ai-pipeline"
-# region = "us-central1"
-# predict_pipeline_name = "ai-pipeline-credit-default-predict"
-# train_pipeline_name = "ai-pipeline-credit-default-train"
-# pipeline_root_path = f"gs://{gcs_bucket}/{predict_pipeline_name}"
-
-# model_name = "cc_default_rf_model.joblib"
-
-@component(packages_to_install=["google-cloud-storage","pandas","scikit-learn==0.21.3","fsspec","gcsfs"])
-def predict_batch(gcs_bucket: str, predict_file_path: str, model_path: str, output_path: str):
-    from sklearn.externals import joblib
+@component(packages_to_install=["google-cloud-storage","numpy","pandas==1.2.3","scikit-learn","fsspec","gcsfs","matplotlib","statsmodels","datetime","joblib"])
+def predict_batch(gcs_bucket: str, date: str, prediction_data: list, output_path: str, model_name: str):
+    import joblib
     from google.cloud import storage
     import pandas as pd
+    import numpy as np
 
-    project_id = project_id
-    model_local_uri = model_name
-    gcs_client = storage.Client(project=project_id)
-    bucket = gcs_client.get_bucket(gcs_bucket)
-
-    # Load predict data from GCS to pandas
-    dataframe = pd.read_csv(f'gs://{gcs_bucket}/{predict_file_path}')
+    bucket = storage.Client().bucket(gcs_bucket)
 
     # Load ML model from GCS
-    model_file = bucket.blob(model_path)
-    model_file.download_to_filename(model_local_uri)
-    loaded_model = joblib.load(model_local_uri)
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(gcs_bucket)
+    model_file = bucket.blob(model_name)
+    model_file.download_to_filename(model_name)
+    loaded_model = joblib.load(model_name)
 
-    # Predict
-    prediction = loaded_model.predict(dataframe)
-    prediction = pd.DataFrame(prediction)
+    # Predict for the next 5 days
+    prediction = loaded_model.predict([pd.to_datetime(date)],np.array(prediction_data).reshape(1,-1))
+    prediction = pd.DataFrame(prediction[0])
 
     # Store prediction to GCS
     bucket.blob(output_path).upload_from_string(prediction.to_csv(index=False), 'text/csv')
@@ -47,25 +39,35 @@ def predict_batch(gcs_bucket: str, predict_file_path: str, model_path: str, outp
     description="Prediction Pipeline",
     pipeline_root=pipeline_root_path,
 )
-def pipeline():
-    # TODO
-    predict_file_path = ""
-    predict_batch(
-        gcs_bucket,
-        predict_file_path,
-        f"{train_pipeline_name}/artefacts/{model_name}",
-        f"{predict_pipeline_name}/artefacts/prediction.csv"
+
+def call_model():
+    sp500_history = yf.Ticker('^GSPC').history(period='15d')['Close']
+    prediction_data = list(sp500_history)
+
+    date = str(datetime.now().date())
+
+    def pipeline():
+        predict_batch(
+            gcs_bucket,
+            date,
+            prediction_data,
+            output_path,
+            model_name,
+        )
+
+    compiler.Compiler().compile(
+        pipeline_func=pipeline, package_path=f"{predict_pipeline_name}.json"
     )
+    
+    api_client = AIPlatformClient(project_id=project_id, region=region)
 
-compiler.Compiler().compile(
-    pipeline_func=pipeline, package_path=f"{predict_pipeline_name}.json"
-)
+    response = api_client.create_run_from_job_spec(
+        job_spec_path=f"{predict_pipeline_name}.json",
+        pipeline_root=pipeline_root_path,
+        enable_caching=False
+    )
+    sleep(360)
+    with open("prediction.txt","w") as f:
+        f.write(read(output_path))
 
-api_client = AIPlatformClient(project_id=project_id, region=region)
-
-response = api_client.create_run_from_job_spec(
-    job_spec_path=f"{predict_pipeline_name}.json",
-    pipeline_root=pipeline_root_path
-)
-
-print(response)
+call_model()
