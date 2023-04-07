@@ -9,14 +9,27 @@ import yfinance as yf
 import numpy as np
 from datetime import datetime
 
+
+"""
+DOCUMENTATION
+
+import * from this file
+
+execute pipeline_setup.py
+"""
+
 @component(packages_to_install=["google-cloud-storage","numpy","pandas==1.2.3","scikit-learn","fsspec","gcsfs","matplotlib","statsmodels","datetime","joblib"])
-def predict_batch(gcs_bucket: str, date: str, prediction_data: list, output_path: str, model_name: str):
+def predict_batch(gcs_bucket: str, date: str, prediction_data: list, output_path: str, model_name: str, context_filenames: list):
     import joblib
     from google.cloud import storage
     import pandas as pd
     import numpy as np
 
     bucket = storage.Client().bucket(gcs_bucket)
+    
+    for context_filename, context_filepath in context_filenames:
+        blob = bucket.blob(context_filename)
+        blob.download_to_filename(context_filename)
 
     # Load ML model from GCS
     storage_client = storage.Client()
@@ -34,31 +47,10 @@ def predict_batch(gcs_bucket: str, date: str, prediction_data: list, output_path
 
     print(f"Prediction file path: {output_path}")
 
-@pipeline(
-    name="predictionpipeline",
-    description="Prediction Pipeline",
-    pipeline_root=pipeline_root_path,
-)
+if __name__=="__main__":
+    exec(open("pipeline_setup.py").read())
 
 def call_model():
-    sp500_history = yf.Ticker('^GSPC').history(period='15d')['Close']
-    prediction_data = list(sp500_history)
-
-    date = str(datetime.now().date())
-
-    def pipeline():
-        predict_batch(
-            gcs_bucket,
-            date,
-            prediction_data,
-            output_path,
-            model_name,
-        )
-
-    compiler.Compiler().compile(
-        pipeline_func=pipeline, package_path=f"{predict_pipeline_name}.json"
-    )
-    
     api_client = AIPlatformClient(project_id=project_id, region=region)
 
     response = api_client.create_run_from_job_spec(
@@ -70,4 +62,8 @@ def call_model():
     with open("prediction.txt","w") as f:
         f.write(read(output_path))
 
-call_model()
+# def pull_prediction():
+
+
+if __name__=="__main__":
+    call_model()
