@@ -1,6 +1,6 @@
 class Stock:
 
-    def __init__(self, symbol='', name='', c_price=0, exchange='', industry='', market_cap=0, metrics=None):
+    def __init__(self, symbol='', name='', c_price=0, industry='', market_cap=0, metrics=None):
         self.symbol = symbol
         self.name = name
         self.c_price = c_price
