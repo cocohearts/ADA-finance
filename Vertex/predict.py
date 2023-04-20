@@ -8,6 +8,7 @@ from time import sleep
 import yfinance as yf
 import numpy as np
 from datetime import datetime
+import pandas as pd
 
 
 """
@@ -16,6 +17,8 @@ DOCUMENTATION
 import * from this file
 
 execute pipeline_setup.py
+
+run call_model
 """
 
 @component(packages_to_install=["google-cloud-storage","numpy","pandas==1.2.3","scikit-learn","fsspec","gcsfs","matplotlib","statsmodels","datetime","joblib"])
@@ -47,9 +50,6 @@ def predict_batch(gcs_bucket: str, date: str, prediction_data: list, output_path
 
     print(f"Prediction file path: {output_path}")
 
-if __name__=="__main__":
-    exec(open("pipeline_setup.py").read())
-
 def call_model():
     api_client = AIPlatformClient(project_id=project_id, region=region)
 
@@ -62,8 +62,10 @@ def call_model():
     with open("prediction.txt","w") as f:
         f.write(read(output_path))
 
-# def pull_prediction():
+def pull_prediction():
+    dataframe = pd.read_csv(filepath_or_buffer="prediction.txt")
 
 
 if __name__=="__main__":
+    exec(open("pipeline_setup.py").read())
     call_model()
