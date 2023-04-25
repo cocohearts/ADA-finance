@@ -1,4 +1,4 @@
-import stockscreener_functions
+import StockScreener.stockscreener_functions
 import finnhub
 import time
 import pickle
@@ -9,9 +9,12 @@ criteria = {'PE': ('<', 10), 'PB': ('<', 0.7), 'RG5Y': ('>', 10), 'PS': ('<', 1)
 # (For demo) criteria = {'PE': ('<', 10), 'PB': ('<', 0.7)}
 
 # Values are terms from Finnhub API documentation - see pins in Discord
+# translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
+#                 'PM5Y': 'netProfitMargin5Y', 'ROAE': 'roae5Y', 'DE': 'totalDebt/totalEquityAnnual',
+#                 'CR': 'currentRatioAnnual'}
+
 translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
-                'PM5Y': 'netProfitMargin5Y', 'ROAE': 'roae5Y', 'DE': 'totalDebt/totalEquityAnnual',
-                'CR': 'currentRatioAnnual'}
+                'DE': 'Debt/EquityAnnual','CR': 'currentRatio'}
 
 finnhub_client = finnhub.Client(api_key="cdq10f2ad3i5u3ridjs0cdq10f2ad3i5u3ridjsg")
 
@@ -24,15 +27,16 @@ def get_metrics(c):
         time.sleep(60)
         data = finnhub_client.company_basic_financials(symbol, metric='all')
 
-    c.metrics = stockscreener_functions.insert_metrics(data, criteria, translations)
+    c.metrics = StockScreener.stockscreener_functions.insert_metrics(data, criteria, translations)
     return c
 
 
 def find_matches(stocks, criteria):
     match = []
+    print("finding matches")
     for c in stocks:
         symbol = c.symbol
-        if stockscreener_functions.match_conditions(criteria, c.metrics):
+        if StockScreener.stockscreener_functions.match_conditions(criteria, c.metrics):
             try:
                 profile = finnhub_client.company_profile2(symbol=symbol)
             except finnhub.FinnhubAPIException:

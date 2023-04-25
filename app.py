@@ -2,7 +2,9 @@ from re import template
 from flask import Flask, render_template, request
 # from flask_crontab import Crontab
 from Vertex.predict import *
+from StockScreener.stock import *
 from StockScreener.load_metrics import *
+from StockScreener.stockscreener import *
 
 app = Flask(__name__)
 # crontab = Crontab(app)
@@ -19,17 +21,22 @@ def about():
 def screener():
     return render_template('screener.html.j2',items = translations.keys(), translations = translations)
 
-@app.route('/screener_results')
+@app.route('/screener_results', methods = ['POST'])
 def screener_results():
     criteria = {}
     for item in translations:
         item_value = request.values.get(item+"_val")
+        item_value = int(item_value)
         item_dir = request.values.get(item+"_dir")
         criteria[item] = (item_dir,item_value)
     
-    companies = pickle.load(open("../StockScreener/companies.p", "rb"))
+    companies = pickle.load(open("companies.p", "rb"))
+    print(companies[0].metrics)
+    # companies = {}
 
     matches = find_matches(companies, criteria)
+    print(len(matches))
+    print(criteria)
 
     return render_template('screener_results.html.j2',items = translations.keys(), translations = translations, matches=matches)
 
