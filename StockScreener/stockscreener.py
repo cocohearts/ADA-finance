@@ -15,7 +15,6 @@ translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGr
 
 finnhub_client = finnhub.Client(api_key="cdq10f2ad3i5u3ridjs0cdq10f2ad3i5u3ridjsg")
 
-
 def get_metrics(c):
     symbol = c.symbol
     try:
@@ -54,22 +53,6 @@ def find_matches(stocks, criteria):
             match.append(c)
     return match
 
-# This part is the part that takes five minutes to run
-""" 
-sp500 = pd.read_html('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')[0]
-companies = [Stock(symbol=sp500["Symbol"][i], name=sp500["Security"][i]) for i in range(len(sp500))]
-for i in range(len(companies)):
-    if i % 10 == 0:
-        print(f"Getting metrics for {i}th company")
-    companies[i] = get_metrics(companies[i])
-print("Done getting metrics") """
 
-# TODO Alex Zhao store the data in companies array (type: Stock) somehow, right now it's being pickled into "companies.p"
-
-# pickle.dump(companies, open("companies.p", "wb"))
-
-
-companies = pickle.load(open("companies.p", "rb"))
-matches = find_matches(companies, criteria)
-for c in matches:
-    print(c.symbol, c.name, c.metrics, c.industry, c.market_cap, c.price)
+# companies = pickle.load(open("companies.p", "rb"))
+# matches = find_matches(companies, criteria)
