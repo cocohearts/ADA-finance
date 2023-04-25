@@ -5,7 +5,7 @@ from Vertex.predict import *
 from StockScreener.load_metrics import *
 
 app = Flask(__name__)
-crontab = Crontab(app)
+# crontab = Crontab(app)
 
 @app.route('/')
 def main():
