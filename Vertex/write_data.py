@@ -1,6 +1,6 @@
 from google.cloud import storage
 # from Forecasting.preprocessing import preprocessing
-from directory_parameters import *
+from Vertex.directory_parameters import *
 
 local_filename = "test.txt"
 model_blobname = model_name

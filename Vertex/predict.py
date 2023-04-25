@@ -2,8 +2,8 @@ from kfp.dsl import pipeline
 from kfp.v2 import compiler
 from kfp.v2.dsl import component
 from kfp.v2.google.client import AIPlatformClient
-from directory_parameters import *
-from write_data import *
+from Vertex.directory_parameters import *
+from Vertex.write_data import *
 from time import sleep
 import yfinance as yf
 import numpy as np
