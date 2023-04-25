@@ -1,7 +1,5 @@
 import stockscreener_functions
-from stock import Stock
 import finnhub
-import pandas as pd
 import time
 import pickle
 
