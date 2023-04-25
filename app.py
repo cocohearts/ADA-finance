@@ -1,13 +1,11 @@
 from re import template
 from flask import Flask, render_template, request
-# from flask_crontab import Crontab
-from Vertex.predict import *
 from StockScreener.stock import *
-from StockScreener.load_metrics import *
 from StockScreener.stockscreener import *
+import pickle
+import pandas as pd
 
 app = Flask(__name__)
-# crontab = Crontab(app)
 
 @app.route('/')
 def main():
@@ -26,7 +24,7 @@ def screener_results():
     criteria = {}
     for item in translations:
         item_value = request.values.get(item+"_val")
-        item_value = int(item_value)
+        item_value = float(item_value)
         item_dir = request.values.get(item+"_dir")
         criteria[item] = (item_dir,item_value)
     
@@ -42,12 +40,7 @@ def screener_results():
 
 @app.route('/forecast')
 def forecast():
-    return render_template('forecast.html.j2')
+    dataframe = pd.read_csv(filepath_or_buffer="prediction.txt")
+    prediction = {}
 
-# @crontab.job(minute="0", hour="0")
-# def my_scheduled_job():
-#     exec(open("../Vertex/pipeline_setup.py").read())
-#     # for prediction
-#     call_model()
-#     # for stockscreener
-#     load_metrics()
+    return render_template('forecast.html.j2',prediction = dataframe)

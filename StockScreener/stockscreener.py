@@ -1,7 +1,5 @@
-import StockScreener.stockscreener_functions
 import finnhub
 import time
-import pickle
 
 # Feel free to add more metrics if you want
 criteria = {'PE': ('<', 10), 'PB': ('<', 0.7), 'RG5Y': ('>', 10), 'PS': ('<', 1), 'PM5Y': ('>', 30),
@@ -27,16 +25,15 @@ def get_metrics(c):
         time.sleep(60)
         data = finnhub_client.company_basic_financials(symbol, metric='all')
 
-    c.metrics = StockScreener.stockscreener_functions.insert_metrics(data, criteria, translations)
+    c.metrics = insert_metrics(data, criteria, translations)
     return c
-
 
 def find_matches(stocks, criteria):
     match = []
     print("finding matches")
     for c in stocks:
         symbol = c.symbol
-        if StockScreener.stockscreener_functions.match_conditions(criteria, c.metrics):
+        if match_conditions(criteria, c.metrics):
             try:
                 profile = finnhub_client.company_profile2(symbol=symbol)
             except finnhub.FinnhubAPIException:
@@ -58,5 +55,26 @@ def find_matches(stocks, criteria):
     return match
 
 
-# companies = pickle.load(open("companies.p", "rb"))
-# matches = find_matches(companies, criteria)
+def insert_metrics(data_dict: dict, criteria: dict, translations: dict):
+    stock_dict = dict()
+    for c in criteria.keys():
+        try:
+            stock_dict[c] = data_dict['metric'][translations[c]]
+        except KeyError:
+            pass
+    return stock_dict
+
+def match_conditions(criteria: dict, metrics: dict):
+    for m in criteria.keys():
+        if m not in metrics.keys():
+            return False
+        v = metrics[m]
+        (c, t) = criteria[m]
+        if type(v) in (int, float):
+            if c == '>':
+                if not v > t:
+                    return False
+            elif c == '<':
+                if not v < t:
+                    return False
+    return True

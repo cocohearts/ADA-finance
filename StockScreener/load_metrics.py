@@ -1,6 +1,7 @@
 import pandas as pd
 from StockScreener.stock import *
 from StockScreener.stockscreener import *
+import pickle
 
 def load_metrics():
     sp500 = pd.read_html('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')[0]
@@ -12,6 +13,3 @@ def load_metrics():
     print("Done getting metrics")
 
     pickle.dump(companies, open("companies.p", "wb"))
-
-if __name__ == "__main__":
-    load_metrics()

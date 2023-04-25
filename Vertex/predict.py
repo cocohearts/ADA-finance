@@ -62,10 +62,6 @@ def call_model():
     with open("prediction.txt","w") as f:
         f.write(read(output_path))
 
-def pull_prediction():
-    dataframe = pd.read_csv(filepath_or_buffer="prediction.txt")
-
-
 if __name__=="__main__":
     exec(open("pipeline_setup.py").read())
     call_model()
