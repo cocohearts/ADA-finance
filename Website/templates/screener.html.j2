@@ -12,6 +12,15 @@
         </ul>
     </nav>
     <main id="homeheader">
-        screener
+        <form action="/screener_results" method="POST">
+            {% for criteria_name in items %}
+                <input type="number" id="{{criteria_name}}_val" name="{{criteria_name}}_val">
+                <input type="radio" id="{{criteria_name}}_greater" name="{{criteria_name}}_dir" value=">">
+                <label for="{{criteria_name}}_greater"> > </label>
+                <input type="radio" id="{{criteria_name}}_lesser" name="{{criteria_name}}_dir" value="<">
+                <label for="{{criteria_name}}_lesser"> < </label>
+            {% endfor %}
+            <input type="submit" value="Submit">
+        </form>
     </main>
 {% endblock %}
