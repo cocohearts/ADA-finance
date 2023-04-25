@@ -25,9 +25,5 @@ class linearRegression:
         print("Trained linear regression in", (datetime.datetime.now() - now).microseconds / 1000, "milliseconds")
         print("MSE of LR: ", mean_squared_error(y, y_pred))
 
-        # filename = "lin_reg.sav"
-        # pickle.dump(self.lin_reg, open(filename, "wb"))
-
     def predict(self, X):
-        # filename = "lin_reg.sav"
         return pd.Series(self.lin_reg.predict(X), index=X.index)
