@@ -1,6 +1,6 @@
 from re import template
 from flask import Flask, render_template, request
-from flask_crontab import Crontab
+# from flask_crontab import Crontab
 from Vertex.predict import *
 from StockScreener.load_metrics import *
 
@@ -37,10 +37,10 @@ def screener_results():
 def forecast():
     return render_template('forecast.html.j2')
 
-@crontab.job(minute="0", hour="0")
-def my_scheduled_job():
-    exec(open("../Vertex/pipeline_setup.py").read())
-    # for prediction
-    call_model()
-    # for stockscreener
-    load_metrics()
+# @crontab.job(minute="0", hour="0")
+# def my_scheduled_job():
+#     exec(open("../Vertex/pipeline_setup.py").read())
+#     # for prediction
+#     call_model()
+#     # for stockscreener
+#     load_metrics()
