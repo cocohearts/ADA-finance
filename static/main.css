@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
-
+/* TODO scroll animations needed */
 * {
     margin: 0;
     padding: 0;
@@ -7,9 +7,32 @@
 }
 
 body {
-    height: 100vh;
     background: #1E5128;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#results_table {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+}
+
+#screener_form {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: xx-large;
+}
+
+input {
+  margin: 0.3em;
+  font-size: xx-large;
+  text-align: center;
+}
+
+label {
+  color: white;
 }
 
 nav {
@@ -18,8 +41,12 @@ nav {
     padding: 25px 5%;
     padding-left: 10px;
     align-items: center;
-    background: #191A19;
+    background: #0d0d0d;
     font-size: large;
+    width:100%;
+    position: fixed;
+    transition: all 300ms ease;
+    z-index: 10;
 }
 
 .logo {
@@ -139,10 +166,10 @@ ul li a:hover::after {
     ul {
         position: absolute;
         width: 100%;
-        height: calc(100vh - 71px);
+        /* height: calc(100vh - 71px); */
         background-color: #18283B;
-        left: 0;
-        top: 0;
+        /* left: 0;
+        top: 0; */
         text-align: center;
         display: none;
         margin-top: 71px;
@@ -254,45 +281,7 @@ h4 {
     font-weight: 300;
     border-right:solid #191A19;
   }
-  
-  .wave {
-    position: absolute;
-    top: -100px;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background: url("/static/wave.png");
-    background-size: 1000px 100px;
-  }
-  
-  .wave#wave1 {
-    z-index: 1000;
-    opacity: 1;
-    bottom: 0;
-    animation: animateWaves 4s linear infinite;
-  }
-  
-  .wave#wave2 {
-    z-index: 999;
-    opacity: 0.5;
-    bottom: 10px;
-    animation: animate 4s linear infinite !important;
-  }
-  
-  .wave#wave3 {
-    z-index: 1000;
-    opacity: 0.2;
-    bottom: 15px;
-    animation: animateWaves 3s linear infinite;
-  }
-  
-  .wave#wave4 {
-    z-index: 999;
-    opacity: 0.7;
-    bottom: 20px;
-    animation: animate 3s linear infinite;
-  }
-  
+
   @keyframes animateWaves {
     0% {
       background-position-x: 1000px;
@@ -313,9 +302,9 @@ h4 {
 
 /* Tiles */
 .tools{
-  background-color: white;
+  background-color: whitesmoke;
   text-align:center;
-  display:inline-flex;
+  display:flex;
   justify-content:center;
   align-items:center;
 }
@@ -328,8 +317,7 @@ h4 {
 
 .screenertile {
   display: inline-block;
-  width:500px;
-  height:350px;
+  box-sizing: content-box;
   transition:0.5s;
   justify-content:center;
   align-items:center;
@@ -337,7 +325,7 @@ h4 {
   background-position:center;
   background-size:cover;
   border-radius:10px;
-  margin: 70px;
+  margin: 30px;
   margin-top: 30px;
 }
 .screenertile div{
@@ -356,53 +344,20 @@ h4 {
   opacity:1;
   transform:scale(1);
 }
-
-.predictiontile {
-    display: inline-block;
-    width:500px;
-    height:350px;
-    transition:0.5s;
-    justify-content:center;
-    align-items:center;
-    background-image: url(https://cdn.analyticsvidhya.com/wp-content/uploads/2021/07/21894download.jpg);
-    background-position:center;
-    background-size:cover;
-    border-radius:10px;
-    margin: 70px;
-    margin-top: 30px;
-  }
-
-  .predictiontile div{
-    opacity:0;
-    transform:scale(0);
-    transition:0.8s;
-    font-size:2rem;
-    color:white;
-  }
-  
-  .predictiontile:hover {
-    box-shadow:0 0 0 200px rgba(0,0,0,0.9) inset;
-  }
-
-  .predictiontile:hover div{
-    opacity:1;
-    transform:scale(1);
-  }
-  
   
 /* Heading */
 .heading{
   text-align: center;
   padding: 10px;
   padding-top:50px;
-  background-color: white;
+  background-color: whitesmoke;
   font-size: larger;
 }
 
 .subheading{
   text-align: center;
   padding: 10px;
-  background-color: white;
+  background-color: whitesmoke;
   font-size: larger;
 }
 
@@ -446,13 +401,14 @@ h4 {
   position:absolute;
   top: 103px;
   left:0;
-  height:103%;
+  height:85%;
   width: 100%;
   -o-object-fit: cover;
   object-fit: cover;
   -o-object-position: center;
   object-position: center;
   opacity:35%;
+  background-color: #1E5128;
 }
 
 .overlay {
@@ -468,4 +424,46 @@ h4 {
   justify-content: center;
   background: #000000 none repeat scroll 0 0;
   mix-blend-mode: overlay;
+}
+
+.background {
+  background:whitesmoke;
+}
+
+.about {
+  align-items: left;
+  width: 80%;
+}
+
+.container {
+  width: 100%;
+  background:whitesmoke;
+  width:auto;
+  height:auto;
+  border-top: #1E5128 dotted 5px;
+  overflow:auto; 
+}
+
+.child {
+  background:whitesmoke;
+  float: left;
+  padding:50px;
+  line-height: 200%;
+  font-size: larger;
+}
+
+.title {
+  text-align: center;
+  background-color: whitesmoke;
+  font-size: xx-large;
+  padding: 10px;
+  padding-top:50px;
+  width:20%;
+  height:100%;
+  text-decoration: underline #1E5128 3px;
+  line-height: 200%;
+}
+
+.aboutus {
+  background: whitesmoke;
 }

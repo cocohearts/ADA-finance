@@ -1,0 +1,79 @@
+{% extends "base.html.j2" %}
+
+{% block body %}
+<script>
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = function() {
+    var currentScrollPos = window.pageYOffset;
+    if (prevScrollpos > currentScrollPos) {
+        document.getElementById("navbar").style.top = "0";
+    } else {
+        document.getElementById("navbar").style.top = "-105px";
+    }
+    prevScrollpos = currentScrollPos;
+    }
+</script>
+    <nav id = "navbar">
+        <img class="logo" src="static/Black Logo.png" alt="logo" width="250">
+        <input type="checkbox" id="checkbox">
+        <ul>
+            <li><a href="." class="active">Home</a></li>
+            <li><a href="forecast">Price Prediction</a></li>
+            <li><a href="screener">Stock Screener</a></li>
+        </ul>
+    </nav>
+    <main id="homeheader" class="overlay">
+        <h1>Tools of the trade tailored to you</h1>
+        <h4>Our free, innovative trading tools accommodate every kind of investor</h4>
+    </main>
+    <video autoplay muted loop class="video">
+        <source src="static/home.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="heading"><h3>Explore our Tools</h3></div>
+    <div class="subheading">Learn how our financial programs can help power your market decisions.</div>
+    <div class="tools">
+        <ul class="tools">
+            <li class="screenertile" style="background-image: url('https://media-cldnry.s-nbcnews.com/image/upload/newscms/2020_12/3279436/200322-new-york-stock-exchange-coronavirus-cs-1144a.jpg');">
+                <div class="tile">
+                    Stock Screener
+                    <p class="caption">Stock screener for investors and traders, financial visualizations.</p>
+                    <form action="/screener">
+                        <p><button class="btn">Learn More</button></p>
+                    </form>
+                </div>
+            </li>
+            <li class="screenertile" style="background-image: url('https://cdn.analyticsvidhya.com/wp-content/uploads/2021/07/21894download.jpg');">
+                <div class="tile">
+                    Stock Prediction
+                    <p class="caption">Stay ahead of the market with a program built on 30+ years of historical data.</p>
+                    <p><button class="btn">Learn More</button></p>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="aboutus">
+        <div class="background container">
+            <div class = "title child">About Us</div>
+            <div class = "about child">ADA Finance is an application that provides innovative trading tools to investors and traders of all levels to help people make informed investment decisions by providing them with the most accurate market information and predictions. Created by Lakeside School students, Alex Zhao, Daniel Wang, and Alvin Zhang for their CS 5 class project, this application strives to provide investors with the resources and support they need to achieve their financial goals.</div>
+        </div>
+        <div class = "heading child">Our Team</div>
+    </div>
+    <footer class="footer">
+        {# <div class="waves">
+        <div class="wave" id="wave1"></div>
+        <div class="wave" id="wave2"></div>
+        <div class="wave" id="wave3"></div>
+        <div class="wave" id="wave4"></div>
+        </div> #}
+        {# <ul class="menu">
+            <li class="menu__item"><a class="menu__link" href="#">Home</a></li>
+            <li class="menu__item"><a class="menu__link" href="#">Tools</a></li>
+            <li class="menu__item"><a class="menu__link" href="#">About</a></li>
+            <li class="menu__item"><a class="menu__link" href="#">Team</a></li>
+        </ul> #}
+        <p>&copy;2023 ADA Finance | All Rights Reserved</p>
+    </footer>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+{% endblock %}

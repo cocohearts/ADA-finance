@@ -1,0 +1,39 @@
+{% extends "base.html.j2" %}
+
+{% block body %}
+    <nav>
+        <div class="logo">ADA Finance</div>
+        <input type="checkbox" id="checkbox">
+        <ul>
+            <li><a href=".">Home</a></li>
+            <li><a href="forecast">Price Prediction</a></li>
+            <li><a href="screener" class="active">Stock Screener</a></li>
+        </ul>
+    </nav>
+    <main id="homeheader">
+        <table id="results_table">
+            <tr>
+                <th>Name</th>
+                <th>Ticker</th>
+                <th>Price</th>
+                <th>Industry</th>
+                <th>Market Cap</th>
+                {% for criteria_name in items %}
+                    <th>{{translations[criteria_name]}}</th>
+                {% endfor %}
+            </tr>
+            {% for stock in matches %}
+            <tr>
+                <td>{{stock.name}}</td>
+                <td>{{stock.symbol}}</td>
+                <td>{{stock.c_price}}</td>
+                <td>{{stock.industry}}</td>
+                <td>{{stock.market_cap}}</td>
+                {% for criteria_name in items %}
+                    <td>{{stock.metrics[criteria_name]}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </main>
+{% endblock %}
