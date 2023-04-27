@@ -20,13 +20,9 @@ def preprocessing(df, order):
     """
 
     y = price.copy()
-    dp = DeterministicProcess(
-        index=y.index,
-        order=order
-    )
-
-    X = dp.in_sample()
-    return X, y, dp
+    X = y.array
+    first = y.index()[0]
+    return X, y
 
 def make_lags(ts, lags):
     return pd.concat(
@@ -41,3 +37,6 @@ def make_multistep_target(ts, steps):
         {f'y_step_{i + 1}': ts.shift(-i)
          for i in range(steps)},
         axis=1)
+
+def array_to_series(arr, first):
+    return pd.series(arr, )

@@ -1,23 +1,22 @@
 from sklearn.model_selection import train_test_split
 import preprocessing
-import linear_regression
+import exponential_regression
 import neural_net
 import pandas as pd
 import numpy as np
 
 class hybrid:
     def __init__(self):
-        self.lr = None
+        self.er = None
         self.nn = None
         self.dp = None
 
     def train(self, X1, X2, y, fore, dp):
         self.dp = dp
 
-        self.lr = linear_regression.linearRegression()
-        self.lr.train(X1, y)
+        self.er = exponential_regression.exponentialRegression(X1, y)
 
-        y_resid = y - self.lr.predict(X1)
+        y_resid = y - self.er.predict(X1)
         y_resid = y_resid.squeeze()
 
         y2 = preprocessing.make_multistep_target(y_resid, fore).dropna()
@@ -50,7 +49,7 @@ class hybrid:
     # [day2_pred, day3_pred... day6_pred], [day2_date, day3_date... day6_date]]...]
     def predict(self, d, X2):
         X1 = self.dp.range(d[0], pd.to_datetime(d[-1]) + pd.tseries.offsets.BusinessDay(n=4))
-        y_pred = self.lr.predict(X1)
+        y_pred = self.er.predict(X1)
         y_pred_2 = self.nn.predict(X2)
         y_pred_boosted = np.zeros((len(y_pred_2), 2, 5), dtype=object)
         for i in range(len(y_pred_2)):
