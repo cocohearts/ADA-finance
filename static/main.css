@@ -11,6 +11,30 @@ body {
     font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
+#results_table {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+}
+
+#screener_form {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: xx-large;
+}
+
+input {
+  margin: 0.3em;
+  font-size: xx-large;
+  text-align: center;
+}
+
+label {
+  color: white;
+}
+
 nav {
     display: flex;
     justify-content: space-between;

@@ -23,19 +23,17 @@
         </ul>
     </nav>
     <main id="homeheader">
-        <div id="criteria">
-            <form action="/screener_results" method="POST">
-                {% for criteria_name in items %}
-                    <p>Criteria for {{criteria_name}}</p>
-                    <input type="number" id="{{criteria_name}}_val" name="{{criteria_name}}_val">
-                    <input type="radio" id="{{criteria_name}}_greater" name="{{criteria_name}}_dir" value=">">
-                    <label for="{{criteria_name}}_greater"> > </label>
-                    <input type="radio" id="{{criteria_name}}_lesser" name="{{criteria_name}}_dir" value="<">
-                    <label for="{{criteria_name}}_lesser"> < </label>
-                    <br>
-                {% endfor %}
-                <input type="submit" value="Submit">
-            </form>
-        </div>
+        <form id="screener_form" action="/screener_results" method="POST">
+            {% for criteria_name in items %}
+                <p>Criteria for {{translations[criteria_name]}}</p>
+                <input type="number" step="0.01" id="{{criteria_name}}_val" name="{{criteria_name}}_val">
+                <input type="radio" id="{{criteria_name}}_greater" name="{{criteria_name}}_dir" value=">">
+                <label for="{{criteria_name}}_greater"> > </label>
+                <input type="radio" id="{{criteria_name}}_lesser" name="{{criteria_name}}_dir" value="<">
+                <label for="{{criteria_name}}_lesser"> < </label>
+                <br>
+            {% endfor %}
+            <input type="submit" value="Submit">
+        </form>
     </main>
 {% endblock %}
