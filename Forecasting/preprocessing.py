@@ -1,28 +1,15 @@
-import matplotlib
-from statsmodels.tsa.deterministic import DeterministicProcess
-from sklearn.preprocessing import PolynomialFeatures
 import pandas as pd
 
-
-def preprocessing(df, order):
+def preprocessing(df):
     price = df["Close"][9000:]
 
-    """
-    trend = price.rolling(
-        window=14,
-        center=True,
-        min_periods=7
-    ).mean()
-
-    ax = price.plot()
-    trend.plot(ax=ax, linewidth=3)
-    matplotlib.pyplot.show()
-    """
+    price = price.groupby(pd.PeriodIndex(price.index, freq="M")).mean()
 
     y = price.copy()
-    X = y.array
-    first = y.index()[0]
-    return X, y
+    X = make_lags(y, 24).dropna()
+    y = make_multistep_target(y, 12).dropna()
+
+    return X[:-11], y[24:]
 
 def make_lags(ts, lags):
     return pd.concat(
@@ -38,5 +25,3 @@ def make_multistep_target(ts, steps):
          for i in range(steps)},
         axis=1)
 
-def array_to_series(arr, first):
-    return pd.series(arr, )
