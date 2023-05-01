@@ -1,28 +1,41 @@
 {% extends "base.html.j2" %}
 
 {% block body %}
-    <nav>
-        <div class="logo">ADA Finance</div>
+<script>
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = function() {
+    var currentScrollPos = window.pageYOffset;
+    if (prevScrollpos > currentScrollPos) {
+        document.getElementById("navbar").style.top = "0";
+    } else {
+        document.getElementById("navbar").style.top = "-105px";
+    }
+    prevScrollpos = currentScrollPos;
+    }
+</script>
+    <nav id = "navbar">
+        <img class="logo" src="static/Black Logo.png" alt="logo" width="250">
         <input type="checkbox" id="checkbox">
         <ul>
             <li><a href=".">Home</a></li>
             <li><a href="forecast">Price Prediction</a></li>
             <li><a href="screener" class="active">Stock Screener</a></li>
-            <li><a href="#contact">Contact Us</a></li>
         </ul>
     </nav>
     <main id="homeheader">
-        <form action="/screener_results" method="POST">
-            {% for criteria_name in items %}
-                <p>Criteria for {{criteria_name}}</p>
-                <input type="number" id="{{criteria_name}}_val" name="{{criteria_name}}_val">
-                <input type="radio" id="{{criteria_name}}_greater" name="{{criteria_name}}_dir" value=">">
-                <label for="{{criteria_name}}_greater"> > </label>
-                <input type="radio" id="{{criteria_name}}_lesser" name="{{criteria_name}}_dir" value="<">
-                <label for="{{criteria_name}}_lesser"> < </label>
-                <br>
-            {% endfor %}
-            <input type="submit" value="Submit">
-        </form>
+        <div id="criteria">
+            <form action="/screener_results" method="POST">
+                {% for criteria_name in items %}
+                    <p>Criteria for {{criteria_name}}</p>
+                    <input type="number" id="{{criteria_name}}_val" name="{{criteria_name}}_val">
+                    <input type="radio" id="{{criteria_name}}_greater" name="{{criteria_name}}_dir" value=">">
+                    <label for="{{criteria_name}}_greater"> > </label>
+                    <input type="radio" id="{{criteria_name}}_lesser" name="{{criteria_name}}_dir" value="<">
+                    <label for="{{criteria_name}}_lesser"> < </label>
+                    <br>
+                {% endfor %}
+                <input type="submit" value="Submit">
+            </form>
+        </div>
     </main>
 {% endblock %}

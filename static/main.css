@@ -443,3 +443,43 @@ h4 {
 .aboutus {
   background: whitesmoke;
 }
+
+form {
+  max-width: 100px;
+  margin: 0 auto;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  float:left;
+}
+
+label {
+  display: inline-block;
+  width: 100px;
+  float:left;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"]:checked + label {
+  color: red;
+}
+
+input[type="submit"] {
+  background-color: green;
+  color: white;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.criteria {
+  width: 100%;
+  display:inline-block;
+  size: 50%;
+  height: 20%;
+}
