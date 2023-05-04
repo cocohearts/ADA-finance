@@ -13,10 +13,10 @@ X, y = preprocessing.preprocessing(df)
 model = neural_net()
 model.train(X, y)
 
-model = joblib.load(open("model.sav", "rb"))
+joblib.dump(model, open("model.sav", "wb"))
+# model = joblib.load(open("model.sav", "rb"))
 
-d = [str(y[0].index[0]).split(" ")[0], "2020-11-04"]
-fit = model.predict(d, X)
+fit = model.predict(X)
 idx = pd.to_datetime(fit[:, 1][:, 1])
 idx.freq = 'B'
 y_fit = pd.Series(fit[:, 0][:, 0].astype(float), index=idx)
