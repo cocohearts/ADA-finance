@@ -17,7 +17,7 @@ def about():
 
 @app.route('/screener')
 def screener():
-    return render_template('screener.html.j2',items = translations.keys(), translations = translations)
+    return render_template('screener.html.j2',items = translations.keys(), translations = names)
 
 @app.route('/screener_results', methods = ['POST'])
 def screener_results():
@@ -36,7 +36,7 @@ def screener_results():
     print(len(matches))
     print(criteria)
 
-    return render_template('screener_results.html.j2',items = translations.keys(), translations = translations, matches=matches)
+    return render_template('screener_results.html.j2',items = translations.keys(), translations = names, matches=matches)
 
 @app.route('/forecast')
 def forecast():

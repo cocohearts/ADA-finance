@@ -2,16 +2,19 @@ import finnhub
 import time
 
 # Feel free to add more metrics if you want
-criteria = {'PE': ('<', 10), 'PB': ('<', 0.7), 'RG5Y': ('>', 10), 'PS': ('<', 1), 'PM5Y': ('>', 30),
-             'ROAE': ('>', 10), 'DE': ('<', 50), 'CR': ('>', 1.5)}
+# criteria = {'PE': ('<', 10), 'PB': ('<', 0.7), 'RG5Y': ('>', 10), 'PS': ('<', 1), 'PM5Y': ('>', 30),
+#              'ROAE': ('>', 10), 'DE': ('<', 50), 'CR': ('>', 1.5)}
 
 # Values are terms from Finnhub API documentation - see pins in Discord
-translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
-                'PM5Y': 'netProfitMargin5Y', 'ROAE': 'roae5Y', 'DE': 'totalDebt/totalEquityAnnual',
-                'CR': 'currentRatioAnnual'}
-
 # translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
-#                 'DE': 'Debt/EquityAnnual','CR': 'currentRatio'}
+#                 'PM5Y': 'netProfitMargin5Y', 'ROAE': 'roae5Y', 'DE': 'totalDebt/totalEquityAnnual',
+#                 'CR': 'currentRatioAnnual'}
+
+translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
+                'DE': 'totalDebt/totalEquityAnnual','CR': 'currentRatio'}
+
+names = {'PE': 'Annual Norm PE', 'PB': 'Price/Book Annual', 'RG5Y': '5Y Revenue Growth', 'PS': 'Price/Sales Trailing 12M',
+                'DE': 'Annual Debt/Equity','CR': 'Assets/Liabilities Ratio'}
 
 finnhub_client = finnhub.Client(api_key="cdq10f2ad3i5u3ridjs0cdq10f2ad3i5u3ridjsg")
 

@@ -13,6 +13,8 @@ body {
 }
 
 #results_table {
+    padding: 1%;
+    padding-top: 5%;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -502,6 +504,11 @@ input[type="submit"] {
   color: white;
   padding: 10px;
   margin-top: 10px;
+}
+
+#submit_div {
+  text-align: center;
+  width: 100%;
 }
 
 .criteria {
