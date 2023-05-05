@@ -9,6 +9,7 @@
 body {
     background: #1E5128;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
+    overflow: overlay;
 }
 
 #results_table {
@@ -506,4 +507,18 @@ input[type="submit"] {
   display:inline-block;
   size: 50%;
   height: 20%;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color:transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #c4c4c4;
+  border-radius: 10px;
+  border: 2px solid #a3a3a3;
 }
