@@ -23,20 +23,16 @@ body {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 4%;
+    padding-top: 6%;
     font-size: xx-large;
-}
-
-input {
-  margin: 0.3em;
-  font-size: xx-large;
-  text-align: center;
+    width: 60%;
 }
 
 .screenerform_info {
   color : white;
-  padding-top: 0.8%;
+  padding-top: 1%;
   padding-bottom: 0.2%;
+  text-align: center;
 }
 
 label {
@@ -477,22 +473,20 @@ h4 {
   background: whitesmoke;
 }
 
-form {
-  max-width: 100px;
-  margin: 0 auto;
-}
-
 input {
-  width: 100%;
   padding: 10px;
   margin-bottom: 10px;
   float:left;
+  margin: 0.6em;
+  font-size: xx-large;
+  text-align: center;
+  width: 75%;
 }
 
 label {
   display: inline-block;
   width: 100px;
-  float:left;
+  float: left;
 }
 
 input[type="radio"] {

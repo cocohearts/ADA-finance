@@ -4,65 +4,54 @@ import time
 # Feel free to add more metrics if you want
 criteria = {'PE': ('<', 10), 'PB': ('<', 0.7), 'RG5Y': ('>', 10), 'PS': ('<', 1), 'PM5Y': ('>', 30),
              'ROAE': ('>', 10), 'DE': ('<', 50), 'CR': ('>', 1.5)}
-# (For demo) criteria = {'PE': ('<', 10), 'PB': ('<', 0.7)}
 
 # Values are terms from Finnhub API documentation - see pins in Discord
-# translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
-#                 'PM5Y': 'netProfitMargin5Y', 'ROAE': 'roae5Y', 'DE': 'totalDebt/totalEquityAnnual',
-#                 'CR': 'currentRatioAnnual'}
-
 translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
-                'DE': 'Debt/EquityAnnual','CR': 'currentRatio'}
+                'PM5Y': 'netProfitMargin5Y', 'ROAE': 'roae5Y', 'DE': 'totalDebt/totalEquityAnnual',
+                'CR': 'currentRatioAnnual'}
+
+# translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
+#                 'DE': 'Debt/EquityAnnual','CR': 'currentRatio'}
 
 finnhub_client = finnhub.Client(api_key="cdq10f2ad3i5u3ridjs0cdq10f2ad3i5u3ridjsg")
 
-def get_metrics(c):
-    symbol = c.symbol
+def add_metrics(my_stock):
+    symbol = my_stock.symbol
+    
     try:
         data = finnhub_client.company_basic_financials(symbol, metric='all')
-    except finnhub.FinnhubAPIException:
+        profile = finnhub_client.company_profile2(symbol=symbol)
+        price = finnhub_client.quote(symbol=symbol)["c"]
+    except:
         print("sleeping")
         time.sleep(60)
         data = finnhub_client.company_basic_financials(symbol, metric='all')
+        profile = finnhub_client.company_profile2(symbol=symbol)
+        price = finnhub_client.quote(symbol=symbol)["c"]
 
-    c.metrics = insert_metrics(data, criteria, translations)
-    return c
+    my_stock.metrics = pick_metrics(data, criteria, translations)
+    my_stock.industry = profile["finnhubIndustry"]
+    my_stock.market_cap = round(profile["marketCapitalization"], 2)
+    my_stock.price = price
+
+    return my_stock
 
 def find_matches(stocks, criteria):
-    match = []
+    matches = []
     print("finding matches")
-    for c in stocks:
-        symbol = c.symbol
-        if match_conditions(criteria, c.metrics):
-            try:
-                profile = finnhub_client.company_profile2(symbol=symbol)
-            except finnhub.FinnhubAPIException:
-                print("sleeping")
-                time.sleep(60)
-                profile = finnhub_client.company_profile2(symbol=symbol)
+    for stock in stocks:
+        if match_conditions(criteria, stock.metrics):
+            matches.append(stock)
+    return matches
 
-            c.industry = profile["finnhubIndustry"]
-            c.market_cap = round(profile["marketCapitalization"], 2)
-
-            try:
-                c.price = finnhub_client.quote(symbol=symbol)["c"]
-            except finnhub.FinnhubAPIException:
-                print("sleeping")
-                time.sleep(60)
-                c.price = finnhub_client.company_profile2(symbol=symbol)["c"]
-
-            match.append(c)
-    return match
-
-
-def insert_metrics(data_dict: dict, criteria: dict, translations: dict):
-    stock_dict = dict()
-    for c in criteria.keys():
+def pick_metrics(data_dict: dict, criteria: dict, translations: dict):
+    metric_dict = dict()
+    for criterion in translations.keys():
         try:
-            stock_dict[c] = data_dict['metric'][translations[c]]
+            metric_dict[criterion] = data_dict['metric'][translations[criterion]]
         except KeyError:
             pass
-    return stock_dict
+    return metric_dict
 
 def match_conditions(criteria: dict, metrics: dict):
     for m in criteria.keys():
