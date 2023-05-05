@@ -23,6 +23,7 @@ body {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
+    padding-top: 4%;
     font-size: xx-large;
 }
 
@@ -32,7 +33,14 @@ input {
   text-align: center;
 }
 
+.screenerform_info {
+  color : white;
+  padding-top: 0.8%;
+  padding-bottom: 0.2%;
+}
+
 label {
+  padding-top: 1%;
   color: white;
 }
 
