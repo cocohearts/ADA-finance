@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def preprocessing(df, order):
-    price = df["Close"][3000:]
+    price = df["Close"][9000:]
 
     """
     trend = price.rolling(
