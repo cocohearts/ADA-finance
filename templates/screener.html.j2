@@ -13,7 +13,7 @@
     <main id="homeheader">
         <form id="screener_form" action="/screener_results" method="POST">
             {% for criteria_name in items %}
-                <p>Criteria for {{translations[criteria_name]}}</p>
+                <p class="screenerform_info">Criteria for {{translations[criteria_name]}}</p>
                 <input type="number" step="0.01" id="{{criteria_name}}_val" name="{{criteria_name}}_val">
                 <input type="radio" id="{{criteria_name}}_greater" name="{{criteria_name}}_dir" value=">">
                 <label for="{{criteria_name}}_greater"> > </label>
