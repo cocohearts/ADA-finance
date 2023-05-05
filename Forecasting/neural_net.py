@@ -22,10 +22,10 @@ class neural_net:
         self.neural_net.add(Dropout(0.2))
         self.neural_net.add(LSTM(units=50))
         self.neural_net.add(Dense(1, activation="linear"))
-        sgd = tf.keras.optimizers.SGD(learning_rate=0.001, decay=10 ** -6, momentum=0.9, nesterov=True)
-        self.neural_net.compile(optimizer=sgd, loss='mean_squared_error', metrics=['mean_squared_error'])
-        self.neural_net.fit(X_train, y_train, epochs=10)
-        print("Trained neural net in", (datetime.datetime.now() - now).microseconds / 1000, "milliseconds")
+        sgd = tf.keras.optimizers.Adam(learning_rate=0.001)
+        self.neural_net.compile(optimizer=sgd, loss='mean_squared_error')
+        self.neural_net.fit(X_train, y_train, epochs=1000)
+        print("Trained neural net in", (datetime.datetime.now() - now).seconds, "seconds")
 
     def predict(self, X):
         return self.neural_net.predict(X)
