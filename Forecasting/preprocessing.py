@@ -1,14 +1,18 @@
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 
 def preprocessing(df):
     price = df["Close"][9000:]
-
     price = price.groupby(pd.PeriodIndex(price.index, freq="M")).mean()
 
-    y = price.copy()
+    values = price.values
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    scaled_price = scaler.fit_transform(pd.DataFrame(values))
+
+    y = pd.Series(scaled_price[:, 0], index=price.index)
     X = make_lags(y, 24).dropna()
 
-    return X, y[24:]
+    return X, y[24:], scaler
 
 def make_lags(ts, lags):
     return pd.concat(

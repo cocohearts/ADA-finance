@@ -9,12 +9,16 @@ import pandas as pd
 import tensorflow as tf
 
 class neural_net:
-    def __init__(self):
+    def __init__(self, nn = None):
         # self.neural_net = MLPRegressor(hidden_layer_sizes=(100, 200, 100), max_iter=5000, learning_rate_init=0.001,
         #                              tol=0.0001, alpha=0.00001)
-        self.neural_net = Sequential()
 
-    def train(self, X_train, y_train):
+        if nn is None:
+            self.neural_net = Sequential()
+        else:
+            self.neural_net = nn
+
+    def train(self, X_train, y_train, epochs):
         now = datetime.datetime.now()
         self.neural_net.add(LSTM(units=50, return_sequences=True, input_shape=(X_train.shape[1], 1)))
         self.neural_net.add(Dropout(0.2))
@@ -24,7 +28,7 @@ class neural_net:
         self.neural_net.add(Dense(1, activation="linear"))
         sgd = tf.keras.optimizers.Adam(learning_rate=0.001)
         self.neural_net.compile(optimizer=sgd, loss='mean_squared_error')
-        self.neural_net.fit(X_train, y_train, epochs=1000)
+        self.neural_net.fit(X_train, y_train, epochs=epochs)
         print("Trained neural net in", (datetime.datetime.now() - now).seconds, "seconds")
 
     def predict(self, X):
@@ -40,3 +44,6 @@ class neural_net:
         y_fit[y_fit.columns[0]].plot(ax=ax, color="blue")
 
         plt.show()
+
+    def save(self, path):
+        self.neural_net.save(path)
