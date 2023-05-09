@@ -32,7 +32,7 @@ def add_metrics(my_stock):
         profile = finnhub_client.company_profile2(symbol=symbol)
         price = finnhub_client.quote(symbol=symbol)["c"]
 
-    my_stock.metrics = pick_metrics(data, criteria, translations)
+    my_stock.metrics = pick_metrics(data, translations)
     my_stock.industry = profile["finnhubIndustry"]
     my_stock.market_cap = round(profile["marketCapitalization"], 2)
     my_stock.price = price
@@ -47,7 +47,7 @@ def find_matches(stocks, criteria):
             matches.append(stock)
     return matches
 
-def pick_metrics(data_dict: dict, criteria: dict, translations: dict):
+def pick_metrics(data_dict: dict, translations: dict):
     metric_dict = dict()
     for criterion in translations.keys():
         try:
