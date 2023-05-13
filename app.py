@@ -40,7 +40,7 @@ def screener_results():
 
 @app.route('/forecast')
 def forecast():
-    dataframe = pd.read_csv(filepath_or_buffer="prediction.txt")
-    prediction = {}
+    # dataframe = pd.read_csv(filepath_or_buffer="prediction.txt")
+    # prediction = {}
 
-    return render_template('forecast.html.j2',prediction = dataframe)
+    return render_template('forecast.html.j2')

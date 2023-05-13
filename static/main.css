@@ -12,6 +12,11 @@ body {
     overflow: overlay;
 }
 
+.canvas#line {
+  height: 400;
+  padding-top: 200;
+}
+
 #results_table {
     padding: 1%;
     padding-top: 5%;

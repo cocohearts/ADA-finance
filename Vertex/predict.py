@@ -59,7 +59,7 @@ def call_model():
         enable_caching=False
     )
     sleep(360)
-    with open("prediction.txt","w") as f:
+    with open("./static/prediction.txt","w") as f:
         f.write(read(output_path))
 
 if __name__=="__main__":
