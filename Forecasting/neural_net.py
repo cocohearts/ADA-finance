@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
 import numpy as np
-import keras
 from keras.models import Sequential
 from keras.layers import *
 import datetime
@@ -9,7 +8,7 @@ import pandas as pd
 import tensorflow as tf
 
 class neural_net:
-    def __init__(self, nn = None):
+    def __init__(self, nn=None):
         # self.neural_net = MLPRegressor(hidden_layer_sizes=(100, 200, 100), max_iter=5000, learning_rate_init=0.001,
         #                              tol=0.0001, alpha=0.00001)
 
@@ -28,7 +27,8 @@ class neural_net:
         self.neural_net.add(Dense(1, activation="linear"))
         sgd = tf.keras.optimizers.Adam(learning_rate=0.001)
         self.neural_net.compile(optimizer=sgd, loss='mean_squared_error')
-        self.neural_net.fit(X_train, y_train, epochs=epochs)
+        self.neural_net.fit(X_train, y_train, epochs=epochs,
+                            callbacks=tf.keras.callbacks.EarlyStopping(monitor='loss', patience=10))
         print("Trained neural net in", (datetime.datetime.now() - now).seconds, "seconds")
 
     def predict(self, X):

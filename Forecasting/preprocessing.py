@@ -2,17 +2,13 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
 def preprocessing(df):
-    price = df["Close"][9000:]
+    price = df["close"]
     price = price.groupby(pd.PeriodIndex(price.index, freq="M")).mean()
 
-    values = price.values
-    scaler = MinMaxScaler(feature_range=(0, 1))
-    scaled_price = scaler.fit_transform(pd.DataFrame(values))
-
-    y = pd.Series(scaled_price[:, 0], index=price.index)
+    y = price
     X = make_lags(y, 24).dropna()
 
-    return X, y[24:], scaler
+    return X, y[24:]
 
 def make_lags(ts, lags):
     return pd.concat(
@@ -27,4 +23,11 @@ def make_multistep_target(ts, steps):
         {f'y_step_{i + 1}': ts.shift(-i)
          for i in range(steps)},
         axis=1)
+
+
+def to_percent(df):
+    return df.pct_change().dropna()
+
+def to_values(start, y_pred):
+    return y_pred.add(1, fill_value=0).cumprod()*start
 
