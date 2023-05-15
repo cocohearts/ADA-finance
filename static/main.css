@@ -16,63 +16,6 @@ body {
   padding-top: 200;
 }
 
-#results_table {
-    padding: 1%;
-    padding-top: 5%;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-}
-
-#screener_form {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 6%;
-    font-size: medium;
-    width: 100%;
-    height: 20%;
-}
-
-input {
-  padding: 5px;
-  float:left;
-  margin: 0.6em;
-  font-size: medium;
-  text-align: center;
-  width: 10%;
-  height: 20px;
-  display:inline-block;
-}
-
-.screenerform_info {
-  color : white;
-  padding-top: 5%;
-  padding-bottom: 0.2%;
-  text-align: center;
-}
-
-label {
-  /* padding-top: 1%; */
-  color: white;
-  background-color: grey;
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 25px 5%;
-    padding-left: 10px;
-    align-items: center;
-    background: #0d0d0d;
-    font-size: large;
-    width:100%;
-    position: fixed;
-    transition: all 300ms ease;
-    z-index: 10;
-}
-
 .logo {
     display:inline;
     color: #FFF;
@@ -128,10 +71,6 @@ ul li a:hover::after {
     left: 0;
     background-color: white;
     transform: none;
-}
-
-#checkbox{
-    display: none;
 }
 
 @keyframes fadeIn {
@@ -255,34 +194,18 @@ h4 {
   display:block;
 }
 
-.screenertile {
-  display: inline-block;
-  box-sizing: content-box;
-  transition:0.5s;
-  justify-content:center;
-  align-items:center;
-  background-image:url(https://media-cldnry.s-nbcnews.com/image/upload/newscms/2020_12/3279436/200322-new-york-stock-exchange-coronavirus-cs-1144a.jpg);
-  background-position:center;
-  background-size:cover;
-  border-radius:10px;
-  margin: 30px;
-  margin-top: 30px;
-}
-.screenertile div{
-  opacity:0;
-  transform:scale(0);
-  transition:0.5s;
-  font-size:2rem;
-  color:white;
-}
-
-.screenertile:hover {
-  box-shadow:0 0 0 200px rgba(0,0,0,0.9) inset;
-}
-
-.screenertile:hover div{
-  opacity:1;
-  transform:scale(1);
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 5%;
+    padding-left: 10px;
+    align-items: center;
+    background: #0d0d0d;
+    font-size: large;
+    width:100%;
+    position: fixed;
+    transition: all 300ms ease;
+    z-index: 10;
 }
   
 /* Heading */
@@ -409,61 +332,34 @@ h4 {
   background: whitesmoke;
 }
 
-/* label {
+
+
+.screenertile {
   display: inline-block;
-  width: 30px;
-  border: #455468 solid 2px;
+  box-sizing: content-box;
+  transition:0.5s;
+  justify-content:center;
+  align-items:center;
+  background-image:url(https://media-cldnry.s-nbcnews.com/image/upload/newscms/2020_12/3279436/200322-new-york-stock-exchange-coronavirus-cs-1144a.jpg);
+  background-position:center;
+  background-size:cover;
+  border-radius:10px;
+  margin: 30px;
+  margin-top: 30px;
+}
+.screenertile div{
+  opacity:0;
+  transform:scale(0);
+  transition:0.5s;
+  font-size:2rem;
+  color:white;
 }
 
-input[type="radio"] {
-  display: none;
+.screenertile:hover {
+  box-shadow:0 0 0 200px rgba(0,0,0,0.9) inset;
 }
 
-input[type="radio"]:checked + label {
-  color: red;
+.screenertile:hover div{
+  opacity:1;
+  transform:scale(1);
 }
-
-input[type="submit"] {
-  background-color: green;
-  color: white;
-  padding: 10px;
-  margin-top: 10px;
-}
-
-#submit_div {
-  text-align: center;
-  width: 100%;
-}
-
-.criteria {
-  width: 100%;
-  display:inline-block;
-  size: 50%;
-  height: 20%;
-}
-
-*::-webkit-scrollbar {
-  width: 10px;
-}
-
-*::-webkit-scrollbar-track {
-  background-color:transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: #c4c4c4;
-  border-radius: 10px;
-  border: 2px solid #a3a3a3;
-}
-
-#caption {
-  font-size: xx-small;
-  font-style: italic;
-}
-
-#screener {
-  display:inline-block;
-  width:100%;
-  height: 10%;
-  display: table-cell;
-} */

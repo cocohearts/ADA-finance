@@ -1,25 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background: #1E5128;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-    overflow: overlay;
-}
-
-#results_table {
-    padding: 1%;
-    padding-top: 5%;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-}
-
 #screener_form {
     text-align: center;
     margin-left: auto;
@@ -27,88 +5,34 @@ body {
     padding-top: 6%;
     font-size: medium;
     width: 100%;
-    height: 20%;
+}
+
+.screenercriteria {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 input {
-  padding: 5px;
-  float:left;
+  padding: 0.3%;
   margin: 0.6em;
   font-size: medium;
   text-align: center;
-  width: 10%;
-  height: 20px;
+  width: 15%;
+  height: 1%;
   display:inline-block;
 }
 
-.screenerform_info {
-    color : white;
-    padding-top: 5%;
-    padding-bottom: 0.2%;
-    text-align: center;
-  }
-  
-  label {
-    /* padding-top: 1%; */
-    color: white;
-    background-color: grey;
-  }
-  
-  nav {
-      display: flex;
-      justify-content: space-between;
-      padding: 25px 5%;
-      padding-left: 10px;
-      align-items: center;
-      background: #0d0d0d;
-      font-size: large;
-      width:100%;
-      position: fixed;
-      transition: all 300ms ease;
-      z-index: 10;
-  }
-  
-  .logo {
-      display:inline;
-      color: #FFF;
-      font-size: 22px;
-  }
-  ul {
-    list-style: none;
+.screenercriteria_info {
+  color : white;
+  padding-top: 1%;
+  padding-bottom: 0.2%;
+  text-align: center;
 }
 
-ul li {
-    display: inline-block;
-    border-right:solid 1px #FFF;
-}
-
-ul li a {
-    text-decoration: none;
-    color: white;
-    padding: 8px 0px;
-    margin: 30px;
-    position: relative;
-}
-
-ul li a::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: white;
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
-    transform-origin: center;
-    font-weight:bold;
-}
-
-ul li a:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-    transform-origin: center;
+label {
+  /* padding-top: 1%; */
+  color: white;
+  background-color: grey;
 }
 
 #checkbox{
@@ -116,57 +40,58 @@ ul li a:hover::after {
 }
 
 label {
-    display: inline-block;
-    width: 30px;
-    border: #455468 solid 2px;
-  }
+  display: inline-block;
+  width: 30px;
+  border: #455468 solid 2px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"]:checked + label {
+  color: red;
+}
+
+input[type="submit"] {
+  background-color: green;
+  color: white;
+  padding: 10px;
+  margin-top: 10px;
+  height: 50px;
+}
+
+#submit_div {
+  text-align: center;
+  width: 100%;
+}
   
-  input[type="radio"] {
-    display: none;
-  }
-  
-  input[type="radio"]:checked + label {
-    color: red;
-  }
-  
-  input[type="submit"] {
-    background-color: green;
-    color: white;
-    padding: 10px;
-    margin-top: 10px;
-  }
-  
-  #submit_div {
-    text-align: center;
-    width: 100%;
-  }
-  
-  .criteria {
-    width: 100%;
-    display:inline-block;
-    size: 50%;
-    height: 20%;
-  }
-  
-  *::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  *::-webkit-scrollbar-track {
-    background-color:transparent;
-  }
-  
-  *::-webkit-scrollbar-thumb {
-    background-color: #c4c4c4;
-    border-radius: 10px;
-    border: 2px solid #a3a3a3;
-  }
-  
-  #caption {
-    font-size: xx-small;
-    font-style: italic;
-  }
-  
-  #screener {
-    width:100%;
-  }
+/* .criteria {
+  width: 100%;
+  display:inline-block;
+  size: 50%;
+  height: 20%;
+} */
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color:transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #c4c4c4;
+  border-radius: 10px;
+  border: 2px solid #a3a3a3;
+}
+
+#caption {
+  font-size: xx-small;
+  font-style: italic;
+}
+
+#screener {
+  width: 100%;
+}

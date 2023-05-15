@@ -8,7 +8,24 @@
     <link rel="stylesheet" href="static/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+
+    <script>
+        var prevScrollpos = window.pageYOffset;
+        window.onscroll = function() {
+        var currentScrollPos = window.pageYOffset;
+        if (prevScrollpos > currentScrollPos) {
+            document.getElementById("navbar").style.top = "0";
+        } else {
+            document.getElementById("navbar").style.top = "-105px";
+        }
+        prevScrollpos = currentScrollPos;
+        }
+    </script>
+
+    {% block styling %}
+    {% endblock %}
 </head>
 <body>
+    
     {% block body %} {% endblock %}
 </body>

@@ -1,11 +1,14 @@
 {% extends "base.html.j2" %}
 
-{% block body %}
+{% block styling %}
+<link rel="stylesheet" href="static/forecast.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="static/line.js"></script>
-    <nav>
-        <div class="logo">ADA Finance</div>
-        <input type="checkbox" id="checkbox">
+{% endblock %}
+
+{% block body %}
+    <nav id = "navbar">
+        <img class="logo" src="static/Black Logo.png" alt="logo" width="250">
         <ul>
             <li><a href=".">Home</a></li>
             <li><a href="forecast" class="active">Price Prediction</a></li>

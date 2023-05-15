@@ -23,10 +23,13 @@ def screener():
 def screener_results():
     criteria = {}
     for item in translations:
-        item_value = request.values.get(item+"_val")
-        item_value = float(item_value)
-        item_dir = request.values.get(item+"_dir")
-        criteria[item] = (item_dir,item_value)
+        try:
+            item_value = request.values.get(item+"_val")
+            item_value = float(item_value)
+            item_dir = request.values.get(item+"_dir")
+            criteria[item] = (item_dir,item_value)
+        except:
+            pass
     companies = pickle.load(open("companies.p", "rb"))
     print(companies[0].metrics)
     # companies = {}
@@ -35,7 +38,7 @@ def screener_results():
     print(len(matches))
     print(criteria)
 
-    return render_template('screener_results.html.j2',items = translations.keys(), translations = names, matches=matches)
+    return render_template('screener_results.html.j2',items = translations.keys(), names = names, matches=matches)
 
 @app.route('/forecast')
 def forecast():

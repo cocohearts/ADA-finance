@@ -7,8 +7,12 @@ criteria = {'PE': ('<', 10), 'PB': ('<', 0.7), 'RG5Y': ('>', 10), 'PS': ('<', 1)
 
 # Values are terms from Finnhub API documentation - see pins in Discord
 translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
-                'PM5Y': 'netProfitMargin5Y', 'ROAE': 'roae5Y', 'DE': 'totalDebt/totalEquityAnnual',
-                'CR': 'currentRatioAnnual'}
+        'PM5Y': 'netProfitMargin5Y', 'ROAE': 'roae5Y', 'DE': 'totalDebt/totalEquityAnnual',
+        'CR': 'currentRatioAnnual'}
+
+names = {'PE': 'NormalizedPE', 'PB': 'Price/Book', 'RG5Y': '5YRevGrowth', 'PS': 'Price/Sales',
+                'PM5Y': '5YProfit', 'ROAE': 'roae5Y', 'DE': 'Debt/Equity',
+                'CR': 'Assets/Liabilities'}
 
 # translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
 #                 'DE': 'Debt/EquityAnnual','CR': 'currentRatio'}
