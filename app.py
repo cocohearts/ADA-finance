@@ -17,7 +17,7 @@ def about():
 
 @app.route('/screener')
 def screener():
-    return render_template('screener.html.j2',items = translations.keys(), translations = names)
+    return render_template('screener.html.j2', items = translations.keys(), translations = names)
 
 @app.route('/screener_results', methods = ['POST'])
 def screener_results():
@@ -27,7 +27,6 @@ def screener_results():
         item_value = float(item_value)
         item_dir = request.values.get(item+"_dir")
         criteria[item] = (item_dir,item_value)
-    
     companies = pickle.load(open("companies.p", "rb"))
     print(companies[0].metrics)
     # companies = {}

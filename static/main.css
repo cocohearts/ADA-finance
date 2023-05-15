@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
-/* TODO scroll animations needed */
 * {
     margin: 0;
     padding: 0;
@@ -26,20 +25,33 @@ body {
     margin-left: auto;
     margin-right: auto;
     padding-top: 6%;
-    font-size: xx-large;
-    width: 60%;
+    font-size: medium;
+    width: 100%;
+    height: 20%;
+}
+
+input {
+  padding: 5px;
+  float:left;
+  margin: 0.6em;
+  font-size: medium;
+  text-align: center;
+  width: 10%;
+  height: 20px;
+  display:inline-block;
 }
 
 .screenerform_info {
   color : white;
-  padding-top: 1%;
+  padding-top: 5%;
   padding-bottom: 0.2%;
   text-align: center;
 }
 
 label {
-  padding-top: 1%;
+  /* padding-top: 1%; */
   color: white;
+  background-color: grey;
 }
 
 nav {
@@ -113,92 +125,8 @@ ul li a:hover::after {
     transform: none;
 }
 
-#icon {
-    background-color: #191A19;
-    padding: 5px 7px 3px 7px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all .3s ease;
-}
-
-#icon svg {
-    color: #FFF;
-    height: 28px;
-    transition: all .3s ease;
-}
-
-#icon:hover {
-    background: #FFF;
-}
-
-#icon:hover svg {
-    color: #0075FF;
-}
-
-#checkbox,
-#icon {
+#checkbox{
     display: none;
-}
-
-.link {
-    position: fixed;
-    background-color: #D12322;
-    padding: 23px 40px;
-    right: -100px;
-    border-radius: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    transform: rotate(-90deg);
-    font-size: 18px;
-    font-weight: 500;
-    color: #FFF;
-    text-decoration: none;
-    text-transform: capitalize;
-    transition: all .1s ease-in-out;
-}
-
-.link i {
-    padding-left: 7px;
-}
-
-.link:hover {
-    text-decoration: underline;
-    background-color: black;
-}
-@media screen and (max-width: 768px) {
-    nav {
-        border-bottom: 1px solid #455468;
-    }
-
-    ul {
-        position: absolute;
-        width: 100%;
-        /* height: calc(100vh - 71px); */
-        background-color: #18283B;
-        /* left: 0;
-        top: 0; */
-        text-align: center;
-        display: none;
-        margin-top: 71px;
-    }
-
-    ul li {
-        display: block;
-        padding: 10px 15px;
-    }
-
-    ul li a {
-        display: block;
-        padding: 10px 0;
-    }
-
-    #icon {
-        display: block;
-    }
-
-    #checkbox:checked~ul {
-        display: block;
-    }
 }
 
 @keyframes fadeIn {
@@ -476,20 +404,10 @@ h4 {
   background: whitesmoke;
 }
 
-input {
-  padding: 10px;
-  margin-bottom: 10px;
-  float:left;
-  margin: 0.6em;
-  font-size: xx-large;
-  text-align: center;
-  width: 75%;
-}
-
-label {
+/* label {
   display: inline-block;
-  width: 100px;
-  float: left;
+  width: 30px;
+  border: #455468 solid 2px;
 }
 
 input[type="radio"] {
@@ -537,3 +455,10 @@ input[type="submit"] {
   font-size: xx-small;
   font-style: italic;
 }
+
+#screener {
+  display:inline-block;
+  width:100%;
+  height: 10%;
+  display: table-cell;
+} */

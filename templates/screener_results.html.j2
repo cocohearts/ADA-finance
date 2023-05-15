@@ -1,6 +1,16 @@
-{% extends "base.html.j2" %}
-
-{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ADA Finance</title>
+    <link rel="stylesheet" href="static/screener.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
+<body>
     <nav>
         <div class="logo">ADA Finance</div>
         <input type="checkbox" id="checkbox">
@@ -36,4 +46,4 @@
             {% endfor %}
         </table>
     </main>
-{% endblock %}
+</body>
