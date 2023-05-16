@@ -5,7 +5,6 @@
 {% block body %}
     <nav id = "navbar">
         <img class="logo" src="static/Black Logo.png" alt="logo" width="250">
-        {# <input type="checkbox" id="checkbox"> #}
         <ul>
             <li><a href=".">Home</a></li>
             <li><a href="forecast">Price Prediction</a></li>
@@ -13,6 +12,7 @@
         </ul>
     </nav>
     <main id="homeheader">
+        <div id="screenerpadding"></div>
         <div id="screener">
             <form id="screener_form" action="/screener_results" method="POST">
                 {% for criteria_name in items %}
