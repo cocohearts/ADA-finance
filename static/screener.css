@@ -73,25 +73,15 @@ input[type="submit"] {
   height: 20%;
 } */
 
-*::-webkit-scrollbar {
-  width: 10px;
-}
-
-*::-webkit-scrollbar-track {
-  background-color:transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: #c4c4c4;
-  border-radius: 10px;
-  border: 2px solid #a3a3a3;
-}
-
 #caption {
   font-size: xx-small;
   font-style: italic;
 }
 
-/* #screener {
+#screenerpadding {
+  height: 40px;
+}
+
+#screener {
   width: 100%;
-} */
+}

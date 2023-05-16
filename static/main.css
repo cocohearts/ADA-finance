@@ -11,11 +11,6 @@ body {
     overflow: overlay;
 }
 
-.canvas#line {
-  height: 400;
-  padding-top: 200;
-}
-
 .logo {
     display:inline;
     color: #FFF;
@@ -72,6 +67,22 @@ ul li a:hover::after {
     background-color: white;
     transform: none;
 }
+
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color:transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #c4c4c4;
+  border-radius: 10px;
+  border: 2px solid #a3a3a3;
+}
+
 
 @keyframes fadeIn {
     0% { opacity: 0; }
