@@ -29,5 +29,6 @@ def to_percent(df):
     return df.pct_change().dropna()
 
 def to_values(start, y_pred):
-    return y_pred.add(1, fill_value=0).cumprod()*start
+    return pd.concat([pd.Series({y_pred.index.shift(-1)[0]: start}),
+                      y_pred.add(1, fill_value=0).cumprod()*start])
 

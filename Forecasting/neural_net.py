@@ -1,3 +1,4 @@
+from preprocessing import make_lags
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
 import numpy as np
@@ -32,7 +33,15 @@ class neural_net:
         print("Trained neural net in", (datetime.datetime.now() - now).seconds, "seconds")
 
     def predict(self, X):
-        return self.neural_net.predict(X)
+        return self.neural_net.predict(X, verbose=0)
+
+    def predict_future(self, y, f):
+        y_future = pd.concat([y, pd.Series({y.index.shift(j)[-1]: 0 for j in range(1, f + 1)})])
+        for i in range(1, f + 1):
+            X_future = make_lags(y_future, 24).dropna().iloc[-f + i - 1]
+            y_future[y.index.shift(i)[-1]] = self.predict(pd.DataFrame(X_future).T)[0][0]
+
+        return y_future.iloc[-f:]
 
     def test(self, X_test, y_test):
         y_pred = np.array(self.predict(X_test))
