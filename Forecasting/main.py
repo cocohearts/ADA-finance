@@ -78,7 +78,7 @@ print("MSE on test set:", mean_squared_error(y_test, y_pred))
 
 ## Predict future values
 
-ticker = "REGN"
+ticker = "TRIP"
 f = 60
 
 df = load.load("../data/" + ticker + "_data.csv")
