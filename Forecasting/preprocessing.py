@@ -1,32 +1,14 @@
-import matplotlib
-from statsmodels.tsa.deterministic import DeterministicProcess
-from sklearn.preprocessing import PolynomialFeatures
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 
+def preprocessing(df):
+    price = df["close"]
+    price = price.groupby(pd.PeriodIndex(price.index, freq="M")).mean()
 
-def preprocessing(df, order):
-    price = df["Close"][9000:]
+    y = price
+    X = make_lags(y, 24).dropna()
 
-    """
-    trend = price.rolling(
-        window=14,
-        center=True,
-        min_periods=7
-    ).mean()
-
-    ax = price.plot()
-    trend.plot(ax=ax, linewidth=3)
-    matplotlib.pyplot.show()
-    """
-
-    y = price.copy()
-    dp = DeterministicProcess(
-        index=y.index,
-        order=order
-    )
-
-    X = dp.in_sample()
-    return X, y, dp
+    return X, y[24:]
 
 def make_lags(ts, lags):
     return pd.concat(
@@ -41,3 +23,12 @@ def make_multistep_target(ts, steps):
         {f'y_step_{i + 1}': ts.shift(-i)
          for i in range(steps)},
         axis=1)
+
+
+def to_percent(df):
+    return df.pct_change().dropna()
+
+def to_values(start, y_pred):
+    return pd.concat([pd.Series({y_pred.index.shift(-1)[0]: start}),
+                      y_pred.add(1, fill_value=0).cumprod()*start])
+

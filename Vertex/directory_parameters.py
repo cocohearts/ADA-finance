@@ -21,7 +21,7 @@ dependencies = [
     ("hybrid.py","../Forecasting/hybrid.py"),
     ("preprocessing.py","../Forecasting/preprocessing.py"),
     ("neural_net.py","../Forecasting/neural_net.py"),
-    ("linear_regression.py","../Forecasting/linear_regression.py")
+    ("exponential_regression.py","../Forecasting/exponential_regression.py")
 ]
 
 model_filepath = "../Forecasting/model.sav"
