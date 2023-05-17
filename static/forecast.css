@@ -1,5 +1,16 @@
 #line {
-  height: 400;
-  padding-top: 200;
-  width: 600;
+  height: 50%;
+  max-width: 50%;
+  margin: auto;
+}
+
+.card-body {
+  width: 100%;
+}
+
+.card-header {
+  padding-top: 9%;
+  padding-bottom: 2%;
+  text-align: center;
+  color: white;
 }

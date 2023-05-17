@@ -17,6 +17,9 @@ xmlhttp.onload = function() {
 
     // Area Chart Example
     var ctx = document.getElementById("line");
+
+    // ctx.width = '200px';
+    // ctx.height = '200px';
     var line = new Chart(ctx, {
       type: 'line',
       data: {
@@ -25,13 +28,13 @@ xmlhttp.onload = function() {
           label: "Price ($)",
           lineTension: false,
           fill: false,
-          backgroundColor: "rgba(2,117,216,1)",
-          borderColor: "rgba(2,117,216,1)",
-          pointRadius: 10,
-          pointBackgroundColor: "rgba(2,117,216,1)",
-          pointBorderColor: "rgba(255,255,255,0.8)",
+          backgroundColor: "white",
+          borderColor: "white",
+          pointRadius: 7,
+          pointBackgroundColor: "white",
+          pointBorderColor: "rgba(29, 159, 59, 0.8)",
           pointHoverRadius: 10,
-          pointHoverBackgroundColor: "rgba(2,117,216,1)",
+          pointHoverBackgroundColor: "white",
           pointHitRadius: 50,
           pointBorderWidth: 2,
     
@@ -39,6 +42,8 @@ xmlhttp.onload = function() {
         }]
       }
     });
+    // ctx.width = '200px';
+    // ctx.height = '200px';
   } 
 };
 xmlhttp.send();
