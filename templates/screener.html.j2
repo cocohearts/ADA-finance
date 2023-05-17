@@ -14,21 +14,31 @@
     <main id="homeheader">
         <div id="screenerpadding"></div>
         <div id="screener">
-            <form id="screener_form" action="/screener_results" method="POST">
-                {% for criteria_name in items %}
-                <div class="screenercriteria">
-                    <p class="screenercriteria_info">{{translations[criteria_name]}} Criteria</p>
-                    <input type="radio" id="{{criteria_name}}_lesser" name="{{criteria_name}}_dir" value="<">
-                    <label for="{{criteria_name}}_lesser"> < </label>
-                    <input type="radio" id="{{criteria_name}}_greater" name="{{criteria_name}}_dir" value=">">
-                    <label for="{{criteria_name}}_greater"> > </label>
-                    <input type="number" step="0.01" id="{{criteria_name}}_val" name="{{criteria_name}}_val">
-                </div>
-                {% endfor %}
-                <div id="submit_div">
-                <input type="submit" id="submit" value="Submit">
-                </div>
-            </form>
+            <table>
+                <form id="screener_form" action="/screener_results" method="POST">
+                    {% for criteria_name in items %}
+                    <tr>
+                        <div class="screenercriteria">
+                            <td><p class="screenercriteria_info">{{translations[criteria_name]}} Criteria</p></td>
+                            <td>
+                                <input type="radio" id="{{criteria_name}}_lesser" name="{{criteria_name}}_dir" value="<">
+                                <label for="{{criteria_name}}_lesser"> < </label>
+                            </td>
+                            <td>
+                                <input type="radio" id="{{criteria_name}}_greater" name="{{criteria_name}}_dir" value=">">
+                                <label for="{{criteria_name}}_greater"> > </label>
+                            </td> 
+                            <td>
+                                <input type="number" step="0.01" id="{{criteria_name}}_val" name="{{criteria_name}}_val">
+                            </td>
+                        </div>
+                    </tr>
+                    {% endfor %}
+                    <div id="submit_div">
+                    <input type="submit" id="submit" value="Submit">
+                    </div>
+                </form>
+            </table>
         </div>
     </main>
 {% endblock %}
