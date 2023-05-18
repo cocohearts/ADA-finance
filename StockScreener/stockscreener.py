@@ -1,21 +1,15 @@
 import finnhub
 import time
 
-# Feel free to add more metrics if you want
-criteria = {'PE': ('<', 10), 'PB': ('<', 0.7), 'RG5Y': ('>', 10), 'PS': ('<', 1), 'PM5Y': ('>', 30),
-             'ROAE': ('>', 10), 'DE': ('<', 50), 'CR': ('>', 1.5)}
-
 # Values are terms from Finnhub API documentation - see pins in Discord
 translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
         'PM5Y': 'netProfitMargin5Y', 'ROAE': 'roae5Y', 'DE': 'totalDebt/totalEquityAnnual',
-        'CR': 'currentRatioAnnual'}
+        'CR': 'currentRatioAnnual', 'FCF': 'focfCagr5Y0', 'EPSG': 'epsGrowth5Y'}
 
 names = {'PE': 'NormalizedPE', 'PB': 'Price/Book', 'RG5Y': '5YRevGrowth', 'PS': 'Price/Sales',
                 'PM5Y': '5YProfit', 'ROAE': 'roae5Y', 'DE': 'Debt/Equity',
-                'CR': 'Assets/Liabilities'}
+                'CR': 'Assets/Liabilities', 'FCF': "FreeCashFlow", 'EPSG': '5YEPSGrowth'}
 
-# translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
-#                 'DE': 'Debt/EquityAnnual','CR': 'currentRatio'}
 
 finnhub_client = finnhub.Client(api_key="cdq10f2ad3i5u3ridjs0cdq10f2ad3i5u3ridjsg")
 
@@ -33,7 +27,7 @@ def add_metrics(my_stock):
         profile = finnhub_client.company_profile2(symbol=symbol)
         price = finnhub_client.quote(symbol=symbol)["c"]
 
-    my_stock.metrics = pick_metrics(data, criteria, translations)
+    my_stock.metrics = pick_metrics(data, translations)
     my_stock.industry = profile["finnhubIndustry"]
     my_stock.market_cap = round(profile["marketCapitalization"], 2)
     my_stock.price = price
@@ -48,7 +42,7 @@ def find_matches(stocks, criteria):
             matches.append(stock)
     return matches
 
-def pick_metrics(data_dict: dict, criteria: dict, translations: dict):
+def pick_metrics(data_dict: dict, translations: dict):
     metric_dict = dict()
     for criterion in translations.keys():
         try:

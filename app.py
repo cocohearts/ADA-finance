@@ -1,6 +1,5 @@
 from re import template
 from flask import Flask, render_template, request
-from StockScreener.stock import *
 from StockScreener.stockscreener import *
 import pickle
 import pandas as pd
@@ -17,9 +16,9 @@ def about():
 
 @app.route('/screener')
 def screener():
-    return render_template('screener.html.j2', items = translations.keys(), translations = names)
+    return render_template('screener.html.j2', items=translations.keys(), translations=names)
 
-@app.route('/screener_results', methods = ['POST'])
+@app.route('/screener_results', methods=['POST'])
 def screener_results():
     criteria = {}
     for item in translations:
@@ -38,7 +37,7 @@ def screener_results():
     print(len(matches))
     print(criteria)
 
-    return render_template('screener_results.html.j2',items = translations.keys(), names = names, matches=matches)
+    return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches)
 
 @app.route('/forecast')
 def forecast():
