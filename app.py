@@ -16,7 +16,7 @@ def about():
 
 @app.route('/screener')
 def screener():
-    return render_template('screener.html.j2', items=translations.keys(), translations=names)
+    return render_template('screener.html.j2', items=translations.keys(), translations=names, industries=industries)
 
 @app.route('/screener_results', methods=['POST'])
 def screener_results():
@@ -36,6 +36,12 @@ def screener_results():
     matches = find_matches(companies, criteria)
     print(len(matches))
     print(criteria)
+
+    try:
+        industry = request.values.get("Industry")
+        # TODO FINISH THIS BIT
+    except:
+        pass
 
     return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches)
 

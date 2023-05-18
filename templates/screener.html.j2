@@ -14,8 +14,8 @@
     <main id="homeheader">
         <div id="screenerpadding"></div>
         <div id="screener">
-            <table>
-                <form id="screener_form" action="/screener_results" method="POST">
+            <form id="screener_form" action="/screener_results" method="POST">
+                <table>
                     {% for criteria_name in items %}
                     <tr>
                         <div class="screenercriteria">
@@ -27,18 +27,35 @@
                             <td>
                                 <input type="radio" id="{{criteria_name}}_greater" name="{{criteria_name}}_dir" value=">">
                                 <label for="{{criteria_name}}_greater"> > </label>
-                            </td> 
+                            </td>
                             <td>
                                 <input type="number" step="0.01" id="{{criteria_name}}_val" name="{{criteria_name}}_val">
+                                <label for="{{criteria_name}}_val" style="display: none"></label>
                             </td>
                         </div>
                     </tr>
                     {% endfor %}
-                    <div id="submit_div">
+
+                    <tr>
+                        <div class="screenercriteria">
+                            <td><p class="screenercriteria_info">Industry Criteria</p></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <select name="industry_val" id="industry_val">
+                                    {% for industry in industries %}
+                                        <option value={{ industry }}> {{ industry }} </option>
+                                    {% endfor %}
+                                </select>
+                                <label for="industry_val" style="display: none"></label>
+                            </td>
+                        </div>
+                    </tr>
+                </table>
+                <div id="submit_div">
                     <input type="submit" id="submit" value="Submit">
-                    </div>
-                </form>
-            </table>
+                </div>
+            </form>
         </div>
     </main>
 {% endblock %}

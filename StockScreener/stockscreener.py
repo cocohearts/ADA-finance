@@ -1,5 +1,6 @@
 import finnhub
 import time
+import pickle
 
 # Values are terms from Finnhub API documentation - see pins in Discord
 translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
@@ -10,8 +11,9 @@ names = {'PE': 'NormalizedPE', 'PB': 'Price/Book', 'RG5Y': '5YRevGrowth', 'PS': 
                 'PM5Y': '5YProfit', 'ROAE': 'roae5Y', 'DE': 'Debt/Equity',
                 'CR': 'Assets/Liabilities', 'FCF': "FreeCashFlow", 'EPSG': '5YEPSGrowth'}
 
-
 finnhub_client = finnhub.Client(api_key="cdq10f2ad3i5u3ridjs0cdq10f2ad3i5u3ridjsg")
+
+industries = set([company.industry for company in pickle.load(open("companies.p", "rb"))])
 
 def add_metrics(my_stock):
     symbol = my_stock.symbol
