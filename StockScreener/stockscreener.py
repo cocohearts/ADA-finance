@@ -13,7 +13,8 @@ names = {'PE': 'NormalizedPE', 'PB': 'Price/Book', 'RG5Y': '5YRevGrowth', 'PS': 
 
 finnhub_client = finnhub.Client(api_key="cdq10f2ad3i5u3ridjs0cdq10f2ad3i5u3ridjsg")
 
-industries = set([company.industry for company in pickle.load(open("companies.p", "rb"))])
+industries = sorted(set([company.industry for company in pickle.load(open("companies.p", "rb"))]))
+industry_values = list(range(len(industries)))
 
 def add_metrics(my_stock):
     symbol = my_stock.symbol

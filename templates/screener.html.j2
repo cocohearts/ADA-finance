@@ -43,8 +43,8 @@
                             <td></td>
                             <td>
                                 <select name="industry_val" id="industry_val">
-                                    {% for industry in industries %}
-                                        <option value={{ industry }}> {{ industry }} </option>
+                                    {% for i in industry_values %}
+                                        <option value={{ i }}> {{ industries[i] }} </option>
                                     {% endfor %}
                                 </select>
                                 <label for="industry_val" style="display: none"></label>

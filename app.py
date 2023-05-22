@@ -16,7 +16,8 @@ def about():
 
 @app.route('/screener')
 def screener():
-    return render_template('screener.html.j2', items=translations.keys(), translations=names, industries=industries)
+    return render_template('screener.html.j2', items=translations.keys(), translations=names,
+                           industries=industries, industry_values=industry_values)
 
 @app.route('/screener_results', methods=['POST'])
 def screener_results():
@@ -37,11 +38,17 @@ def screener_results():
     print(len(matches))
     print(criteria)
 
-    try:
-        industry = request.values.get("Industry")
-        # TODO FINISH THIS BIT
-    except:
-        pass
+    industry_val = request.values.get("industry_val")
+
+    if industry_val != "0":
+        industry = industries[int(industry_val)]
+        i = 0
+        while i < len(matches):
+            company = matches[i]
+            if company.industry != industry:
+                matches.remove(company)
+            else:
+                i += 1
 
     return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches)
 
