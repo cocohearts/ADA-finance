@@ -30,7 +30,7 @@ def screener_results():
             criteria[item] = (item_dir,item_value)
         except:
             pass
-    companies = pickle.load(open("companies.p", "rb"))
+    companies = pickle.load(open("StockScreener/companies.p", "rb"))
     print(companies[0].metrics)
     # companies = {}
 
