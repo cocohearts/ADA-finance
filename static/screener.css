@@ -1,3 +1,7 @@
+body {
+    background-color: #232f27;
+}
+
 #screener_form {
     text-align: center;
     margin-left: auto;
@@ -7,32 +11,44 @@
     width: 100%;
 }
 
+#form_div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .screenercriteria {
-  margin-left: auto;
-  margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
+    flex-basis: 18%
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
 }
 
 input {
-  padding: 0.3%;
-  margin: 0.6em;
-  font-size: medium;
-  text-align: center;
-  width: 15%;
-  height: 1%;
-  display:inline-block;
+    padding: 0.3%;
+    margin: 0.6em;
+    font-size: medium;
+    text-align: center;
+    width: 15%;
+    height: 1%;
+    display:inline-block;
 }
 
 .screenercriteria_info {
-  color : white;
-  padding-top: 1%;
-  padding-bottom: 0.2%;
-  text-align: center;
+    color : white;
+    padding-top: 1%;
+    padding-bottom: 0.2%;
+    text-align: center;
 }
 
 label {
-  /* padding-top: 1%; */
-  color: white;
-  background-color: grey;
+    /* padding-top: 1%; */
+    color: white;
+    background-color: grey;
 }
 
 #checkbox{
@@ -40,42 +56,47 @@ label {
 }
 
 label {
-  display: inline-block;
-  width: 30px;
-  border: #455468 solid 2px;
+    display: inline-block;
+    width: 30px;
+    border: #455468 solid 2px;
 }
 
 input[type="radio"] {
-  display: none;
+    display: none;
 }
 
 input[type="radio"]:checked + label {
-  color: red;
+    color: red;
 }
 
 input[type="submit"] {
-  background-color: green;
-  color: white;
-  padding: 10px;
-  margin-top: 10px;
-  height: 50px;
+    background-color: #cbcaca;
+    color: #232f27;
+    padding: 10px;
+    margin-top: 10px;
+    height: 50px;
+}
+
+input[type="submit"]:hover {
+    box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+    transform: translateY(-2px);
 }
 
 #submit_div {
-  text-align: center;
-  width: 100%;
+    text-align: center;
+    width: 100%;
 }
   
 /* .criteria {
-  width: 100%;
-  display:inline-block;
-  size: 50%;
-  height: 20%;
+    width: 100%;
+    display:inline-block;
+    size: 50%;
+    height: 20%;
 } */
 
 #caption {
-  font-size: xx-small;
-  font-style: italic;
+    font-size: xx-small;
+    font-style: italic;
 }
 
 #screenerpadding {

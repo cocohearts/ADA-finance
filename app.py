@@ -16,7 +16,7 @@ def about():
 
 @app.route('/screener')
 def screener():
-    return render_template('screener.html.j2', items=translations.keys(), translations=names,
+    return render_template('screener.html.j2', items=translations.keys(), names=names,
                            industries=industries, industry_values=industry_values)
 
 @app.route('/screener_results', methods=['POST'])

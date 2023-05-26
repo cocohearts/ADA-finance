@@ -4,12 +4,12 @@ import pickle
 
 # Values are terms from Finnhub API documentation - see pins in Discord
 translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
-        'PM5Y': 'netProfitMargin5Y', 'ROAE': 'roae5Y', 'DE': 'totalDebt/totalEquityAnnual',
-        'CR': 'currentRatioAnnual', 'FCF': 'focfCagr5Y0', 'EPSG': 'epsGrowth5Y'}
+                'PM5Y': 'netProfitMargin5Y', 'ROAE': 'roae5Y', 'DE': 'totalDebt/totalEquityAnnual',
+                'CR': 'currentRatioAnnual', 'FCF': 'focfCagr5Y0', 'EPSG': 'epsGrowth5Y'}
 
-names = {'PE': 'NormalizedPE', 'PB': 'Price/Book', 'RG5Y': '5YRevGrowth', 'PS': 'Price/Sales',
-                'PM5Y': '5YProfit', 'ROAE': 'roae5Y', 'DE': 'Debt/Equity',
-                'CR': 'Assets/Liabilities', 'FCF': "FreeCashFlow", 'EPSG': '5YEPSGrowth'}
+names = {'PE': 'Price-Earnings Ratio', 'PB': 'Price-Book Ratio', 'RG5Y': '5 Year Revenue Growth',
+         'PS': 'Price-Sales Ratio', 'PM5Y': 'Profit Margin', 'ROAE': 'Return on Average Equity',
+         'DE': 'Debt-Equity Ratio', 'CR': 'Current Ratio', 'FCF': "Free Cash Flow", 'EPSG': '5 Year EPS Growth'}
 
 finnhub_client = finnhub.Client(api_key="cdq10f2ad3i5u3ridjs0cdq10f2ad3i5u3ridjsg")
 

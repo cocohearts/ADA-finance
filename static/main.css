@@ -6,8 +6,8 @@
 }
 
 body {
-    background: #1c5627;
     font-family: "Capsule Sans Text", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: #1E5128;
     /*overflow: overlay;*/
 }
 
@@ -197,7 +197,7 @@ h4 {
 
 /* Tiles */
 .tools{
-    background-color: #23252f;
+    background-color: #232f27;
     text-align:center;
     display:flex;
     justify-content:center;
@@ -227,14 +227,14 @@ nav {
 .heading{
     text-align: center;
     padding: 50px 10px 10px;
-    background-color: #272935;
+    background-color: #222d23;
     font-size: larger;
 }
 
 .subheading{
     text-align: center;
     padding: 10px;
-    background-color: #272935;
+    background-color: #222d23;
     font-size: larger;
     color: #cbcaca;
     font-style: italic;
@@ -311,7 +311,7 @@ nav {
 }
 
 .container {
-    background-color: #272935;
+    background-color: #222d23;
     width: auto;
     height: auto;
     overflow:auto;
