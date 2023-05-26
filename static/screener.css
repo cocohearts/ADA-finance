@@ -17,7 +17,7 @@ input {
   margin: 0.6em;
   font-size: medium;
   text-align: center;
-  width: 15%;
+  width: 50%;
   height: 1%;
   display:inline-block;
 }
@@ -65,13 +65,6 @@ input[type="submit"] {
   text-align: center;
   width: 100%;
 }
-  
-/* .criteria {
-  width: 100%;
-  display:inline-block;
-  size: 50%;
-  height: 20%;
-} */
 
 #caption {
   font-size: xx-small;
