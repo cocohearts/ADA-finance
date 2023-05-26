@@ -1,8 +1,35 @@
 #results_table {
-    padding: 1%;
     padding-top: 100px;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     background-color: white;
+    word-wrap: break-word;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+#results_table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+#results_table th,
+#results_table td {
+    padding: 12px 15px;
+}
+
+#results_table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+#results_table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+#results_table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
 }
