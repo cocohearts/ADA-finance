@@ -18,7 +18,7 @@
                     <div id="form_div">
                         {% for criteria_name in items %}
                             <div class="screenercriteria">
-                                <p class="screenercriteria_info">{{names[criteria_name]}} </p>
+                                <p class="screenercriteria_info"> {{names[criteria_name]}} </p>
                                     <input type="radio" id="{{criteria_name}}_lesser" name="{{criteria_name}}_dir" value="<">
                                     <label for="{{criteria_name}}_lesser"> < </label>
                                     <input type="radio" id="{{criteria_name}}_greater" name="{{criteria_name}}_dir" value=">">
@@ -29,7 +29,7 @@
                         {% endfor %}
                         <div class="break"></div>
                         <div class="screenercriteria">
-                            <p class="screenercriteria_info">Industry Criteria</p>
+                            <p class="screenercriteria_info"> Industry </p>
                                 <select name="industry_val" id="industry_val">
                                     {% for i in industry_values %}
                                         <option value={{ i }}> {{ industries[i] }} </option>
