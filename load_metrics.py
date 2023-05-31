@@ -1,6 +1,6 @@
 import pandas as pd
-from stock import *
-from stockscreener import *
+from StockScreener.stock import *
+from StockScreener.stockscreener import *
 import pickle
 
 def load_metrics():
