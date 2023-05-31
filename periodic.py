@@ -1,4 +1,5 @@
 import schedule
+from StockScreener import load_metrics
 from StockScreener.load_metrics import *
 from Vertex.predict import *
 

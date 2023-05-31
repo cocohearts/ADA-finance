@@ -1,6 +1,7 @@
 import finnhub
 import time
 import pickle
+from StockScreener.stock import *
 
 # Values are terms from Finnhub API documentation - see pins in Discord
 translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',

@@ -1,20 +1,26 @@
+body {
+    background-color: #232f27;
+}
+
 #results_table {
     padding-top: 100px;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
     background-color: white;
     word-wrap: break-word;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 #results_table thead tr {
     background-color: #009879;
     color: #ffffff;
     text-align: left;
+}
+
+#results_table th {
+    background-color: #232f27;
+    color: whitesmoke;
+    border: 2px solid #232f27;
 }
 
 #results_table th,

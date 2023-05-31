@@ -1,5 +1,7 @@
 from re import template
 from flask import Flask, render_template, request
+from StockScreener import stock
+from StockScreener.stock import *
 from StockScreener.stockscreener import *
 import pickle
 import pandas as pd
