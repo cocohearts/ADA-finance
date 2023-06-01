@@ -2,8 +2,8 @@ project_id = "ada-cloud-compute"
 gcs_bucket = "ada_finance_dataset"
 region = "us-central1"
 train_pipeline_name = "S&P_train_pipeline"
-predict_pipeline_name = "S&P_predict_pipeline"
-pipeline_root_path = f"gs://{gcs_bucket}/{train_pipeline_name}"
+predict_pipeline_name = "predict_pipeline"
+pipeline_root_path = f"gs://{gcs_bucket}/{predict_pipeline_name}"
 endpoint_id = "132886975333007360"
 project_num = "741599104884"
 
@@ -28,5 +28,5 @@ dependencies = [
     # ("exponential_regression.py","../Forecasting/exponential_regression.py")
 ]
 
-model_filepath = "../Forecasting/model.sav"
+# model_filepath = "../Forecasting/model.sav"
 # model_name = "hi"
