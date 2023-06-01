@@ -68,25 +68,6 @@ ul li a:hover::after {
     transform: none;
 }
 
-*::-webkit-scrollbar {
-    /* width: 10px; */
-}
-
-*::-webkit-scrollbar-track {
-    background-color:black;
-}
-
-*::-webkit-scrollbar-thumb {
-    background-color: #c4c4c4;
-    border-radius: 2px;
-    border: 2px solid #a3a3a3;
-}
-
-*::-webkit-scrollbar-button {
-    height: 10px;
-    background-color: black;
-}
-
 @keyframes fadeIn {
     0% { opacity: 0; }
     100% { opacity: 1; }
@@ -129,70 +110,12 @@ h4 {
     flex-direction: column;
   }
   
-  .menu {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0;
-    flex-wrap: wrap;
-    font-size: small;
-  }
-  
-  .menu__item {
-    list-style: none;
-  }
-  
-  .social-icon__link {
-    font-size: 2rem;
-    color: #fff;
-    margin: 0 10px;
-    display: inline-block;
-    transition: 0.5s;
-  }
-  .social-icon__link:hover {
-    transform: translateY(-10px);
-  }
-  
-  .menu__link {
-    font-size: 1.2rem;
-    color: #fff;
-    margin: 0 10px;
-    display: inline-block;
-    transition: 0.5s;
-    text-decoration: none;
-    opacity: 0.75;
-    font-weight: 300;
-  }
-  
-  .menu__link:hover {
-    opacity: 1;
-  }
-  
   .footer p {
     color: #fff;
     margin: 15px 0 10px 0;
     font-size: 1rem;
     font-weight: 300;
     border-right:solid #191A19;
-  }
-
-  @keyframes animateWaves {
-    0% {
-      background-position-x: 1000px;
-    }
-    100% {
-      background-position-x: 0;
-    }
-  }
-  
-  @keyframes animate {
-    0% {
-      background-position-x: -1000px;
-    }
-    100% {
-      background-position-x: 0;
-    }
   }
 
 /* Tiles */
@@ -210,8 +133,9 @@ h4 {
     display:block;
 }
 
-nav {
+header {
     display: flex;
+    height: 100px;
     justify-content: space-between;
     padding: 25px 5% 25px 10px;
     align-items: center;
@@ -219,9 +143,10 @@ nav {
     font-size: large;
     width:100%;
     position: fixed;
-    transition: all 300ms ease;
+    /* transition: all 300ms ease; */
     z-index: 10;
-    height: 100px;
+    top:0;
+    transition: top 0.2s ease-in-out;
 }
   
 /* Heading */
@@ -374,8 +299,6 @@ nav {
     transform:scale(1);
 }
 
-/* .emptyspace {
-    height:120px;
-    width:100%;
-    background: #222d23;
-} */
+.nav-up {
+    top: -100px;
+}

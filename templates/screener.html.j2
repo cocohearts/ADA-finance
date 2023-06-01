@@ -1,16 +1,17 @@
 {% extends "base.html.j2" %}
 {% block styling %}
     <link rel="stylesheet" href="static/screener.css">
+    <script src="static/scroll.js"></script>
 {% endblock %}
 {% block body %}
-    <nav id = "navbar">
+    <header id = "header">
         <img class="logo" src="static/Black Logo.png" alt="logo" width="250">
         <ul>
             <li><a href=".">Home</a></li>
             <li><a href="forecast">Price Prediction</a></li>
             <li><a href="screener" class="active">Stock Screener</a></li>
         </ul>
-    </nav>
+    </header>
     <main id="homeheader">
         <div id="screenerpadding"></div>
             <form id="screener_form" action="/screener_results" method="POST">
