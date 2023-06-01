@@ -1,44 +1,49 @@
 {% extends "base.html.j2" %}
 {% block styling %}
     <link rel="stylesheet" href="static/screener.css">
+    <script src="static/scroll.js"></script>
 {% endblock %}
 {% block body %}
-    <nav id = "navbar">
+    <header id = "header">
         <img class="logo" src="static/Black Logo.png" alt="logo" width="250">
         <ul>
             <li><a href=".">Home</a></li>
             <li><a href="forecast">Price Prediction</a></li>
             <li><a href="screener" class="active">Stock Screener</a></li>
         </ul>
-    </nav>
+    </header>
     <main id="homeheader">
         <div id="screenerpadding"></div>
-        <div id="screener">
-            <table>
-                <form id="screener_form" action="/screener_results" method="POST">
-                    {% for criteria_name in items %}
-                    <tr>
+            <form id="screener_form" action="/screener_results" method="POST">
+                <div id="screener">
+                    <div id="form_div">
+                        {% for criteria_name in items %}
+                            <div class="screenercriteria">
+                                <p class="screenercriteria_info"> {{names[criteria_name]}} </p>
+                                    <input type="radio" id="{{criteria_name}}_lesser" name="{{criteria_name}}_dir" value="<">
+                                    <label for="{{criteria_name}}_lesser"> < </label>
+                                    <input type="radio" id="{{criteria_name}}_greater" name="{{criteria_name}}_dir" value=">">
+                                    <label for="{{criteria_name}}_greater"> > </label>
+                                    <input type="number" step="0.01" id="{{criteria_name}}_val" name="{{criteria_name}}_val">
+                                    <label for="{{criteria_name}}_val" style="display: none"></label>
+                            </div>
+                        {% endfor %}
+                        <div class="break"></div>
                         <div class="screenercriteria">
-                            <td><p class="screenercriteria_info">{{translations[criteria_name]}} Criteria</p></td>
-                            <td>
-                                <input type="radio" id="{{criteria_name}}_lesser" name="{{criteria_name}}_dir" value="<">
-                                <label for="{{criteria_name}}_lesser"> < </label>
-                            </td>
-                            <td>
-                                <input type="radio" id="{{criteria_name}}_greater" name="{{criteria_name}}_dir" value=">">
-                                <label for="{{criteria_name}}_greater"> > </label>
-                            </td> 
-                            <td>
-                                <input type="number" step="0.01" id="{{criteria_name}}_val" name="{{criteria_name}}_val">
-                            </td>
+                            <p class="screenercriteria_info"> Industry </p>
+                                <select name="industry_val" id="industry_val">
+                                    {% for i in industry_values %}
+                                        <option value={{ i }}> {{ industries[i] }} </option>
+                                    {% endfor %}
+                                </select>
+                                <label for="industry_val" style="display: none"></label>
                         </div>
-                    </tr>
-                    {% endfor %}
-                    <div id="submit_div">
-                    <input type="submit" id="submit" value="Submit">
                     </div>
-                </form>
-            </table>
-        </div>
+
+                    <div id="submit_div">
+                        <input type="submit" id="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
     </main>
 {% endblock %}

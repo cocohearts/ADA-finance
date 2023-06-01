@@ -1,6 +1,6 @@
 import pandas as pd
-from stock import *
-from stockscreener import *
+from StockScreener.stock import *
+from StockScreener.stockscreener import *
 import pickle
 
 def load_metrics():
@@ -12,4 +12,7 @@ def load_metrics():
         companies[index] = add_metrics(company)
     print("Done getting metrics")
 
-    pickle.dump(companies, open("companies.p", "wb"))
+    pickle.dump(companies, open("StockScreener/companies.p", "wb"))
+
+
+load_metrics()

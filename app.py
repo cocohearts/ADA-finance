@@ -1,5 +1,7 @@
 from re import template
 from flask import Flask, render_template, request
+from StockScreener import stock
+from StockScreener.stock import *
 from StockScreener.stockscreener import *
 import pickle
 import pandas as pd
@@ -16,7 +18,8 @@ def about():
 
 @app.route('/screener')
 def screener():
-    return render_template('screener.html.j2', items=translations.keys(), translations=names)
+    return render_template('screener.html.j2', items=translations.keys(), names=names,
+                           industries=industries, industry_values=industry_values)
 
 @app.route('/screener_results', methods=['POST'])
 def screener_results():
@@ -29,13 +32,25 @@ def screener_results():
             criteria[item] = (item_dir,item_value)
         except:
             pass
-    companies = pickle.load(open("companies.p", "rb"))
+    companies = pickle.load(open("StockScreener/companies.p", "rb"))
     print(companies[0].metrics)
     # companies = {}
 
     matches = find_matches(companies, criteria)
     print(len(matches))
     print(criteria)
+
+    industry_val = request.values.get("industry_val")
+
+    if industry_val != "0":
+        industry = industries[int(industry_val)]
+        i = 0
+        while i < len(matches):
+            company = matches[i]
+            if company.industry != industry:
+                matches.remove(company)
+            else:
+                i += 1
 
     return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches)
 

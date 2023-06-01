@@ -24,7 +24,6 @@ def make_multistep_target(ts, steps):
          for i in range(steps)},
         axis=1)
 
-
 def to_percent(df):
     return df.pct_change().dropna()
 

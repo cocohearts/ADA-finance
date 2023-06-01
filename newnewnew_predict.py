@@ -130,14 +130,3 @@ response = api_client.create_run_from_job_spec(
     enable_caching=False
 )
 sleep(5400)
-
-storage_client = storage.Client()
-bucket = storage_client.bucket(gcs_bucket)
-
-for index,filename in enumerate(file_names):
-    outputname = output_names[index]
-    blob = bucket.blob(outputname)
-    data = blob.download_as_text()
-    print(data)
-    with open(f'predictions/{outputname}','w') as file:
-        file.write(data)
