@@ -12,7 +12,6 @@ def load_metrics():
         companies[index] = add_metrics(company)
     print("Done getting metrics")
 
-    pickle.dump(companies, open("StockScreener/companies.p", "wb"))
-
+    pickle.dump(companies, open("../StockScreener/companies.p", "wb"))
 
 load_metrics()
