@@ -30,4 +30,3 @@ def to_percent(df):
 def to_values(start, y_pred):
     return pd.concat([pd.Series({y_pred.index.shift(-1)[0]: start}),
                       y_pred.add(1, fill_value=0).cumprod()*start])
-
