@@ -52,12 +52,6 @@ input[type=number] {
     margin-bottom: 5px;
 }
 
-label {
-    /* padding-top: 1%; */
-    color: white;
-    background-color: grey;
-}
-
 #checkbox{
     display: none;
 }
@@ -65,7 +59,17 @@ label {
 label {
     display: inline-block;
     width: 30px;
-    border: black solid 1px;
+    /* border: black solid 1px; */
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    background-color: grey;
+    font-weight: bold;
+    font-size: larger;
+    border-radius: 10%;
+    align-items: center;
+    line-height: 20px;
+    padding-bottom: 4px;
 }
 
 input[type="radio"] {
@@ -94,13 +98,6 @@ input[type="submit"]:hover {
     text-align: center;
     width: 100%;
 }
-  
-/* .criteria {
-    width: 100%;
-    display:inline-block;
-    size: 50%;
-    height: 20%;
-} */
 
 #caption {
     font-size: xx-small;
@@ -113,4 +110,20 @@ input[type="submit"]:hover {
 
 #screener {
   width: 100%;
+}
+
+#clear {
+    background-color: #cbcaca;
+    color: #232f27;
+    padding: 10px;
+    margin-top: 10px;
+    height: 50px;
+    float:right;
+    margin: 50px;
+    display:inline-block;
+}
+
+#clear:hover {
+    box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+    transform: translateY(-2px);
 }

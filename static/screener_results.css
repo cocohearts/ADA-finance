@@ -1,14 +1,15 @@
 body {
-    background-color: #222d23;
+    background-color: #232f27;
 }
 
 #results_table {
     margin:auto;
     text-align: center;
-    background-color: white;
+    background-color: #232f27; /*white*/
     word-wrap: break-word;
     font-size: 0.8em;
     font-family: sans-serif;
+    color:#cddfe5; /*black*/
 }
 
 #results_table thead tr {
@@ -18,14 +19,15 @@ body {
 }
 
 #results_table th {
-    background-color: #232f27;
+    background-color: #232f27; /*#232f27*/
     color: whitesmoke;
-    border: 2px solid #232f27;
+    border: 2px solid #364a37; /*#232f27*/
 }
 
 #results_table th,
 #results_table td {
     padding: 5px 5px;
+    border-radius: 5%; 
 }
 
 #results_table tbody tr {
@@ -33,7 +35,7 @@ body {
 }
 
 #results_table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+    background-color: #364a37; /*#2d3b2d#364a37*/
 }
 
 #results_table tbody tr:last-of-type {
@@ -43,4 +45,12 @@ body {
 .emptyspace {
     height:120px;
     width:100%;
+}
+
+#results_table tbody tr:hover {
+    background-color: #425c42;
+}
+
+#ticker:hover{
+    text-decoration: underline solid #3282df;
 }
