@@ -3,19 +3,14 @@ body {
 }
 
 #results_table {
-    margin:auto;
     text-align: center;
     background-color: #232f27; /*white*/
     word-wrap: break-word;
     font-size: 0.8em;
     font-family: sans-serif;
     color:#cddfe5; /*black*/
-}
-
-#results_table thead tr {
-    background-color: #009879;
-    color: #ffffff;
-    text-align: left;
+    margin: auto auto 10px;
+    width: 200px;
 }
 
 #results_table th {
@@ -24,22 +19,23 @@ body {
     border: 2px solid #364a37; /*#232f27*/
 }
 
+.criteria {
+    font-size: x-small;
+    color: #cddfe5;
+}
+
 #results_table th,
 #results_table td {
     padding: 5px 5px;
     border-radius: 5%; 
 }
 
-#results_table tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
 #results_table tbody tr:nth-of-type(even) {
     background-color: #364a37; /*#2d3b2d#364a37*/
 }
 
-#results_table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+#results_table tbody tr:nth-of-type(odd) {
+    background-color: #29382f;
 }
 
 .emptyspace {

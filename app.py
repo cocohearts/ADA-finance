@@ -29,18 +29,15 @@ def screener_results():
             item_value = request.values.get(item+"_val")
             item_value = float(item_value)
             item_dir = request.values.get(item+"_dir")
-            criteria[item] = (item_dir,item_value)
-        except:
+            criteria[item] = (item_dir, item_value)
+        except ValueError:
             pass
-    companies = pickle.load(open("StockScreener/companies.p", "rb"))
-    print(companies[0].metrics)
-    # companies = {}
 
+    companies = pickle.load(open("StockScreener/companies.p", "rb"))
     matches = find_matches(companies, criteria)
-    print(len(matches))
-    print(criteria)
 
     industry_val = request.values.get("industry_val")
+    industry = None
 
     if industry_val != "0":
         industry = industries[int(industry_val)]
@@ -52,7 +49,12 @@ def screener_results():
             else:
                 i += 1
 
-    return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches)
+    # For some reason Jinja kept breaking when I tried to index a tuple inside a dictionary
+    for key in criteria.keys():
+        criteria[key] = criteria[key][0] + " " + str(criteria[key][1])
+
+    return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches,
+                           criteria=criteria, industry=industry)
 
 @app.route('/forecast')
 def forecast():
