@@ -5,11 +5,11 @@ from StockScreener.stock import *
 
 # Values are terms from Finnhub API documentation - see pins in Discord
 translations = {'PE': 'peNormalizedAnnual', 'PB': 'pbAnnual', 'RG5Y': 'revenueGrowth5Y', 'PS': 'psTTM',
-                'PM5Y': 'netProfitMargin5Y', 'ROAE': 'roae5Y', 'DE': 'totalDebt/totalEquityAnnual',
-                'CR': 'currentRatioAnnual', 'FCF': 'focfCagr5Y0', 'EPSG': 'epsGrowth5Y'}
+                'PM5Y': 'netProfitMargin5Y', 'ROE': 'roe5Y', 'DE': 'totalDebt/totalEquityAnnual',
+                'CR': 'currentRatioAnnual', 'FCF': 'focfCagr5Y', 'EPSG': 'epsGrowth5Y'}
 
 names = {'PE': 'Price-Earnings Ratio', 'PB': 'Price-Book Ratio', 'RG5Y': '5 Year Revenue Growth',
-         'PS': 'Price-Sales Ratio', 'PM5Y': 'Profit Margin', 'ROAE': 'Return on Average Equity',
+         'PS': 'Price-Sales Ratio', 'PM5Y': 'Profit Margin', 'ROE': 'Return on Equity',
          'DE': 'Debt-Equity Ratio', 'CR': 'Current Ratio', 'FCF': "Free Cash Flow", 'EPSG': '5 Year EPS Growth'}
 
 finnhub_client = finnhub.Client(api_key="cdq10f2ad3i5u3ridjs0cdq10f2ad3i5u3ridjsg")
