@@ -138,15 +138,15 @@ storage_client = storage.Client()
 bucket = storage_client.bucket(gcs_bucket)
 
 for index,filename in enumerate(file_names):
-outputname = output_names[index]
-blob = bucket.blob(f"predictions/{outputname}")
-try:
-    data = blob.download_as_text()
-    print(data)
-    with open(f'predictions/{outputname}','w') as file:
-        file.write(data)
-except:
-    pass
+    outputname = output_names[index]
+    blob = bucket.blob(f"predictions/{outputname}")
+    try:
+        data = blob.download_as_text()
+        print(data)
+        with open(f'predictions/{outputname}','w') as file:
+            file.write(data)
+    except:
+        pass
 
 for prediction_filename in output_names:
     ticker = prediction_filename[:-9]
