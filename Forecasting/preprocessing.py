@@ -8,7 +8,7 @@ def preprocessing(df):
     y = price
     X = make_lags(y, 24).dropna()
 
-    return X, y[24:]
+    return X, y[-24:]
 
 def make_lags(ts, lags):
     return pd.concat(

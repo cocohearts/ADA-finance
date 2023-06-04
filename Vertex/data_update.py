@@ -12,10 +12,12 @@ bucket = storage_client.bucket(gcs_bucket)
 
 for ticker in tickers:
     tick = yf.Ticker(ticker)
-    df = tick.history(period='24mo',interval='1mo')
-    df = df.set_index(pd.PeriodIndex(df.index,freq='M'))
-    df = df[['Close']]
-    df.rename(columns={'Close','close'},inplace=True)
-    filename = f"{ticker}_data.csv"
+    df = tick.history(period='3y',interval='1d')
+    df.rename(columns={'Close':'close'},inplace=True)
+    df['date'] = pd.PeriodIndex(df.index,freq='D')
+    df = df[['date','close']]
+
+    filename = f"data/{ticker}_data.csv"
 
     bucket.blob(filename).upload_from_string(df.to_csv(index=False),'text/csv')
+    print(f'{ticker} success')

@@ -10,6 +10,7 @@ import numpy as np
 from datetime import datetime
 import pandas as pd
 from os import listdir
+import matplotlib.pyplot as plt
 
 """
 DOCUMENTATION
@@ -39,18 +40,15 @@ def predict_batch(gcs_bucket: str, file_names: list, output_names: list, context
     from pathlib import Path
         
     # bucket_name = 'your-bucket-name'
-    directory = "model.sav/"
-    # dl_dir = 'your-local-directory/'
+    model_directory = "model.sav/"
 
-    storage_client = storage.Client()
-    bucket = storage_client.bucket(gcs_bucket)
-    blobs = bucket.list_blobs(prefix=directory)  # Get list of files
+    blobs = bucket.list_blobs(prefix=model_directory)  # Get list of files
     for blob in blobs:
         if blob.name.endswith("/"):
             continue
         file_split = blob.name.split("/")
-        directory = "/".join(file_split[0:-1])
-        Path(directory).mkdir(parents=True, exist_ok=True)
+        model_directory = "/".join(file_split[0:-1])
+        Path(model_directory).mkdir(parents=True, exist_ok=True)
         blob.download_to_filename(blob.name)
     
     import neural_net
@@ -65,15 +63,17 @@ def predict_batch(gcs_bucket: str, file_names: list, output_names: list, context
         filename = file_names[index]
         print("processing",filename)
         outputname = output_names[index]
-        blob = bucket.blob(filename)
+        blob = bucket.blob(f"data/{filename}")
         blob.download_to_filename(filename)
-
+        
         data = pd.read_csv(filename)[['date','close']]
+        if data.size == 0:
+            continue
         data = data.set_index(pd.to_datetime(data["date"]))
         data = data.asfreq('B')
         data = data.fillna(method="ffill")
-        _, y_other = preprocessing(data)
-        
+        y_other = data["close"]
+        y_other = y_other.groupby(pd.PeriodIndex(y_other.index, freq="M")).mean()
         if len(y_other) <= 24:
             continue
         last = y_other[-1]
@@ -96,7 +96,7 @@ def predict_batch(gcs_bucket: str, file_names: list, output_names: list, context
 
         prediction = pd.concat([data,finalprediction])
 
-        bucket.blob(outputname).upload_from_string(prediction.to_csv(index=True), 'text/csv')
+        bucket.blob(f"predictions/{outputname}").upload_from_string(prediction.to_csv(index=True), 'text/csv')
         print(filename,"processed")
 
 file_names = listdir('data/')
@@ -116,7 +116,6 @@ def pipeline():
         output_names,
         dependencies
     )
-# TODO remove :1 after testing
 
 compiler.Compiler().compile(
     pipeline_func=pipeline, package_path=f"{predict_pipeline_name}.json"
@@ -129,4 +128,54 @@ response = api_client.create_run_from_job_spec(
     pipeline_root=pipeline_root_path,
     enable_caching=False
 )
+
 sleep(5400)
+
+file_names = listdir('data/')
+output_names = [filename[:-9]+"_prediction.csv" for filename in file_names]
+
+storage_client = storage.Client()
+bucket = storage_client.bucket(gcs_bucket)
+
+for index,filename in enumerate(file_names):
+outputname = output_names[index]
+blob = bucket.blob(f"predictions/{outputname}")
+try:
+    data = blob.download_as_text()
+    print(data)
+    with open(f'predictions/{outputname}','w') as file:
+        file.write(data)
+except:
+    pass
+
+for prediction_filename in output_names:
+    ticker = prediction_filename[:-9]
+    try:
+        df = pd.read_csv(f'predictions/{prediction_filename}')
+    except:
+        continue
+
+    ticker = prediction_filename[:-15]
+    df = pd.read_csv(f'predictions/{prediction_filename}')
+    dates = [f'{date[5:7]}/{date[2:4]}' for date in list(df['Unnamed: 0'])]
+    values = list(df['close'])
+
+    fig,ax=plt.subplots()
+    ax.plot(values,'g--')
+    ax.set_xlabel("Month")
+    ax.set_ylabel("y_other ($)")
+    ax.set_ylim(ymin=0)
+
+    n=17
+    residue = len(dates)-1-n*int(len(dates)/n)
+    tick_indices = [residue+int(len(dates)/n)*r for r in range(n+1)]
+    tick_months = [dates[tick_index] for tick_index in tick_indices]
+    ax.set_xticks(tick_indices)
+    ax.set_xticklabels(tick_months,rotation = 45)
+
+    ax.set_title(f"Past and Predicted Price Values for {ticker}")
+    plt.grid()
+    prediction_graphname = f"predictiongraphs/{ticker}_predictiongraph.png"
+    fig.savefig(prediction_graphname)
+
+    plt.close(fig)

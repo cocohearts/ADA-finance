@@ -2,9 +2,9 @@ from os import listdir
 import matplotlib.pyplot as plt
 import pandas as pd
 
-prediction_names = listdir('predictions/')
+output_names = listdir('predictions/')
 loaded_count = 0
-for prediction_filename in prediction_names:
+for prediction_filename in output_names:
     ticker = prediction_filename[:-9]
     try:
         df = pd.read_csv(f'predictions/{prediction_filename}')
