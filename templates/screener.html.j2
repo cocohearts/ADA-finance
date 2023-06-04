@@ -1,9 +1,15 @@
 {% extends "base.html.j2" %}
 {% block styling %}
     <link rel="stylesheet" href="static/screener.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <script src="static/scroll.js"></script>
 {% endblock %}
 {% block body %}
+    {% if n == True  %}
+        <script>
+            alert("No companies found with matching name. Try Again!");
+        </script>
+    {% endif %}
     <header id = "header">
         <img class="logo" src="static/Black Logo.png" alt="logo" width="250">
         <ul>
@@ -12,6 +18,27 @@
             <li><a href="screener" class="active">Stock Screener</a></li>
         </ul>
     </header>
+    <form action="/search_results" method="GET">
+        {# <div class="wrapper">
+            <div class="search-input">
+                <label id="searchlabel" for="search">Search for stuff</label>
+                <input id="search" type="search" name="search" placeholder="Search ticker or company..." autofocus required autocomplete="off" />
+                <div class="autocom-box">
+                    <!-- here list are inserted from javascript -->
+                </div>
+                <button id="search_btn" type="submit">Go</button>  
+                {# <button id="search_btn" type="submit"class="icon"><i class="fas fa-search"></i></div> #}
+            </div>
+        </div> #}
+        <div class="search-input">
+            <label id="searchlabel" for="search">Search for stuff</label>
+            <input id="search" type="search" name="search" placeholder="Search ticker or company..." autofocus required autocomplete="off" />
+            <div class="autocom-box">
+                <!-- here list are inserted from javascript -->
+            </div>
+            <button id="search_btn" type="submit">Go</button>   
+        </div>  
+    </form>
     <main id="homeheader">
         <div id="screenerpadding"></div>
             <form id="screener_form" action="/screener_results" method="POST">
@@ -19,7 +46,12 @@
                     <div id="form_div">
                         {% for criteria_name in items %}
                             <div class="screenercriteria">
-                                <p class="screenercriteria_info"> {{names[criteria_name]}} </p>
+                                <div>
+                                     <p class="screenercriteria_info"> {{names[criteria_name]}} </p>
+                                    <div class="help-tip">
+                                        <p>info on criteria</p>
+                                    </div>
+                                </div>
                                     <input type="radio" id="{{criteria_name}}_lesser" name="{{criteria_name}}_dir" value="<">
                                     <label for="{{criteria_name}}_lesser"> < </label>
                                     <input type="radio" id="{{criteria_name}}_greater" name="{{criteria_name}}_dir" value=">">
@@ -31,7 +63,7 @@
                         <div class="break"></div>
                         <div class="screenercriteria">
                             <p class="screenercriteria_info"> Industry </p>
-                                <select name="industry_val" id="industry_val">
+                                <select name="industry_val" id="industry_val" style="height: 25px">
                                     {% for i in industry_values %}
                                         <option value={{ i }}> {{ industries[i] }} </option>
                                     {% endfor %}
@@ -45,5 +77,14 @@
                     </div>
                 </div>
             </form>
+            <button id="clear" onclick = "clearRadio()"> Clear All </button>
     </main>
+
+<script>
+function clearRadio() {
+    document.getElementById('screener_form').reset();
+}
+</script>
+<script src="js/suggestions.js"></script> 
+<script src="js/autocomplete.js"></script> 
 {% endblock %}

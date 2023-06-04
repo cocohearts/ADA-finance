@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="static/screener.css">
     <link rel="stylesheet" href="static/screener_results.css">
     <script src="static/scroll.js"></script>
+    <script src="static/sorttable.js"></script>
 {% endblock %}
 {% block body %}
     <header id = "header">
@@ -15,26 +16,30 @@
     </header>
     <div class="emptyspace"></div>
     <main id="homeheader">
-        <table id="results_table" style="width:200px">
+        <table id="results_table" class="sortable">
             <tr>
                 <th>Name</th>
                 <th>Ticker</th>
                 <th>Price</th>
-                <th>Industry</th>
-                <th>Market Cap</th>
+                <th>Industry {% if industry != None %} <p class="criteria"> ({{ industry }}) </p> {% endif %}</th>
+                <th>Market Cap <p class="criteria"> (Billions) </p></th>
                 {% for criteria_name in items %}
-                    <th>{{names[criteria_name]}}</th>
+                    <th>{{names[criteria_name]}} <p class="criteria"> {{ criteria[criteria_name] }} </p></th>
                 {% endfor %}
             </tr>
             {% for stock in matches %}
             <tr>
                 <td>{{stock.name}}</td>
-                <td style="color:#228b22; font-weight:bold">{{stock.symbol}}</td>
-                <td>{{stock.price}}</td>
+                <td id="ticker" style="color:#3282df">{{stock.symbol}}</td>
+                <td>${{stock.price}}</td>
                 <td>{{stock.industry}}</td>
-                <td>{{stock.market_cap}}</td>
+                <td>${{(stock.market_cap / 1000)|round(2)}} </td>
                 {% for criteria_name in items %}
-                    <td>{{stock.metrics[criteria_name]}}</td>
+                    {% if stock.metrics[criteria_name] != None %}
+                        <td>{{stock.metrics[criteria_name]}}</td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
                 {% endfor %}
             </tr>
             {% endfor %}
