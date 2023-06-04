@@ -21,6 +21,28 @@ def screener():
     return render_template('screener.html.j2', items=translations.keys(), names=names,
                            industries=industries, industry_values=industry_values)
 
+@app.route('/search_results', methods=['GET'])
+def search_results():
+    companies = pickle.load(open("StockScreener/companies.p", "rb"))
+    matches = companies
+    c = request.values.get("search")
+    print(c)
+    for i in matches:
+        print(i.name)
+        print(i.symbol)
+    if c != "":
+        i = 0
+        while i < len(matches):
+            company = matches[i]
+            if company.name != c and company.symbol != c.upper():
+                matches.remove(company)
+            else:
+                i += 1
+    if len(matches)==0:
+        none=True
+        return render_template('screener.html.j2', n=none, items=translations.keys(), names=names, industries=industries, industry_values=industry_values)
+    return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches)
+
 @app.route('/screener_results', methods=['POST'])
 def screener_results():
     criteria = {}
