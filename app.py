@@ -112,8 +112,10 @@ def screener_results():
 @app.route('/forecast',methods=['GET'])
 def forecast():
     top = list(pd.read_csv("predictions/top.txt")['0'])
+    with open("predictions/growth.json","r") as file:
+        ticker_growth_dict = json.load(file)
 
-    return render_template('forecast.html.j2',top=top)
+    return render_template('forecast.html.j2',top=top,ticker_growth_dict=ticker_growth_dict)
 
 @app.route('/forecast_results',methods=['GET','POST'])
 def forecast_results():
