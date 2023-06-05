@@ -6,5 +6,5 @@ The company's net profit and divided by total revenue. Tells you how profitable 
 Net income divided by shareholders' equity. ROE is a gauge of a corporation's profitability and how efficiently it generates those profits.
 Shows how much debt a company has compared to its assets. Found by dividing a company's total debt by total shareholder equity.
 Current ratio measures the liquidity of a company. It is the ratio of a company's assets and its liabilities. A current ratio <1 shows that a company does not have financial means to pay off its short-term debts.
-FreeCash Flow is a measurement of a company's profitability. It is the remaining cash after a company pays its operating expenses and capital expenses.
-5Y EPS Growth is the compound annual growth rate of a company's EPS over the last 5 years.
+Free Cash Flow is a measurement of a company's profitability. It is the remaining cash after a company pays its operating expenses and capital expenses.
+5Y EPS Growth is the compound annual growth rate of a company's earnings per share over the last 5 years.

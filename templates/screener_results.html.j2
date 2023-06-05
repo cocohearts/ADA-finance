@@ -24,7 +24,7 @@
                 <th>Industry {% if industry != None %} <p class="criteria"> ({{ industry }}) </p> {% endif %}</th>
                 <th>Market Cap <p class="criteria"> (Billions) </p></th>
                 {% for criteria_name in items %}
-                    <th>{{names[criteria_name]}} <p class="criteria"> {{ criteria[criteria_name] }} </p></th>
+                    <th>{{names[criteria_name]}} <p class="criteria"> {{ items[criteria_name] }} </p></th>
                 {% endfor %}
             </tr>
             {% for stock in matches %}
