@@ -32,9 +32,6 @@
             <tr>
                 <td>{{stock.name}}</td>
                 <td><a style="color:#3282df" href="forecast_results?ticker={{stock.symbol}}" id="ticker">{{stock.symbol}}</a></td>
-                {# <span class="growthtext">5y forecast: {{growth}} growth</span> #}
-                <img 
-                {# <td id="ticker" style="color:#3282df">{{stock.symbol}}</td> #}
                 <td>${{stock.price}}</td>
                 <td>{{stock.industry}}</td>
                 <td>${{(stock.market_cap / 1000)|round(2)}} </td>

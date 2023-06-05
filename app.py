@@ -91,9 +91,9 @@ def screener_results():
 
 @app.route('/forecast',methods=['GET'])
 def forecast():
-    top10 = list(pd.read_csv("predictions/top10.txt")['0'])
+    top = list(pd.read_csv("predictions/top.txt")['0'])
 
-    return render_template('forecast.html.j2',top10=top10)
+    return render_template('forecast.html.j2',top=top)
 
 @app.route('/forecast_results',methods=['GET','POST'])
 def forecast_results():
@@ -104,6 +104,6 @@ def forecast_results():
         graph_image_path = f"static/predictiongraphs/{ticker}_predictiongraph.png"
     else:
         graph_image_path = None
-    top10 = list(pd.read_csv("predictions/top10.txt")['0'])
+    top = list(pd.read_csv("predictions/top.txt")['0'])
 
-    return render_template('forecast_results.html.j2',graphpath=graph_image_path,top10=top10)
+    return render_template('forecast_results.html.j2',graphpath=graph_image_path,top=top)
