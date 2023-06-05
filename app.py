@@ -48,7 +48,7 @@ def search_results():
     if len(matches)==0:
         none=True
         return render_template('screener.html.j2', n=none, items=translations.keys(), names=names, industries=industries, industry_values=industry_values)
-    return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches)
+    return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches, industries=industries, industry_values=industry_values)
 
 @app.route('/screener_results', methods=['POST'])
 def screener_results():
