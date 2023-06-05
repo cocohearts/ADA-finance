@@ -6,7 +6,7 @@
     <script src="static/scroll.js"></script>
 {% endblock %}
 {% block body %}
-    {% if n == True  %}
+    {% if n == True %}
         <script>
             alert("No companies found with matching name. Try Again!");
         </script>
@@ -28,7 +28,7 @@
                     <!-- here list are inserted from javascript -->
                 </div>
                 <button id="search_btn" type="submit">Go</button>  
-                {# <button id="search_btn" type="submit"class="icon"><i class="fas fa-search"></i></div> #}
+                <button id="search_btn" type="submit"class="icon"><i class="fas fa-search"></i></div>
             </div>
         </div> #}
         <div class="search-input">
@@ -45,12 +45,12 @@
             <form id="screener_form" action="/screener_results" method="POST">
                 <div id="screener">
                     <div id="form_div">
-                        {% for criteria_name in items %}
+                        {% for (criteria_name,line) in loops %}
                             <div class="screenercriteria">
                                 <div>
                                      <p class="screenercriteria_info"> {{names[criteria_name]}} </p>
                                     <div class="help-tip">
-                                        <p>info on criteria</p>
+                                        <p>{{line}}</p>
                                     </div>
                                 </div>
                                     <input type="radio" id="{{criteria_name}}_lesser" name="{{criteria_name}}_dir" value="<">

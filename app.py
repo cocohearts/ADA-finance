@@ -5,6 +5,7 @@ from StockScreener.stock import *
 from StockScreener.stockscreener import *
 import pickle
 import pandas as pd
+import itertools
 
 app = Flask(__name__)
 
@@ -18,8 +19,14 @@ def about():
 
 @app.route('/screener')
 def screener():
+    items=translations.keys()
+    tips = []
+    with open('static/criteriatips.txt') as info:
+        for line in info:
+            tips.append(line)
+    print (tips)
     return render_template('screener.html.j2', items=translations.keys(), names=names,
-                           industries=industries, industry_values=industry_values)
+                           industries=industries, industry_values=industry_values, tips=tips, loops=zip(items,tips))
 
 @app.route('/search_results', methods=['GET'])
 def search_results():

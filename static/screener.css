@@ -150,7 +150,7 @@ input[type="submit"]:hover {
 }
 
 .help-tip:hover p{
-    display:block;
+    display:inline-block;
     transform-origin: 100% 0%;
 
     -webkit-animation: fadeIn 0.3s ease-in-out;
