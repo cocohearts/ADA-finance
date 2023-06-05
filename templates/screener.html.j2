@@ -6,9 +6,13 @@
     <script src="static/scroll.js"></script>
 {% endblock %}
 {% block body %}
-    {% if n == True %}
+    {% if error == "none" %}
         <script>
-            alert("No companies found with matching name. Try Again!");
+            alert("No matching companies found. Please try again!");
+        </script>
+    {% elif error == "industry" %}
+        <script>
+            alert("An unexpected error was encountered when parsing the industry criteria. Please try again!")
         </script>
     {% endif %}
     <header id = "header">

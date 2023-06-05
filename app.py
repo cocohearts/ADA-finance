@@ -19,14 +19,13 @@ def about():
 
 @app.route('/screener')
 def screener():
-    items=translations.keys()
+    items = translations.keys()
     tips = []
     with open('static/criteriatips.txt') as info:
         for line in info:
             tips.append(line)
-    print (tips)
-    return render_template('screener.html.j2', items=translations.keys(), names=names,
-                           industries=industries, industry_values=industry_values, tips=tips, loops=zip(items,tips))
+    return render_template('screener.html.j2', items=items, names=names,
+                           industries=industries, industry_values=industry_values, tips=tips, loops=zip(items, tips))
 
 @app.route('/search_results', methods=['GET'])
 def search_results():
@@ -45,10 +44,15 @@ def search_results():
                 matches.remove(company)
             else:
                 i += 1
-    if len(matches)==0:
-        none=True
-        return render_template('screener.html.j2', n=none, items=translations.keys(), names=names, industries=industries, industry_values=industry_values)
-    return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches)
+    if len(matches) == 0 or len(matches) > 1:
+        tips = []
+        with open('static/criteriatips.txt') as info:
+            for line in info:
+                tips.append(line)
+        return render_template('screener.html.j2', error="none", items=translations.keys(),
+                               names=names, industries=industries, industry_values=industry_values,
+                               tips=tips, loops=zip(translations.keys(), tips))
+    return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches, criteria={})
 
 @app.route('/screener_results', methods=['POST'])
 def screener_results():
@@ -68,8 +72,18 @@ def screener_results():
     industry_val = request.values.get("industry_val")
     industry = None
 
+    tips = []
+    with open('static/criteriatips.txt') as info:
+        for line in info:
+            tips.append(line)
+
     if industry_val != "0":
-        industry = industries[int(industry_val)]
+        try:
+            industry = industries[int(industry_val)]
+        except IndexError:
+            return render_template('screener.html.j2', error="industry", items=translations.keys(), names=names,
+                                   industries=industries, industry_values=industry_values, tips=tips,
+                                   loops=zip(translations.keys(), tips))
         i = 0
         while i < len(matches):
             company = matches[i]
@@ -77,6 +91,11 @@ def screener_results():
                 matches.remove(company)
             else:
                 i += 1
+
+    if len(matches) == 0:
+        return render_template('screener.html.j2', error="none", items=translations.keys(), names=names,
+                               industries=industries, industry_values=industry_values, tips=tips,
+                               loops=zip(translations.keys(), tips))
 
     # For some reason Jinja kept breaking when I tried to index a tuple inside a dictionary
     for key in criteria.keys():
