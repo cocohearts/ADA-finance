@@ -1,10 +1,10 @@
-shit
-more shit
-more shit
-exponentially more shit
-about
-background
-fa
-ease
-fff
-eeadw
+Price to earnings ratio (P/E) equals the price of a share of stock, divided by the company's earnings-per-share. 
+Price-to-book value (P/B) is the ratio of the market value of a company's shares (share price) over its book value of equity.
+Annual compounded growth rate of revenue over the last 5 years.
+The price-to-sales ratio (P/S) is the ratio between the company's market capitalization by the revenue in the most recent year (per-share stock price by the per-share revenue). 
+The company's net profit and divided by total revenue. Tells you how profitable the company was over a period of time.
+Net income divided by shareholders' equity. ROE is a gauge of a corporation's profitability and how efficiently it generates those profits.
+Shows how much debt a company has compared to its assets. Found by dividing a company's total debt by total shareholder equity.
+add info
+add info
+add info 
