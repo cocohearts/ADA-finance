@@ -3,9 +3,11 @@ from os import listdir
 import pandas as pd
 from directory_parameters import *
 from google.cloud import storage
+from get_tickers import *
+tickers = get_tickers()
 
-file_names = listdir('data/')
-tickers = [ticker[:-9] for ticker in file_names]
+# file_names = listdir('data/')
+# tickers = [ticker[:-9] for ticker in file_names]
 
 storage_client = storage.Client()
 bucket = storage_client.bucket(gcs_bucket)

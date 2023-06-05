@@ -6,6 +6,7 @@ from StockScreener.stockscreener import *
 import pickle
 import pandas as pd
 import itertools
+import json
 
 app = Flask(__name__)
 
@@ -24,7 +25,6 @@ def screener():
     with open('static/criteriatips.txt') as info:
         for line in info:
             tips.append(line)
-    print (tips)
     return render_template('screener.html.j2', items=translations.keys(), names=names,
                            industries=industries, industry_values=industry_values, tips=tips, loops=zip(items,tips))
 
@@ -81,9 +81,13 @@ def screener_results():
     # For some reason Jinja kept breaking when I tried to index a tuple inside a dictionary
     for key in criteria.keys():
         criteria[key] = criteria[key][0] + " " + str(criteria[key][1])
+    
+    with open("predictions/growth.json","r") as file:
+        ticker_growth_dict = json.load(file)
+    print(ticker_growth_dict)
 
     return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches,
-                           criteria=criteria, industry=industry)
+                           criteria=criteria, industry=industry, ticker_growth_dict=ticker_growth_dict)
 
 @app.route('/forecast',methods=['GET'])
 def forecast():
@@ -94,6 +98,8 @@ def forecast():
 @app.route('/forecast_results',methods=['GET','POST'])
 def forecast_results():
     ticker = request.values.get("ticker")
+    if ticker == None:
+        ticker = request.args.get("ticker")
     if ticker:
         graph_image_path = f"static/predictiongraphs/{ticker}_predictiongraph.png"
     else:
