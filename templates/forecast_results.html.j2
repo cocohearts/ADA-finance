@@ -1,0 +1,37 @@
+{% extends "base.html.j2" %}
+
+{% block styling %}
+    <link rel="stylesheet" href="static/forecast.css">
+    <link rel="stylesheet" href="static/searchbar.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="static/line.js"></script>
+    <script src="static/scroll.js"></script>
+{% endblock %}
+
+{% block body %}
+    <header id = "header">
+        <img class="logo" src="static/Black Logo.png" alt="logo" width="250">
+        <ul>
+            <li><a href=".">Home</a></li>
+            <li><a href="forecast" class="active">Price Prediction</a></li>
+            <li><a href="screener">Stock Screener</a></li>
+        </ul>
+    </header>
+    <main id="homeheader">
+    <form action="/forecast_results" method="GET">
+        <div class="search-input">
+            <label id="searchlabel" for="search">Search for stuff</label>
+            <input id="search" type="search" name="ticker" placeholder="Search ticker or company..." autofocus required autocomplete="off" />
+            <div class="autocom-box">
+                <!-- here list are inserted from javascript -->
+            </div>
+            <button id="search_btn" type="submit">Go</button>   
+        </div>  
+    </form>
+
+    <div class="graph_display">
+        <img id="graph-jpg" src="{{graphpath}}"  title="Prediction plot" alt="An image of our prediction plot">
+    </div>
+
+    </main>
+{% endblock %}
