@@ -28,9 +28,10 @@
             <button id="search_btn" type="submit">Go</button>   
         </div>  
     </form>
-
+    <h1>Explore</h1>
+    <h2>Stocks our model predicts will have high growth</h2>
     <ol id="explore_list">
-    {% for ticker in top10 %}
+    {% for ticker in top %}
         <li><a href="forecast_results?ticker={{ticker}}">{{ticker}}</a></li>
     {% endfor %}
     </ol>

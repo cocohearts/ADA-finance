@@ -4,6 +4,7 @@ import pandas as pd
 from directory_parameters import *
 from google.cloud import storage
 from get_tickers import *
+
 tickers = get_tickers()
 
 # file_names = listdir('data/')

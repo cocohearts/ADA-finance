@@ -19,3 +19,7 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
+
+h1, h2 {
+  text-align: center;
+}
