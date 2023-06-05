@@ -47,6 +47,23 @@ body {
     background-color: #425c42;
 }
 
+#ticker:not(:hover){
+    text-decoration: solid #3282df;
+
+}
+
 #ticker:hover{
     text-decoration: underline solid #3282df;
+}
+
+#ticker .growthtext{
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    right: 105%;
+}
+
+#ticker:hover .growthtext{
+    visibility: visible;
 }

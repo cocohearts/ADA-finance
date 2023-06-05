@@ -1,16 +1,16 @@
-from Forecasting.preprocessing import preprocessing, to_percent
 from kfp.dsl import pipeline
 from kfp.v2 import compiler
 from kfp.v2.dsl import component
 from kfp.v2.google.client import AIPlatformClient
-from Vertex.directory_parameters import *
-from Vertex.write_data import *
+from directory_parameters import *
+from write_data import *
 from time import sleep
 import numpy as np
 from datetime import datetime
 import pandas as pd
 from os import listdir
 import matplotlib.pyplot as plt
+from get_tickers import get_tickers
 
 """
 DOCUMENTATION
@@ -99,9 +99,11 @@ def predict_batch(gcs_bucket: str, file_names: list, output_names: list, context
         bucket.blob(f"predictions/{outputname}").upload_from_string(prediction.to_csv(index=True), 'text/csv')
         print(filename,"processed")
 
-file_names = listdir('data/')
+# file_names = listdir('data/')
+tickers = get_tickers()
 
-output_names = [filename[:-9]+"_prediction.csv" for filename in file_names]
+output_names = [ticker+"_prediction.csv" for ticker in tickers]
+file_names = [ticker+"_data.csv" for ticker in tickers]
 outputpaths = [f"predict_pipeline/artefacts/{outputname}" for outputname in output_names]
 
 @pipeline(
@@ -128,5 +130,3 @@ response = api_client.create_run_from_job_spec(
     pipeline_root=pipeline_root_path,
     enable_caching=False
 )
-
-sleep(5400)

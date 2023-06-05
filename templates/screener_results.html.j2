@@ -28,9 +28,10 @@
                 {% endfor %}
             </tr>
             {% for stock in matches %}
+            {% set growth = ticker_growth_dict[stock.symbol]%}
             <tr>
                 <td>{{stock.name}}</td>
-                <td id="ticker" style="color:#3282df">{{stock.symbol}}</td>
+                <td><a style="color:#3282df" href="forecast_results?ticker={{stock.symbol}}" id="ticker">{{stock.symbol}}</a></td>
                 <td>${{stock.price}}</td>
                 <td>{{stock.industry}}</td>
                 <td>${{(stock.market_cap / 1000)|round(2)}} </td>

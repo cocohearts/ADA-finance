@@ -1,12 +1,18 @@
 from os import listdir
 import matplotlib.pyplot as plt
 import pandas as pd
+import json
 
 import os
 import glob
 
-prediction_names = listdir('predictions/')
+from get_tickers import get_tickers
+
+tickers = get_tickers()
+
+prediction_names = [ticker+"_prediction.csv" for ticker in tickers]
 value_ticker_arr = []
+ticker_dict = dict()
 
 for prediction_filename in prediction_names:
     if prediction_filename[-3:] != "csv":
@@ -19,10 +25,14 @@ for prediction_filename in prediction_names:
 
     ticker = prediction_filename[:-15]
     values = list(df['close'])
-    growth = values[-1]/values[-25]
+    growth = values[-1]/values[-60]
 
     value_ticker_arr.append((growth,ticker))
+    ticker_dict[ticker] = int((growth-1)*100)
 
 value_ticker_arr.sort(reverse=True)
-tickers = [pair[1] for pair in value_ticker_arr[:10]]
-pd.DataFrame(tickers).to_csv("predictions/top10.txt",index=False)
+tickers = [pair[1] for pair in value_ticker_arr[:16]]
+pd.DataFrame(tickers).to_csv("predictions/top.txt",index=False)
+
+with open("predictions/growth.json", "w") as file:
+    json.dump(ticker_dict,file)

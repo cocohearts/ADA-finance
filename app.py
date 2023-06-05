@@ -6,6 +6,7 @@ from StockScreener.stockscreener import *
 import pickle
 import pandas as pd
 import itertools
+import json
 
 app = Flask(__name__)
 
@@ -19,14 +20,13 @@ def about():
 
 @app.route('/screener')
 def screener():
-    items=translations.keys()
+    items = translations.keys()
     tips = []
     with open('static/criteriatips.txt') as info:
         for line in info:
             tips.append(line)
-    print (tips)
-    return render_template('screener.html.j2', items=translations.keys(), names=names,
-                           industries=industries, industry_values=industry_values, tips=tips, loops=zip(items,tips))
+    return render_template('screener.html.j2', items=items, names=names,
+                           industries=industries, industry_values=industry_values, tips=tips, loops=zip(items, tips))
 
 @app.route('/search_results', methods=['GET'])
 def search_results():
@@ -45,10 +45,15 @@ def search_results():
                 matches.remove(company)
             else:
                 i += 1
-    if len(matches)==0:
-        none=True
-        return render_template('screener.html.j2', n=none, items=translations.keys(), names=names, industries=industries, industry_values=industry_values)
-    return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches, industries=industries, industry_values=industry_values)
+    if len(matches) == 0 or len(matches) > 1:
+        tips = []
+        with open('static/criteriatips.txt') as info:
+            for line in info:
+                tips.append(line)
+        return render_template('screener.html.j2', error="none", items=translations.keys(),
+                               names=names, industries=industries, industry_values=industry_values,
+                               tips=tips, loops=zip(translations.keys(), tips))
+    return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches, criteria={})
 
 @app.route('/screener_results', methods=['POST'])
 def screener_results():
@@ -68,8 +73,18 @@ def screener_results():
     industry_val = request.values.get("industry_val")
     industry = None
 
+    tips = []
+    with open('static/criteriatips.txt') as info:
+        for line in info:
+            tips.append(line)
+
     if industry_val != "0":
-        industry = industries[int(industry_val)]
+        try:
+            industry = industries[int(industry_val)]
+        except IndexError:
+            return render_template('screener.html.j2', error="industry", items=translations.keys(), names=names,
+                                   industries=industries, industry_values=industry_values, tips=tips,
+                                   loops=zip(translations.keys(), tips))
         i = 0
         while i < len(matches):
             company = matches[i]
@@ -78,26 +93,37 @@ def screener_results():
             else:
                 i += 1
 
+    if len(matches) == 0:
+        return render_template('screener.html.j2', error="none", items=translations.keys(), names=names,
+                               industries=industries, industry_values=industry_values, tips=tips,
+                               loops=zip(translations.keys(), tips))
+
     # For some reason Jinja kept breaking when I tried to index a tuple inside a dictionary
     for key in criteria.keys():
         criteria[key] = criteria[key][0] + " " + str(criteria[key][1])
+    
+    with open("predictions/growth.json","r") as file:
+        ticker_growth_dict = json.load(file)
+    print(ticker_growth_dict)
 
     return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches,
-                           criteria=criteria, industry=industry)
+                           criteria=criteria, industry=industry, ticker_growth_dict=ticker_growth_dict)
 
 @app.route('/forecast',methods=['GET'])
 def forecast():
-    top10 = list(pd.read_csv("predictions/top10.txt")['0'])
+    top = list(pd.read_csv("predictions/top.txt")['0'])
 
-    return render_template('forecast.html.j2',top10=top10)
+    return render_template('forecast.html.j2',top=top)
 
 @app.route('/forecast_results',methods=['GET','POST'])
 def forecast_results():
     ticker = request.values.get("ticker")
+    if ticker == None:
+        ticker = request.args.get("ticker")
     if ticker:
         graph_image_path = f"static/predictiongraphs/{ticker}_predictiongraph.png"
     else:
         graph_image_path = None
-    top10 = list(pd.read_csv("predictions/top10.txt")['0'])
+    top = list(pd.read_csv("predictions/top.txt")['0'])
 
-    return render_template('forecast_results.html.j2',graphpath=graph_image_path,top10=top10)
+    return render_template('forecast_results.html.j2',graphpath=graph_image_path,top=top)
