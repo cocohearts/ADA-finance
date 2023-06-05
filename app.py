@@ -85,14 +85,19 @@ def screener_results():
     return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches,
                            criteria=criteria, industry=industry)
 
-@app.route('/forecast',methods=['GET','POST'])
+@app.route('/forecast',methods=['GET'])
 def forecast():
+    top10 = list(pd.read_csv("predictions/top10.txt")['0'])
+
+    return render_template('forecast.html.j2',top10=top10)
+
+@app.route('/forecast_results',methods=['GET','POST'])
+def forecast_results():
     ticker = request.values.get("ticker")
     if ticker:
         graph_image_path = f"static/predictiongraphs/{ticker}_predictiongraph.png"
     else:
         graph_image_path = None
-    # dataframe = pd.read_csv(filepath_or_buffer="prediction.txt")
-    # prediction = {}
+    top10 = list(pd.read_csv("predictions/top10.txt")['0'])
 
-    return render_template('forecast.html.j2',graphpath=graph_image_path)
+    return render_template('forecast_results.html.j2',graphpath=graph_image_path,top10=top10)
