@@ -25,13 +25,8 @@ def screener():
     with open('static/criteriatips.txt') as info:
         for line in info:
             tips.append(line)
-<<<<<<< HEAD
-    return render_template('screener.html.j2', items=translations.keys(), names=names,
-                           industries=industries, industry_values=industry_values, tips=tips, loops=zip(items,tips))
-=======
     return render_template('screener.html.j2', items=items, names=names,
                            industries=industries, industry_values=industry_values, tips=tips, loops=zip(items, tips))
->>>>>>> f8b9d3e19c3e6f390c73f4d754abd1f3f815d0b5
 
 @app.route('/search_results', methods=['GET'])
 def search_results():
