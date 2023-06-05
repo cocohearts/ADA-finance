@@ -163,7 +163,7 @@ for prediction_filename in output_names:
     fig,ax=plt.subplots()
     ax.plot(values,'g--')
     ax.set_xlabel("Month")
-    ax.set_ylabel("y_other ($)")
+    ax.set_ylabel("Price ($)")
     ax.set_ylim(ymin=0)
 
     n=17
@@ -175,7 +175,7 @@ for prediction_filename in output_names:
 
     ax.set_title(f"Past and Predicted Price Values for {ticker}")
     plt.grid()
-    prediction_graphname = f"predictiongraphs/{ticker}_predictiongraph.png"
+    prediction_graphname = f"static/predictiongraphs/{ticker}_predictiongraph.jpg"
     fig.savefig(prediction_graphname)
 
     plt.close(fig)

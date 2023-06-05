@@ -78,9 +78,14 @@ def screener_results():
     return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches,
                            criteria=criteria, industry=industry)
 
-@app.route('/forecast')
+@app.route('/forecast',methods=['GET','POST'])
 def forecast():
+    ticker = request.values.get("ticker")
+    if ticker:
+        graph_image_path = f"static/predictiongraphs/{ticker}_predictiongraph.png"
+    else:
+        graph_image_path = None
     # dataframe = pd.read_csv(filepath_or_buffer="prediction.txt")
     # prediction = {}
 
-    return render_template('forecast.html.j2')
+    return render_template('forecast.html.j2',graphpath=graph_image_path)

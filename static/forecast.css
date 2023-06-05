@@ -1,16 +1,9 @@
-#line {
-  height: 50%;
-  max-width: 50%;
+.graph_display {
   margin: auto;
+  width: 50%;
 }
 
-.card-body {
+#graph-jpg {
   width: 100%;
-}
-
-.card-header {
-  padding-top: 9%;
-  padding-bottom: 2%;
-  text-align: center;
-  color: white;
+  padding-top: 20%;
 }

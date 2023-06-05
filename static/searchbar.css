@@ -1,0 +1,70 @@
+/*Vars*/ 
+:root {
+    --rad: 0.7rem;
+    --dur: 0.3s;
+    --color-dark: #2f2f2f;
+    --color-light: #fff;
+    --color-brand: #57bd84;
+    --font-fam: 'Lato', sans-serif;
+    --height: 35px;
+    --btn-width: 50px;
+    --bez: cubic-bezier(0, 0, 0.43, 1.49);
+  }
+
+#search,
+#search_btn {
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 150px;
+  display: inline-block;
+  height: 35px;
+  border: 0;
+}
+
+#search {
+  margin-left: 50px;
+  outline: 0;
+  width: 400px;
+  text-align: left;
+  outline: 0; /* <-- shold probably remove this for better accessibility, adding for demo aesthetics for now. */
+  background: var(--color-light);
+  padding: 0 1.6rem;
+  border-radius: var(--rad);
+  transition: all var(--dur) var(--bez);
+  transition-property: width, border-radius;
+  position: relative;
+}
+
+#search:focus {
+  transition: width var(--dur) var(--bez), border-radius var(--dur) var(--bez);
+}
+
+#search_btn {
+  display: none; /* prevent being able to tab to it */
+  position: relative;
+  /* top: 0;
+  right: 0; */
+  width: var(--btn-width);
+  font-weight: bold;
+  background: var(--color-brand);
+  border-radius: 0 var(--rad) var(--rad) 0;
+}
+
+#search:not(:placeholder-shown) {
+  border-radius: var(--rad) 0 0 var(--rad);
+  width: calc(400px - var(--btn-width));
+}
+
+#search:not(:placeholder-shown) + #search_btn {
+  display: inline-block;
+}
+
+#searchlabel {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
