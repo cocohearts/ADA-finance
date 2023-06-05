@@ -30,10 +30,12 @@
     </form>
     <h1>Explore</h1>
     <h2>Stocks our model predicts will have high growth</h2>
+    <div id="explore_list_div">
     <ol id="explore_list">
     {% for ticker in top %}
-        <li><a href="forecast_results?ticker={{ticker}}">{{ticker}}</a></li>
+        <li><a class="explore_link" href="forecast_results?ticker={{ticker}}">{{ticker}}</a></li>
     {% endfor %}
     </ol>
+    </div>
     </main>
 {% endblock %}

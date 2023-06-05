@@ -73,7 +73,7 @@ ul li a:hover::after {
     100% { opacity: 1; }
   }
 
-h1 {
+h1, h2 {
     animation: fadeIn 2s;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 500;
