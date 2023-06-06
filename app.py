@@ -10,12 +10,14 @@ import json
 
 from load_metrics import load_metrics
 from apscheduler.schedulers.background import BackgroundScheduler
+import datetime as dt
 
 app = Flask(__name__)
 
 # scheduling load_metrics
 scheduler = BackgroundScheduler()
-scheduler.add_job(load_metrics, 'interval', days=1)
+start_time = dt.datetime.now() + dt.timedelta(minutes=2)
+scheduler.add_job(load_metrics, 'interval', minutes=1440,next_run_time=start_time)
 scheduler.start()
 
 @app.route('/')
