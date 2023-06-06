@@ -28,7 +28,6 @@
                 {% endfor %}
             </tr>
             {% for stock in matches %}
-            {% set growth = ticker_growth_dict[stock.symbol]%}
             <tr>
                 <td>{{stock.name}}</td>
                 <td><a style="color:#3282df" href="forecast_results?ticker={{stock.symbol}}" id="ticker">{{stock.symbol}}</a></td>

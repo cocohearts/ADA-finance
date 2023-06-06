@@ -114,12 +114,9 @@ def screener_results():
     # So I had to parse the tuples into strings first
     for key in criteria.keys():
         criteria[key] = criteria[key][0] + " " + str(criteria[key][1])
-    
-    with open("predictions/growth.json","r") as file:
-        ticker_growth_dict = json.load(file)
 
     return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches,
-                           criteria=criteria, industry=industry, ticker_growth_dict=ticker_growth_dict)
+                           criteria=criteria, industry=industry)
 
 # For forecasting landing page
 @app.route('/forecast', methods=['GET'])
