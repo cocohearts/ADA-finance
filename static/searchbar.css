@@ -1,4 +1,3 @@
-/*Vars*/ 
 :root {
     --rad: 0.7rem;
     --dur: 0.3s;
@@ -26,7 +25,6 @@
   outline: 0;
   width: 400px;
   text-align: left;
-  outline: 0; /* <-- shold probably remove this for better accessibility, adding for demo aesthetics for now. */
   background: var(--color-light);
   padding: 0 1.6rem;
   border-radius: var(--rad);

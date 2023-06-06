@@ -2,7 +2,7 @@ import load
 import preprocessing
 from neural_net import neural_net
 import matplotlib.pyplot as plt
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
 import pandas as pd
 import keras
@@ -10,9 +10,8 @@ import glob
 
 ## Load, preprocess, and split data
 
-df = load.load("SPX.csv")
 
-X, y = preprocessing.preprocessing(df)
+X, y = preprocessing.preprocessing("SPX.csv")
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.15, shuffle=False)
 
@@ -30,6 +29,8 @@ X_train_exp = X_train.copy()
 X_test_exp = X_test.copy()
 y_train_exp = y_train.copy()
 y_test_exp = y_test.copy()
+
+# Concatenate all datasets
 
 for path in list(glob.iglob('../data/*.csv')):
     df = load.load(path)
@@ -56,24 +57,28 @@ print("Preprocessed %d datapoints" % (len(y_train_exp) + len(y_test_exp)))
 
 ## Train model
 
-# model = neural_net()
-# model.train(X_train_exp, y_train_exp, 200)
+# Train code
+"""
+model = neural_net()
+model.train(X_train_exp, y_train_exp, 200)
 
-# model.save("model.sav")
+model.save("model.sav")
+"""
 
+# Load existing model
 model = neural_net(keras.models.load_model("model.sav"))
 
 
 ## Evaluate model
 
-fit = model.predict(X_train)
-y_fit = pd.Series(fit[:, 0].astype(float), index=X_train.index)
+fit = model.predict(X_train_exp)
+y_fit = pd.Series(fit[:, 0].astype(float), index=X_train_exp.index)
 
-pred = model.predict(X_test)
-y_pred = pd.Series(pred[:, 0].astype(float), index=X_test.index)
+pred = model.predict(X_test_exp)
+y_pred = pd.Series(pred[:, 0].astype(float), index=X_test_exp.index)
 
-print("MSE on train set:", mean_squared_error(y_train, y_fit))
-print("MSE on test set:", mean_squared_error(y_test, y_pred))
+print("R^2 on train set:", r2_score(y_train_exp, y_fit))
+print("R^2 on test set:", r2_score(y_test_exp, y_pred))
 
 
 ## Predict future values
@@ -92,16 +97,8 @@ y_future = model.predict_future(y_other, f)
 
 ## Plot results
 
-y = preprocessing.to_values(start_train, pd.Series(y, index=X.index))
-y_fit = preprocessing.to_values(start_train, pd.Series(y_fit, index=X_train.index))
-y_pred = preprocessing.to_values(start_test, pd.Series(y_pred, index=X_test.index))
 y_other = preprocessing.to_values(first, y_other)
 y_future = preprocessing.to_values(last, y_future)
-
-ax = y.plot(color="black")
-y_fit.plot(ax=ax, color="blue")
-y_pred.plot(ax=ax, color="red")
-plt.show()
 
 ax = y_other.plot(color="black")
 y_future.plot(ax=ax, color="red")
