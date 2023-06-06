@@ -32,7 +32,7 @@ def screener():
 def search_results():
     companies = pickle.load(open("StockScreener/companies.p", "rb"))
     matches = companies
-    c = request.values.get("search")
+    c = request.values.get("ticker")
     print(c)
     for i in matches:
         print(i.name)
