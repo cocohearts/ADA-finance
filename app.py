@@ -15,7 +15,7 @@ app = Flask(__name__)
 # Scheduling load_metrics
 scheduler = BackgroundScheduler()
 start_time = dt.datetime.now() + dt.timedelta(minutes=2)
-scheduler.add_job(load_metrics, 'interval', minutes=1440,next_run_time=start_time)
+scheduler.add_job(load_metrics, 'interval', minutes=1440, next_run_time=start_time)
 scheduler.start()
 
 @app.route('/')
@@ -57,7 +57,8 @@ def search_results():
                                names=names, industries=industries, industry_values=industry_values,
                                tips=tips, loops=zip(translations.keys(), tips))
 
-    return render_template('screener_results.html.j2', items=translations.keys(), names=names, matches=matches, criteria={})
+    return render_template('screener_results.html.j2', items=translations.keys(), names=names,
+                           industry=None, matches=matches, criteria={})
 
 # For the other screener functions
 @app.route('/screener_results', methods=['POST'])
