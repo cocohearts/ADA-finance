@@ -32,7 +32,7 @@
     <div id="explore_list_div">
     <ol id="explore_list">
     {% for ticker in top %}
-        <li><a class="explore_link" href="forecast_results?ticker={{ticker}}">{{ticker}}</a> ({{ticker_growth_dict[ticker]}}%)</li>
+        <li><a class="explore_link" href="forecast_results?ticker={{ticker}}">{{ticker}}</a> <span class="growth">({{ticker_growth_dict[ticker]}}%)</span></li>
     {% endfor %}
     </ol>
     </div>
