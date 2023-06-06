@@ -3,8 +3,8 @@ body {
 }
 
 .graph_display {
-  margin: auto;
   width: 50%;
+  margin: auto auto 20px;
 }
 
 #graph-jpg {
@@ -20,6 +20,39 @@ body {
   grid-template-columns: repeat(4, 1fr);
 }
 
+#explore_list_div {
+  width: 100%;
+  margin: auto;
+  animation: fadeIn 2s;
+}
+
 h1, h2 {
   text-align: center;
+}
+h2 {
+  font-size: 40px;
+}
+
+ol {
+  text-decoration: none;
+  color: white;
+  padding: 15px 0;
+  margin: 40px;
+  position: relative;
+  font-size: 30px;
+}
+a {
+  color:#3282df
+}
+
+.explore_link {
+  color:#3282df
+}
+
+.explore_link:not(:hover) {
+  text-decoration: solid #3282df;
+}
+
+.explore_link:hover {
+  text-decoration: underline solid #3282df;
 }

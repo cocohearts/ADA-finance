@@ -20,7 +20,7 @@
             <tr>
                 <th>Name</th>
                 <th>Ticker</th>
-                <th>Price</th>
+                <th>Previous Closing Price</th>
                 <th>Industry {% if industry != None %} <p class="criteria"> ({{ industry }}) </p> {% endif %}</th>
                 <th>Market Cap <p class="criteria"> (Billions) </p></th>
                 {% for criteria_name in items %}
@@ -28,7 +28,6 @@
                 {% endfor %}
             </tr>
             {% for stock in matches %}
-            {% set growth = ticker_growth_dict[stock.symbol]%}
             <tr>
                 <td>{{stock.name}}</td>
                 <td><a style="color:#3282df" href="forecast_results?ticker={{stock.symbol}}" id="ticker">{{stock.symbol}}</a></td>
