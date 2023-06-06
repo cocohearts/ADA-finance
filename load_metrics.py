@@ -19,4 +19,6 @@ def load_metrics():
 
     pickle.dump(companies, open("../StockScreener/companies.p", "wb"))
 
+
+# This function is called by app.py to get the current metrics for each company
 schedule.every().minute.do(load_metrics)
