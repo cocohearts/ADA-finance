@@ -6,6 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="static/line.js"></script>
     <script src="static/scroll.js"></script>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
 {% endblock %}
 
 {% block body %}
@@ -19,14 +20,11 @@
     </header>
     <main id="homeheader">
     <form action="/forecast_results" method="GET">
-        <div class="search-input">
-            <label id="searchlabel" for="search">Search for companies</label>
-            <input id="search" type="search" name="ticker" placeholder="Search ticker or company..." autofocus required autocomplete="off" />
-            <div class="autocom-box">
-                <!-- here list are inserted from javascript -->
-            </div>
-            <button id="search_btn" type="submit">Go</button>   
-        </div>  
+        <div class="input-box">
+            <i class="uil uil-search"></i>
+            <input type="search" name="ticker" placeholder="Search ticker or company..." required autocomplete="off"/>
+            <button class="button" type="submit">Search</button>
+        </div>
     </form>
     <h1>Explore</h1>
     <h2>Stocks our model predicts will have high growth</h2>
