@@ -2,6 +2,7 @@ import pandas as pd
 from StockScreener.stock import *
 from StockScreener.stockscreener import *
 import pickle
+import schedule
 
 # This function is called every night by periodic.py to get the current metrics for each company
 def load_metrics():
@@ -18,4 +19,4 @@ def load_metrics():
 
     pickle.dump(companies, open("../StockScreener/companies.p", "wb"))
 
-load_metrics()
+schedule.every().minute.do(load_metrics)

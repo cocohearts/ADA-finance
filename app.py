@@ -6,7 +6,15 @@ import pickle
 import pandas as pd
 import json
 
+from load_metrics import load_metrics
+from apscheduler.schedulers.background import BackgroundScheduler
+
 app = Flask(__name__)
+
+# scheduling load_metrics
+scheduler = BackgroundScheduler()
+scheduler.add_job(load_metrics, 'interval', days=1)
+scheduler.start()
 
 @app.route('/')
 def main():
