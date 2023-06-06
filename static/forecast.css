@@ -3,8 +3,8 @@ body {
 }
 
 .graph_display {
-  margin: auto;
   width: 50%;
+  margin: auto auto 20px;
 }
 
 #graph-jpg {
