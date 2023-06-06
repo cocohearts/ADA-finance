@@ -1,3 +1,4 @@
+# Custom stock class for storing stock information
 class Stock:
     def __init__(self, symbol='', name='', c_price=0, industry='', market_cap=0, metrics=None):
         self.symbol = symbol
