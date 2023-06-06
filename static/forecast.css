@@ -14,7 +14,7 @@ body {
 
 #explore_list {
   padding-top: 5%;
-  width: 50%;
+  width: 70%;
   margin: auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -41,6 +41,11 @@ ol {
   position: relative;
   font-size: 30px;
 }
+
+.growth {
+  font-size: 16px;
+}
+
 a {
   color:#3282df
 }
