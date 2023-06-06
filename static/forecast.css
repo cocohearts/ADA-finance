@@ -2,6 +2,7 @@ body {
   background: #232f27;
 }
 
+/* prediction model graphs */
 .graph_display {
   width: 50%;
   margin: auto auto 20px;
@@ -12,6 +13,7 @@ body {
   padding-top: 5%;
 }
 
+/* explore section */
 #explore_list {
   padding-top: 5%;
   width: 70%;
@@ -60,4 +62,13 @@ a {
 
 .explore_link:hover {
   text-decoration: underline solid #3282df;
+}
+
+#icon {
+  display: inline-block;
+}
+
+.emptyspace {
+  height:120px;
+  width:100%;
 }

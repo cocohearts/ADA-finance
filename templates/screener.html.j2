@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
 {% endblock %}
 {% block body %}
+    <!-- form security --> 
     {% if error == "none" %}
         <script>
             alert("No matching companies found. Please try again!");
@@ -17,6 +18,7 @@
             alert("An unexpected error was encountered when parsing the industry criteria. Please try again!")
         </script>
     {% endif %}
+    <!-- nav bar --> 
     <header id = "header">
         <img class="logo" src="static/Black Logo.png" alt="logo" width="250">
         <ul>
@@ -25,6 +27,7 @@
             <li><a href="screener" class="active">Stock Screener</a></li>
         </ul>
     </header>
+    <!-- search bar --> 
     <form action="/search_results" method="GET">
         <div class="input-box autocomplete" style="width:500px;">
             <i class="uil uil-search"></i>
@@ -32,6 +35,7 @@
             <button class="button" type="submit">Search</button>
         </div>
     </form>
+    <!-- input forms --> 
     <main id="homeheader">
         <div id="screenerpadding"></div>
             <form id="screener_form" action="/screener_results" method="POST">
@@ -41,6 +45,7 @@
                             <div class="screenercriteria">
                                 <div>
                                      <p class="screenercriteria_info"> {{names[criteria_name]}} </p>
+                                    <!-- tool tips --> 
                                     <div class="help-tip">
                                         <p>{{line}}</p>
                                     </div>
@@ -70,9 +75,11 @@
                     </div>
                 </div>
             </form>
+            <!-- clear all buttom  --> 
             <button id="clear" onclick = "clearRadio()"> Clear All </button>
     </main>
 
+<!-- clear all js --> 
 <script>
 function clearRadio() {
     document.getElementById('screener_form').reset();

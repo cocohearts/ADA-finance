@@ -1,3 +1,4 @@
+/* search bar basic ui */
 .input-box {
   position: relative;
   height: 50px;
@@ -50,8 +51,8 @@
 }
 .input-box .button:active {
   transform: translateY(-50%) scale(0.98);
-}
-/* Responsive */
+} 
+
 @media screen and (max-width: 500px) {
   .input-box {
     height: 30px;
@@ -71,8 +72,8 @@
   }
 }
 
+/* search bar autocomplete */
 .autocomplete {
-  /*the container must be positioned relative:*/
   position: relative;
   display: inline-block;
 }
@@ -82,7 +83,6 @@
   border-bottom: none;
   border-top: none;
   z-index: 99;
-  /*position the autocomplete items to be the same width as the container:*/
   top: 100%;
   left: 0;
   right: 0;
@@ -95,11 +95,9 @@
   border-bottom: 1px solid #d4d4d4;
 }
 .autocomplete-items div:hover {
-  /*when hovering an item:*/
   background-color: #e9e9e9;
 }
 .autocomplete-active {
-  /*when navigating through the items using the arrow keys:*/
   background-color: DodgerBlue !important;
   color: #ffffff;
 }

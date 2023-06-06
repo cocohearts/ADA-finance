@@ -2,21 +2,22 @@ body {
     background-color: #232f27;
 }
 
+/* screener results table */
 #results_table {
     text-align: center;
-    background-color: #232f27; /*white*/
+    background-color: #232f27;
     word-wrap: break-word;
     font-size: 0.8em;
     font-family: sans-serif;
-    color:#cddfe5; /*black*/
+    color:#cddfe5;
     margin: auto auto 10px;
     width: 200px;
 }
 
 #results_table th {
-    background-color: #232f27; /*#232f27*/
+    background-color: #232f27;
     color: whitesmoke;
-    border: 2px solid #364a37; /*#232f27*/
+    border: 2px solid #364a37;
 }
 
 .criteria {
@@ -54,16 +55,4 @@ body {
 
 #ticker:hover{
     text-decoration: underline solid #3282df;
-}
-
-#ticker .growthtext{
-    visibility: hidden;
-    position: absolute;
-    z-index: 1;
-    top: -5px;
-    right: 105%;
-}
-
-#ticker:hover .growthtext{
-    visibility: visible;
 }
